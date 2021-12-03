@@ -13,8 +13,8 @@ const config = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "ethereum", // Usually your GitHub org/user name.
-  projectName: "sourcify", // Usually your repo name.
+  organizationName: "sourcifyeth", // Usually your GitHub org/user name.
+  projectName: "sourcifyeth.github.io", // Usually your repo name.
 
   presets: [
     [
