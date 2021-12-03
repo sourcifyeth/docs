@@ -1,0 +1,42 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #2b50aa;
+  --ifm-color-primary-dark: #274899;
+  --ifm-color-primary-darker: #254490;
+  --ifm-color-primary-darkest: #1e3877;
+  --ifm-color-primary-light: #2f58bb;
+  --ifm-color-primary-lighter: #315cc3;
+  --ifm-color-primary-lightest: #456dd0;
+  --ifm-code-font-size: 95%;
+  --ifm-font-family-base: "Roboto", sans-serif;
+}
+
+:root[data-theme="dark"] {
+  --ifm-background-color: #1e2125;
+  --ifm-background-surface-color: #121212;
+  --ifm-color-primary: #ff858d;
+  --ifm-color-primary-dark: #ff5e69;
+  --ifm-color-primary-darker: #ff4b57;
+  --ifm-color-primary-darkest: #ff1120;
+  --ifm-color-primary-light: #ffacb1;
+  --ifm-color-primary-lighter: #ffbfc3;
+  --ifm-color-primary-lightest: #fff9fa;
+}
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+html[data-theme="dark"] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
