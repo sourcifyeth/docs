@@ -70,7 +70,7 @@ const config = {
             items: [
               {
                 label: "API",
-                to: "/docs/api",
+                to: "/docs/api/index",
               },
             ],
           },

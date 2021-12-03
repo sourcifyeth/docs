@@ -10,7 +10,7 @@ Sourcify is a Solidity source code and metadata verification tool and repository
 
 - **Partial Match**: A partial match indicates that the deployed and the recompiled bytecodes match excluding the metadata hashes. This means the functionality of the given source files is the same with the contract deployed (similar to Etherscan) but the provided source files can contain differences in variable names, comments, spaces etc.
 
-Learn more about how Sourcify matches contracts [here](/docs/matches).
+Learn more about how Sourcify matches contracts [here](/).
 
 ## Repository
 
@@ -23,19 +23,19 @@ Matched contracts are kept both in the Sourcify repository and on IPFS. See an e
 
 Sourcify provides an API to verify contracts and to retrieve the files of matched contracts.
 
-See [API docs](/docs/API)
+See [API docs](/docs/API/index)
 
 ## Run your own Sourcify instance
 
-Sourcify is fully open sourced and we want it to be as decentralized as possible. Run your own Sourcify instance by following the instructions: [Run your own](/docs/run-your-own)
+Sourcify is fully open sourced and we want it to be as decentralized as possible. Run your own Sourcify instance by following the instructions: [Run your own](/)
 
 ## Pin the IPFS repo
 
-You can also help us decentralize the repository by pinning the IPFS repository. See [IPFS](/docs/ipfs)
+You can also help us decentralize the repository by pinning the IPFS repository. See [IPFS](/)
 
 ## Network support
 
-We support many EVM based networks. Ideally you can run your own Sourcify but if you want network support check out [Network Support](/docs/network-support).
+We support many EVM based networks. Ideally you can run your own Sourcify but if you want network support check out [Network Support](/).
 
 ## Questions
 
