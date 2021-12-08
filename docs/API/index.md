@@ -3,7 +3,7 @@ sidebar_position: 1
 slug: /api
 ---
 
-# Introduction
+# Overview
 
 Sourcify provides a public server API for verification, and checking if a contract is verified, and a repository API for retrieving files.
 

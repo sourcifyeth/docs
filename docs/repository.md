@@ -1,0 +1,48 @@
+# Contract Repository
+
+Verified contracts are stored in the Sourcify repository and are available via HTTP or IPFS.
+
+## HTTP
+
+The repository interface is at [https://repo.sourcify.dev](https://repo.sourcify.dev) and [https://repo.staging.sourcify.dev](https://repo.sourcify.dev).
+
+However for performance reasons, it is not possible to navigate the folders above the contract level. You need to know ahead the contract you are looking for.
+:::tip Finding contracts
+
+You can paste the contract address in the UI [sourcify.dev](https://sourcify.dev) without choosing the network and it will check the contract on all chains in the contract repository
+:::
+
+The contracts are accessible under the following path format:
+
+```
+https://repo.sourcify.dev/contracts/:match/:chainId/:contractAddress
+```
+
+- `:match`: either `full_match` or `partial_match`
+- `:chainId`: EVM chain id `1` for Ethereum Mainnet, `5` Ethereum testnet Görli etc. See [chainlist.org](https://chainlist.org)
+- `:contractAddress`: e.g. `0x5ed4a410A612F2fe625a8F3cB4d70f197fF8C8be`
+
+### Examples
+
+Here are some example contracts:
+
+- https://repo.sourcify.dev/contracts/full_match/1/0x5ed4a410A612F2fe625a8F3cB4d70f197fF8C8be
+- https://repo.sourcify.dev/contracts/full_match/1/0xca2ad74003502af6B727e846Fab40D6cb8Da0035
+- https://repo.sourcify.dev/contracts/full_match/100/0x4f15a6e74CFC2F80D5967a8aB75F3c83D8043cF4
+- https://repo.sourcify.dev/contracts/partial_match/1/0xb857F1f4014A0C45C287667148417b6799Fe594E/
+- (staging) https://repo.staging.sourcify.dev/contracts/partial_match/69/0xb50cBeeFBCE78cDe83F184B275b5E80c4f01006A/sources/
+
+### API
+
+You directly download individual files with their full path. See Repository API.
+
+## IPFS
+
+The contract repository is peridically updated and pinned to the IPFS. It is accessible under the following IPNS names:
+
+- [k51qzi5uqu5dll0ocge71eudqnrgnogmbr37gsgl12uubsinphjoknl6bbi41p](https://ipfs.ethdevops.io/ipns/k51qzi5uqu5dll0ocge71eudqnrgnogmbr37gsgl12uubsinphjoknl6bbi41p)
+- (staging) [k51qzi5uqu5dkuzo866rys9qexfvbfdwxjc20njcln808mzjrhnorgu5rh30lb](https://ipfs.ethdevops.io/ipns/k51qzi5uqu5dkuzo866rys9qexfvbfdwxjc20njcln808mzjrhnorgu5rh30lb)
+
+You can also access the contract repository with the `/ipns/:ipns/contracts/:match/:chainId/:contractAddress` format on IPFS. Example:
+
+[/ipns/k51qzi5uqu5dll0ocge71eudqnrgnogmbr37gsgl12uubsinphjoknl6bbi41p/contracts/full_match/1/0x5ed4a410A612F2fe625a8F3cB4d70f197fF8C8be](https://ipfs.ethdevops.io/ipns/k51qzi5uqu5dll0ocge71eudqnrgnogmbr37gsgl12uubsinphjoknl6bbi41p/contracts/full_match/1/0x5ed4a410A612F2fe625a8F3cB4d70f197fF8C8be)

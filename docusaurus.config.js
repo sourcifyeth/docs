@@ -70,7 +70,7 @@ const config = {
             items: [
               {
                 label: "API",
-                to: "/docs/api/index",
+                to: "/docs/api",
               },
             ],
           },
@@ -83,7 +83,11 @@ const config = {
               },
               {
                 label: "Github",
-                href: "https://github.com/ethereum/sourcifyeth",
+                href: "https://github.com/ethereum/sourcify",
+              },
+              {
+                label: "Docs Github",
+                href: "https://github.com/sourcifyeth/docs",
               },
             ],
           },

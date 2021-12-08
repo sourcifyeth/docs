@@ -14,16 +14,11 @@ Learn more about how Sourcify matches contracts [here](/).
 
 ## Repository
 
-Matched contracts are kept both in the Sourcify repository and on IPFS. See an example:
-
-- Sourcify reposiory: [https://repo.sourcify.dev/contracts/full_match/1/0x000000001f91b581BF90b0D07A6259dc083Cc838](https://repo.sourcify.dev/contracts/full_match/1/0x000000001f91b581BF90b0D07A6259dc083Cc838)
-- IPFS (via gateway): [https://gateway.ipfs.io/ipns/k51qzi5uqu5dll0ocge71eudqnrgnogmbr37gsgl12uubsinphjoknl6bbi41p/contracts/full_match/1/0x000000001f91b581BF90b0D07A6259dc083Cc838/](https://gateway.ipfs.io/ipns/k51qzi5uqu5dll0ocge71eudqnrgnogmbr37gsgl12uubsinphjoknl6bbi41p/contracts/full_match/1/0x000000001f91b581BF90b0D07A6259dc083Cc838/)
+Matched contracts are kept in the Sourcify contract repository. It is availale through HTTP and IPFS. See [Contract Repository](/docs/repository)
 
 ## API
 
-Sourcify provides an API to verify contracts and to retrieve the files of matched contracts.
-
-See [API docs](/docs/API/index)
+Sourcify provides an API to verify contracts and to retrieve the files of matched contracts. See [API docs](/docs/api)
 
 ## Run your own Sourcify instance
 
