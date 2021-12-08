@@ -8,6 +8,12 @@ slug: /run-locally
 
 Two main components of the Sourcify is the server and the UI. You can run them locally to verify contracts.
 
+## Requirements
+
+- [nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+  - node v10 needed for the frontend
+- npm
+
 ## Clone
 
 First clone the repository
@@ -23,15 +29,17 @@ Most of the settings are set with environment variables under the `environments/
 See [Environment Variables](/docs/env-vars) section for details.
 
 ```bash
-FQDN=localhost
+FQDN=localhost # Fully Qualified Domain Name
 SERVER_URL=https://localhost:5000 # localhost:$SERVER_EXTERNAL_PORT
 SOLC_REPO_HOST= # Path where Solidity compiler binaries will be saved. e.g. /home/user/solc/bin
 SOLJSON_REPO_HOST= # Path where Solidity JS (solc-js) compilers are saved e.g. /home/user/solc/js
+REPOSITORY_PATH= # Path on host where verified contracts will be saved e.g. /home/user/sourcify/repository
+IPFS_URL= # URL to an IPFS gateway e.g. https://ipfs.io/ipfs/ or if you run a local IPFS node http://localhost:8080/ipfs/ or http://ipfs-container-name:8080/ipfs/ etc.
 ```
 
 ### RPC keys
 
-Set [Alchemy](https://www.alchemy.com/) API keys for each Ethereum and Polygon network you want to use. Replace the RPC links to your liking in [`services/core/src/sourcify-chains.ts`](https://github.com/ethereum/sourcify/blob/master/services/core/src/sourcify-chains.ts) to your liking if you won't be using Alchemy. For the chains without an RPC in `sourcify-chains.ts`, the default RPCs listed in [`services/core/src/chains.json`](https://github.com/ethereum/sourcify/blob/master/services/core/src/chains.json) will be used.
+Set [Alchemy](https://www.alchemy.com/) API keys for each Ethereum and Polygon network you want to use. You can use the same key for all networks. Replace the RPC links to your liking in [`services/core/src/sourcify-chains.ts`](https://github.com/ethereum/sourcify/blob/master/services/core/src/sourcify-chains.ts) to your liking if you won't be using Alchemy. For the chains without an RPC in `sourcify-chains.ts`, the default RPCs from in [`services/core/src/chains.json`](https://github.com/ethereum/sourcify/blob/master/services/core/src/chains.json) will be used.
 
 ```
 ALCHEMY_ID_ETH_MAINNET=
@@ -57,10 +65,28 @@ Build modules
 npx lerna run build
 ```
 
+## Run
+
+### Server
+
 Start the server
 
 ```bash
 npm run server:start
+```
+
+### UI
+
+UI requires node version 10.\* because of the [node-sass](https://github.com/sass/node-sass#node-version-support-policy) package version.
+
+In a new terminal session install and use node version 10
+
+```bash
+nvm install 10
+```
+
+```bash
+nvm use 10
 ```
 
 Start the UI
