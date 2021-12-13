@@ -8,7 +8,7 @@ slug: /api/server/v2/add-input-files
 
 - Adds new input files and immediately scans through them, searching for new contracts.
 - Every contract is represented by its metadata file, a special file generated during the original compilation.
-- If possible, runs the process of verification, as described in [Verify](verify-validated.md).
+- If possible, runs the process of verification, as described in [Verify](/docs/api/server/v2/verify-validated).
 
 **URL** : `/input-files`
 

@@ -21,7 +21,7 @@ Server API are under the paths `https://sourcify.dev/server` and `https://stagin
 
 ### Verification API (v1)
 
-- [Verify](/docs/api/v1/verify) : `POST /` or `POST /verify`
+- [Verify](/docs/api/server/v1/verify) : `POST /` or `POST /verify`
 
 ### Verification API (v2 - session based)
 

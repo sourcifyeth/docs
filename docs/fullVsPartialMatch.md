@@ -1,0 +1,82 @@
+---
+id: full-vs-partial-match
+title: Full vs Partial Match
+slug: /full-vs-partial-match
+---
+
+# Matches
+
+A Sourcify match in summary works as follows:
+
+1. You have a contract on an [EVM](https://ethereum.org/en/developers/docs/evm/) chain (Ethereum, Optimism, Avalanche etc. see [networks](/networks) ) which was at some point written in Solidity, compiled and deployed on the network e.g. [0x5ed4a410A612F2fe625a8F3cB4d70f197fF8C8be](https://etherscan.io/address/0x5ed4a410A612F2fe625a8F3cB4d70f197fF8C8be#code) on Ethereum Mainnet.
+2. You have a contract source code (consisting of one or many Solidity files) and the [metadata file](/metadata) which contains the compilation settings.
+
+:::tip Tip
+
+Different compilation settings i.e. compiler versions, optimization runs result in different bytecodes.
+
+:::
+
+If the bytecode from recompiling the contract with the given source code files and the metadata correspond to the bytecode of the contract of the given address and chain, it will be a **match**. Sourcify defines two types of matches upon verifying contracts: **full (perfect) matches** and **partial matches**.
+
+## Full (Perfect) Matches
+
+Full matches (sometimes referred as _perfect matches_) refer to the cases when the bytecode of the deployed contract is byte-by-byte the same as compilation output of the given source code files under the compilation settings defined in the [metadata file](/metadata).
+
+This means the contents of the source code files and the compilation settings are exactly the same as when the contract author compiled and deployed the contract. Not even a byte! If you were to add a comment, change a variable or function name, the full match will be broken.
+
+How does Sourcify achieve this?
+
+The [metadata file](/metadata) contains a `sources` field that looks like this:
+
+```json
+{
+  ...
+  "sources": {
+    "contracts/1_Storage.sol": {
+      "keccak256": "0xb6ee9d528b336942dd70d3b41e2811be10a473776352009fd73f85604f5ed206",
+      "license": "GPL-3.0",
+      "urls": [
+        "bzz-raw://fe52c6e3c04ba5d83ede6cc1a43c45fa43caa435b207f64707afb17d3af1bcf1",
+        "dweb:/ipfs/QmawU3NM1WNWkBauRudYCiFvuFE1tTLHB98akyBvb9UWwA"
+      ]
+    },
+    "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v3.2.0-solc-0.7/contracts/math/SafeMath.sol": {
+      "keccak256": "0xba96bc371ba999f452985a98717cca1e4c4abb598dc038a9a9c3db08129b1ba4",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://26e50e3f7b6482fb6f598f2e006994a74aa492687daa4b3eee7fd4fb5398ce7f",
+        "dweb:/ipfs/QmZudqoPSkA4USLMFsBBmt19dDPZFS8aaAmL5R7pECXu6t"
+      ]
+    },
+  }
+}
+```
+
+Notice the field `keccak256`. If you change a single byte in one of the source files, the resulting hash of the file in the metadata will change upon compilation.
+
+The hash in the metadata can change, but how do we detect the change looking at the contract bytecode? In the end, this is the only thing written on the blockchain.
+
+This is thanks to the Solidity compiler appending the **hash of the metadata file** (and [several other things](https://docs.soliditylang.org/en/latest/metadata.html#encoding-of-the-metadata-hash-in-the-bytecode)) at the end of the contract bytecode. The metadata hash at the end of the bytecode becomes sort of a fingerprint of the whole compilation.
+
+:::tip Tip
+
+Change a byte in the source code --> Source code hash changes --> Metadata changes --> Metadata hash changes --> Deployed bytecode changes
+
+:::
+
+However the only thing that changes in the bytecode when making a non-functional change (add comments, change variable names) is the appended metadata hash field. Which brings us to the partial matches 👇
+
+## Partial Matches
+
+Partial matches refer to cases when the deployed bytecode of the onchain contract match the bytecode resulting from the recompilation with the metadata and the source files **except the metadata hash**.
+
+In other words, the deployed contract and the given source code + metadata _function_ as the same but there are differences in source code comments, variable names, or other metadata fields such as source paths.
+
+This type of match is similar to how Etherscan verifies contracts. Yes, the matching source code in theory functions the same as the deployed contract but the displayed source code can be misleading or the bytecode can contain [excecutable instructions not seen in the source code](https://samczsun.com/hiding-in-plain-sight/).
+
+## Exceptions
+
+### Immutables
+
+### Libraries
