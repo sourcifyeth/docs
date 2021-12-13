@@ -8,8 +8,8 @@ slug: /full-vs-partial-match
 
 A Sourcify match in summary works as follows:
 
-1. You have a contract on an [EVM](https://ethereum.org/en/developers/docs/evm/) chain (Ethereum, Optimism, Avalanche etc. see [networks](/networks) ) which was at some point written in Solidity, compiled and deployed on the network e.g. [0x5ed4a410A612F2fe625a8F3cB4d70f197fF8C8be](https://etherscan.io/address/0x5ed4a410A612F2fe625a8F3cB4d70f197fF8C8be#code) on Ethereum Mainnet.
-2. You have a contract source code (consisting of one or many Solidity files) and the [metadata file](/metadata) which contains the compilation settings.
+1. You have a contract on an [EVM](https://ethereum.org/en/developers/docs/evm/) chain (Ethereum, Optimism, Avalanche etc. see [networks](/docs/networks) ) which was at some point written in Solidity, compiled and deployed on the network e.g. [0x5ed4a410A612F2fe625a8F3cB4d70f197fF8C8be](https://etherscan.io/address/0x5ed4a410A612F2fe625a8F3cB4d70f197fF8C8be#code) on Ethereum Mainnet.
+2. You have a contract source code (consisting of one or many Solidity files) and the [metadata file](/docs/metadata) which contains the compilation settings.
 
 :::tip Tip
 
@@ -21,13 +21,13 @@ If the bytecode from recompiling the contract with the given source code files a
 
 ## Full (Perfect) Matches
 
-Full matches (sometimes referred as _perfect matches_) refer to the cases when the bytecode of the deployed contract is byte-by-byte the same as compilation output of the given source code files under the compilation settings defined in the [metadata file](/metadata).
+Full matches (sometimes referred as _perfect matches_) refer to the cases when the bytecode of the deployed contract is byte-by-byte the same as compilation output of the given source code files under the compilation settings defined in the [metadata file](/docs/metadata).
 
 This means the contents of the source code files and the compilation settings are exactly the same as when the contract author compiled and deployed the contract. Not even a byte! If you were to add a comment, change a variable or function name, the full match will be broken.
 
 How does Sourcify achieve this?
 
-The [metadata file](/metadata) contains a `sources` field that looks like this:
+The [metadata file](/docs/metadata) contains a `sources` field that looks like this:
 
 ```json
 {
