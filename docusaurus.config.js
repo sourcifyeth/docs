@@ -43,7 +43,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: "Sourcify",
+        title: "sourcify.eth",
         logo: {
           alt: "Sourcify logo",
           src: "img/logo.svg",
