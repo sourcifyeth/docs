@@ -1,0 +1,162 @@
+---
+id: metadata
+title: Contract Metadata
+slug: /metadata
+---
+
+# Contract metadata
+
+## Metadata
+
+Solidity compiler generates an output file called metadata that contains information about the contract and the compilation ([see Solidity docs](https://docs.soliditylang.org/en/latest/metadata.html)). This includes the compiler settings, [contract ABI](https://docs.soliditylang.org/en/latest/abi-spec.html), [NatSpec contract documentation](https://docs.soliditylang.org/en/latest/natspec-format.html), and used source files and their hashes. Sourcify takes the full advantage of this information to [fully verify](/docs/full-vs-partial-match) a deployed contract i.e. a byte-by-byte match of the contract. **Metadata file is required for the Sourcify verification** alongside the Solidity source files.
+
+A simple metadata file looks like this ([Görli 0x6ee24e422832021be0e117e028493DFD73Fe38A3](https://repo.sourcify.dev/contracts/full_match/5/0x6ee24e422832021be0e117e028493DFD73Fe38A3)):
+
+```json
+{
+  "compiler": { "version": "0.8.1+commit.df193b15" },
+  "language": "Solidity",
+  "output": {
+    // Contract ABI
+    "abi": [
+      {
+        "inputs": [],
+        "name": "retrieve",
+        "outputs": [
+          { "internalType": "uint256", "name": "", "type": "uint256" }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          { "internalType": "uint256", "name": "num", "type": "uint256" }
+        ],
+        "name": "store",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+    ],
+    // Developer documentation
+    "devdoc": {
+      "details": "Store & retrieve value in a variable",
+      "kind": "dev",
+      "methods": {
+        "retrieve()": {
+          "details": "Return value ",
+          "returns": { "_0": "value of 'number'" }
+        },
+        "store(uint256)": {
+          "details": "Store value in variable",
+          "params": { "num": "value to store" }
+        }
+      },
+      "title": "Storage",
+      "version": 1
+    },
+    // User documentation
+    "userdoc": { "kind": "user", "methods": {}, "version": 1 }
+  },
+  // Compiler settings
+  "settings": {
+    "compilationTarget": { "contracts/1_Storage.sol": "Storage" },
+    "evmVersion": "istanbul",
+    "libraries": {},
+    "metadata": { "bytecodeHash": "ipfs" },
+    "optimizer": { "enabled": false, "runs": 200 },
+    "remappings": []
+  },
+  // Source files used in compilation
+  "sources": {
+    // File path
+    "contracts/1_Storage.sol": {
+      // File hash
+      "keccak256": "0xb6ee9d528b336942dd70d3b41e2811be10a473776352009fd73f85604f5ed206",
+      "license": "GPL-3.0",
+      "urls": [
+        "bzz-raw://fe52c6e3c04ba5d83ede6cc1a43c45fa43caa435b207f64707afb17d3af1bcf1",
+        "dweb:/ipfs/QmawU3NM1WNWkBauRudYCiFvuFE1tTLHB98akyBvb9UWwA"
+      ]
+    }
+  },
+  "version": 1
+}
+```
+
+## Where to find
+
+### Solidity compiler
+
+You can pass the `--metadata` flag to the Solidity command line compiler to get the metadata output printed.
+
+```bash
+solc --metadata MyContract.sol
+```
+
+Write the metadata into a file with
+
+```bash
+solc --metadata MyContract.sol > metadata.json
+```
+
+### Standard JSON Input-Output
+
+To have the metadata in the ouput of the compilation with Solidity's [standard JSON](https://docs.soliditylang.org/en/latest/using-the-compiler.html#compiler-input-and-output-json-description), add `metadata` to the `outputSelection` of the compilation input JSON. Below example outputs metadata for all contracts compiled.
+
+```json
+    "outputSelection": {
+      "*": {
+        "*": [
+          "metadata", // <--
+          "evm.bytecode",
+          "evm.bytecode.sourceMap"
+        ],
+        ...
+      },
+      ...
+    }
+```
+
+### Truffle
+
+Truffle stores the contract compilation outputs to `build/contracts/` folder. The `.json` file contains the metadata of the contract. You don't need to extract the metadata manually.
+
+Simply drag and drop the output `.json` file of the contract you want to verify to the [sourcify.dev](https://sourcify.dev) UI.
+
+### Hardhat
+
+Hardhat stores the outputs of the compilations under the `artifacts/build-info/` folder inside the project. The `.json` file under the folder contains the [Standard JSON Input-Output](https://docs.soliditylang.org/en/latest/using-the-compiler.html#compiler-input-and-output-json-description) of the Solidity compiler for all contracts.
+
+Since [v2.6.8](https://github.com/nomiclabs/hardhat/releases/tag/hardhat%402.6.8), Hardhat outputs the metadata files of each contract by default under the JSON's `.output.contracts.<contract-path>.<contract-name>.metadata` field. You don't have to extract the metadata manually. To verify via the Hardhat output:
+
+### Hardhat - earlier than v2.6.8
+
+If you use an earlier version of Hardhat than 2.6.8 you can modify the `hardhat-config.js` manually to output metadata inside the `build-info/` file:
+
+```js
+// hardat-config.js
+module.exports = {
+  ...
+  solidity: {
+    settings: {
+      version: ...,
+      optimizer: {...},
+      outputSelection: {
+        "*": {
+          "*": [
+            "abi",
+            "evm.bytecode",
+            "evm.deployedBytecode",
+            "metadata", // <-- add this
+            ...
+          ]
+        },
+      },
+    },
+  },
+  ...
+};
+```
+
+In theory, if you haven't changed any of the compilation settings, it should result in the same metadata file and you should get a full match. Otherwise you will be able to get a partial match only.
