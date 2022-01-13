@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sourcify-docs
+    ports:
+      - "2345:80"

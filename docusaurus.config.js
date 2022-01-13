@@ -7,7 +7,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "Sourcify Docs",
-  tagline: "Documentation for sourcify.dev",
+  tagline: "Documentation for sourcify.eth",
   url: "https://docs.sourcify.dev",
   baseUrl: "/",
   onBrokenLinks: "throw",
@@ -58,6 +58,11 @@ const config = {
           {
             href: "https://github.com/ethereum/sourcify",
             label: "GitHub",
+            position: "right",
+          },
+          {
+            href: "https://github.com/sourcifyeth/docs",
+            label: "Github (Docs)",
             position: "right",
           },
         ],
