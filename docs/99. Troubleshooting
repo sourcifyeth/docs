@@ -1,0 +1,17 @@
+
+
+# Build errors
+
+If you receive errors that a module does not have some types or members exported during build, similar to one below:
+
+```
+src/ValidationService.ts(3,21): error TS2305: Module '"../../../node_modules/@ethereum-sourcify/core/build"' has no exported member 'SourceMap'.
+src/ValidationService.ts(3,32): error TS2305: Module '"../../../node_modules/@ethereum-sourcify/core/build"' has no exported member 'PathBuffer'.
+src/ValidationService.ts(3,44): error TS2305: Module '"../../../node_modules/@ethereum-sourcify/core/build"' has no exported member 'PathContent'.
+src/ValidationService.ts(3,57): error TS2305: Module '"../../../node_modules/@ethereum-sourcify/core/build"' has no exported member 'CheckedContract'.
+```
+
+It is likely the symlinks between packages are broken. npm is trying to download and run the packages as external packages. Symlink the packages with lerna using:
+```
+npx lerna bootstrap
+```
