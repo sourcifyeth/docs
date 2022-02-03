@@ -1,7 +1,7 @@
 ---
-id: libraries
-title: Libraries
-slug: /libraries
+id: remix_plugin
+title: Overview
+slug: /packages/remix_plugin
 ---
 
 # Verification with Libraries
@@ -11,7 +11,7 @@ If the contract to be verified has libraries Sourcify will extract them and save
 Check out these examples:
 
 - [Görli 0x023735217A43724042055D0C365e108517EC69Cb](https://repo.sourcify.dev/contracts/full_match/5/0x023735217A43724042055D0C365e108517EC69Cb/)
-- [Rinkeby 0x705bF4e3CCbF37B0cE5dE86B3F606e640A2a40BD](https://repo.sourcify.dev/contracts/full_match/4/0x705bF4e3CCbF37B0cE5dE86B3F606e640A2a40BD/)
+- [Rikeby 0x705bF4e3CCbF37B0cE5dE86B3F606e640A2a40BD](https://repo.sourcify.dev/contracts/full_match/4/0x705bF4e3CCbF37B0cE5dE86B3F606e640A2a40BD/)
 
 Sourcify recompiles the contract and currently looks for library address placeholders starting with `__$` and find the library address in the deployed contract at the same position.
 
