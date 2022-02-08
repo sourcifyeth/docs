@@ -4,6 +4,19 @@ title: How to Verify Contracts
 slug: /how-to-verify
 ---
 
+# How to Verify
+
+1. Drag and drop the folder containing your source files and metadata, or add them seperately.
+2. Input the contract address you want to verify. If a contract at that address is verified in any of the networks it will be shown above.
+3. Select the network the contract is deployed to.
+4. Click "Verify".
+
+![How to verify screen recording](/img/verification.gif)
+
+## Truffle
+
+If you were using Truffle to compile contracts, you can use the output file at `build/contracts/<contract-name>.json` for the metadata file. Then add the source files as usual.
+
 ## With Hardhat output
 
 1. Drag and drop the `.json` file at [sourcify.dev](https://sourcify.dev).
