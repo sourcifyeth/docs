@@ -136,6 +136,7 @@ const config = {
     //   },
     // ],
   ],
+  scripts: ["/matomo.js"],
 };
 
 // Reverse the sidebar items ordering (including nested category items)

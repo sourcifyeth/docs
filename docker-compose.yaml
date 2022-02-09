@@ -8,3 +8,4 @@ services:
     container_name: sourcify-docs
     ports:
       - "2345:80"
+    restart: always
