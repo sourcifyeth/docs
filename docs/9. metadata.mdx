@@ -10,79 +10,9 @@ slug: /metadata
 
 Solidity compiler generates an output file called metadata that contains information about the contract and the compilation ([see Solidity docs](https://docs.soliditylang.org/en/latest/metadata.html)). This includes the compiler settings, [contract ABI](https://docs.soliditylang.org/en/latest/abi-spec.html), [NatSpec contract documentation](https://docs.soliditylang.org/en/latest/natspec-format.html), and used source files and their hashes. Sourcify takes the full advantage of this information to [fully verify](/docs/full-vs-partial-match) a deployed contract i.e. a byte-by-byte match of the contract. **Metadata file is required for the Sourcify verification** alongside the Solidity source files.
 
-A simple metadata file looks like this ([Görli 0x6ee24e422832021be0e117e028493DFD73Fe38A3](https://repo.sourcify.dev/contracts/full_match/5/0x6ee24e422832021be0e117e028493DFD73Fe38A3)):
+To see metadata in action check out the [Metadata Playground](https://playground.sourcify.dev).
 
-```json
-{
-  "compiler": { "version": "0.8.1+commit.df193b15" },
-  "language": "Solidity",
-  "output": {
-    // Contract ABI
-    "abi": [
-      {
-        "inputs": [],
-        "name": "retrieve",
-        "outputs": [
-          { "internalType": "uint256", "name": "", "type": "uint256" }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "inputs": [
-          { "internalType": "uint256", "name": "num", "type": "uint256" }
-        ],
-        "name": "store",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-      }
-    ],
-    // Developer documentation
-    "devdoc": {
-      "details": "Store & retrieve value in a variable",
-      "kind": "dev",
-      "methods": {
-        "retrieve()": {
-          "details": "Return value ",
-          "returns": { "_0": "value of 'number'" }
-        },
-        "store(uint256)": {
-          "details": "Store value in variable",
-          "params": { "num": "value to store" }
-        }
-      },
-      "title": "Storage",
-      "version": 1
-    },
-    // User documentation
-    "userdoc": { "kind": "user", "methods": {}, "version": 1 }
-  },
-  // Compiler settings
-  "settings": {
-    "compilationTarget": { "contracts/1_Storage.sol": "Storage" },
-    "evmVersion": "istanbul",
-    "libraries": {},
-    "metadata": { "bytecodeHash": "ipfs" },
-    "optimizer": { "enabled": false, "runs": 200 },
-    "remappings": []
-  },
-  // Source files used in compilation
-  "sources": {
-    // File path
-    "contracts/1_Storage.sol": {
-      // File hash
-      "keccak256": "0xb6ee9d528b336942dd70d3b41e2811be10a473776352009fd73f85604f5ed206",
-      "license": "GPL-3.0",
-      "urls": [
-        "bzz-raw://fe52c6e3c04ba5d83ede6cc1a43c45fa43caa435b207f64707afb17d3af1bcf1",
-        "dweb:/ipfs/QmawU3NM1WNWkBauRudYCiFvuFE1tTLHB98akyBvb9UWwA"
-      ]
-    }
-  },
-  "version": 1
-}
-```
+Check [Matches](/docs/full-vs-partial-match) to understand how Sourcify uses the metadata for verification
 
 ## Where to find
 
