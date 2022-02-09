@@ -93,3 +93,38 @@ Start the UI
 ```bash
 npm run dev:ui
 ```
+
+### Repository
+
+The repository (https://repo.sourcify.dev) is a simple web UI on top of the file directory of the verified contracts. It runs [a fork of h5ai](https://github.com/sourcifyeth/h5ai) and is a submodule under the folder `/h5ai-nginx` in the Sourcify git repo. The origin is at [sourcifyeth/h5ai-nginx](https://github.com/sourcifyeth/h5ai-nginx/).
+
+The easiest way to run the contract repository is to directly run the docker container using the docker-compose file `environments/repository.yaml`.
+
+```
+docker-compose up -f environments/repository.yaml up
+```
+
+This will pull and run the `ethereum/source-verify:repository-${TAG}` docker container from [our Docker hub](https://hub.docker.com/r/ethereum/source-verify). The environment variables for the repo path and ports are set at `environments/.env` file.
+
+You can also build your own container by changing the `image` of the container to a local container `build` context:
+
+```yaml
+# environments/repository.yaml
+services:
+  repository:
+    <<: *project-base
+    # Comment/remove this line
+    # image: ethereum/source-verify:repository-${TAG}
+    # Add build fields like below.
+    build:
+      context: ../h5ai-nginx # Point to the /h5ai-nginx folder
+      dockerfile: Dockerfile
+    container_name: repository-${TAG}
+    volumes:
+```
+
+However you need to pull the `/h5ai-nginx` submodule as the folder will be initially empty:
+
+```
+git submodule update --init --recursive
+```

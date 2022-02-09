@@ -87,7 +87,7 @@ NODE_PORT_ROPSTEN=8543
 
 # Other config
 TESTING=false
-TAG=dev
+TAG=latest
 NODE_ENV=development
 INFURA_ID=xxx # Not used
 ALCHEMY_ID_ETH_MAINNET=xxx
