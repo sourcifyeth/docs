@@ -9,6 +9,11 @@ slug: /packages/remix_plugin
 Sourcify has a remix plugin to aid with contract verification and lookup.
 The plugin can be found in this repository [https://github.com/sourcifyeth/remix-sourcify](https://github.com/sourcifyeth/remix-sourcify)
 
+## Verifying
+[![Verifier](https://cdn.loom.com/sessions/thumbnails/b203977174b3444ea5b223ae45250580-with-play.gif)](https://www.loom.com/share/b203977174b3444ea5b223ae45250580 "Verifier")
+
+## Fetching
+[![Fetcher](https://cdn.loom.com/sessions/thumbnails/5b6cb81a9fae4dd1ad3cee6a1e658af1-with-play.gif)](https://www.loom.com/share/5b6cb81a9fae4dd1ad3cee6a1e658af1 "Fetcher")
 
 ## Installation
 1. Navigate to the Remix Plugin manager
