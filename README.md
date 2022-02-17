@@ -48,8 +48,9 @@ Simply run
 docker-compose up -d
 ```
 
-If you made changes, rebuild the container to update:
+If you made changes, pull the changes and rebuild the container to update:
 
 ```
+git checkout main && git pull
 docker-compose up --build -d
 ```
