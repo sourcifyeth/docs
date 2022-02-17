@@ -45,5 +45,11 @@ The website can be served inside a minimal nginx container. [Dockerfile](/Docker
 Simply run
 
 ```
-docker-compose up
+docker-compose up -d
+```
+
+If you made changes, rebuild the container to update:
+
+```
+docker-compose up --build -d
 ```
