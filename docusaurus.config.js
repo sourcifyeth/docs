@@ -15,6 +15,7 @@ const config = {
   favicon: "img/favicon.ico",
   organizationName: "sourcifyeth", // Usually your GitHub org/user name.
   projectName: "sourcifyeth.github.io", // Usually your repo name.
+  trailingSlash: true,
 
   presets: [
     [
