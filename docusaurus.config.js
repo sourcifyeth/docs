@@ -120,6 +120,26 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      algolia: {
+        // The application ID provided by Algolia
+        appId: "8XS45JLX6A",
+
+        // Public API key: it is safe to commit it
+        apiKey: "691d0575a88687b7b39de22b6fb13fcb",
+
+        indexName: "docs-sourcify",
+
+        // Relevant for multiple languages or multiple versions. See https://docusaurus.io/docs/search
+        contextualSearch: false,
+
+        // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+        // externalUrlRegex: "external\\.com|domain\\.com",
+
+        // Optional: Algolia search parameters
+        searchParameters: {},
+
+        //... other Algolia params
+      },
     }),
   plugins: [
     // [
