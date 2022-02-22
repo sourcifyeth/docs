@@ -25,3 +25,12 @@ npx lerna run build
 ```
 
 to create the build files with the added chains.
+
+## Reinstalling dependencies
+
+Switching branches, broken package links etc. may cause errors. In such cases you can try removing and installing the dependencies with:
+```
+rm -rf  node_modules/ services/core/node_modules/ services/verification/node_modules/ services/validation/node_modules/
+npx lerna bootstrap
+npx lerna run build
+```
