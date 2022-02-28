@@ -1,6 +1,6 @@
 ---
 id: get-file-repo
-slug: /api/server/get-file-repo
+slug: /api/repository/get-file-repository
 ---
 
 # Get file from repo.sourcify.dev

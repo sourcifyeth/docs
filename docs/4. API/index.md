@@ -11,8 +11,8 @@ Sourcify provides a public server API for verification, and checking if a contra
 
 There are two ways to access files in the repository:
 
-- [Get file from /repository](/docs/api/server/get-file-static): `GET /repository/contracts/:full_match | partial_match/:chain/:address/:filePath`
-- [Get file from repo.sourcify.dev](/docs/api/server/get-file-repository): `GET http://<repository-host>/contracts/:full_match | partial_match/:chain/:address/:filePath`
+- [Get file from /repository](/docs/api/repository/get-file-static): `GET /repository/contracts/:full_match | partial_match/:chain/:address/:filePath`
+- [Get file from repo.sourcify.dev](/docs/api/repository/get-file-repository): `GET http://<repository-host>/contracts/:full_match | partial_match/:chain/:address/:filePath`
 
 ## Server
 
@@ -38,5 +38,5 @@ Deployed server APIs are: `https://sourcify.dev/server` and `https://staging.sou
 
 ## Other
 
-- [Get Sourcify chains](/docs/api/server/chains): `GET /chains`
-- [Server health](/docs/API/server/health) : `GET /health`
+- [Get Sourcify chains](/docs/api/chains): `GET /chains`
+- [Server health](/docs/API/health) : `GET /health`

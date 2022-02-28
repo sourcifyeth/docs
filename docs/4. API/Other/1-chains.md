@@ -1,6 +1,6 @@
 ---
 id: api-chains
-slug: /api/server/chains
+slug: /api/chains
 ---
 
 # Get Sourcify chains

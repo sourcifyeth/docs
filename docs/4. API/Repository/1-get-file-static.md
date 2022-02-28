@@ -1,6 +1,6 @@
 ---
 id: get-file-static
-slug: /api/server/get-file-static
+slug: /api/repository/get-file-static
 ---
 
 # Get file from /repository

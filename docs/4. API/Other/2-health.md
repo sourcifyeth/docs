@@ -1,7 +1,7 @@
 ---
 id: health
 title: Server health
-slug: /api/server/health
+slug: /api/health
 ---
 
 # Show Server Status
