@@ -7,12 +7,19 @@ slug: /env-vars
 
 # Environment Variables
 
-Sourcify looks at `environments/.env` file when running and assigning environment variables. There are two templates `.env-latest` and `.env-stable` for the staging and master branches respectively. You can copy these templates and rename to `.env` initially. Then set the variables below accordingly.
+Sourcify looks at `environments/.env` file when running and assigning environment variables.
+
+Current deployment reads from the two templates:
+
+- `environments/.env.latest` on the staging branch
+- `environments/.env.stable` on the master branch
+
+The variables set as `VARIABLE=xxx` are secrets. During deployment and end-to-end testing, these are replaced with the script `scripts/find_replace.sh` using the decrypted values in `environments/.env.secrets.gpg`. The secrets file (and the ipfs keys) can be decrypted using `scripts/decrypt.sh`, and encrypted using `scripts/encrypt.sh`, both scripts requiring the `SECRET_KEY` environment variable.
+
+You can copy `.env-latest` and rename to `.env` initially. Then set the variables below accordingly.
 
 ```bash
-# environments/.env.dev
-
-# Monitor config # Not being used
+# Monitor config
 MONITOR_EXTERNAL_PORT=3000
 MONITOR_PORT=80
 MONITOR_FETCH_TIMEOUT=300000
@@ -30,6 +37,7 @@ SOLC_REPO_HOST=/tmp/solc # Path where Solidity compiler binaries will be saved. 
 SOLC_REPO=/home/data/solc-bin/linux-amd64 # Path inside the container where Solidity compiler binaries will be saved
 SOLJSON_REPO_HOST=/tmp/repo # Path where Solidity JS (solc-js) compilers are saved e.g. /home/user/solc/js
 SOLJSON_REPO=/home/data/solc-bin/soljson # Path inside the container where Solidity JS (solc-js) compilers are saved.
+SESSION_SECRET=xxx # Secret used to sign the session ID cookie
 
 # Localchain config # Used for testing with Ganache network.
 LOCALCHAIN_PORT=8545
@@ -67,7 +75,7 @@ ENS_SECRET=xxx # Not used
 
 # Database config # Postgres DB config for storing contract creation transactions. See https://github.com/sourcifyeth/go-ethereum#go-ethereum-sourcify
 POSTGRES_USER=sourcify
-POSTGRES_PASSWORD=F2ezIs79UzK8
+POSTGRES_PASSWORD=password
 POSTGRES_DB=sourcify
 HOST=postgres
 POSTGRES_PORT=5432
