@@ -11,7 +11,7 @@ const Table = () => {
   const [sourcifyChains, setSourcifyChains] = useState();
   const [error, setError] = useState();
   useEffect(() => {
-    fetch("http://sourcify.dev/server/chains")
+    fetch("https://sourcify.dev/server/chains")
       .then((res) => res.json())
       .then((chains) => setSourcifyChains(chains))
       .catch((err) => setError(err.message));
