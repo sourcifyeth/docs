@@ -27,7 +27,7 @@ The plugin can be found in this repository [https://github.com/sourcifyeth/remix
 2. Navigate to sourcify plugin, the compiled contract is auto-magically loaded and ready for you to verify.
 
 ### Lookup:
-1. Select the appropriate network
+1. Select the appropriate chain
 2. Provide the correct contract address
 3. Click on Fetch to retrieve the contract
 

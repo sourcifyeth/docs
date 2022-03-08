@@ -18,7 +18,7 @@ npx lerna bootstrap
 
 ## Error "o.filter is not a function" or "invalid chainIds"
 
-This happens when you add a new network or move to a new branch with a new network, but the build files don't contain the newly added chain. You should
+This happens when you add a new chain or move to a new branch with a new chain, but the build files don't contain the newly added chain. You should
 ```
 npx lerna bootsrap
 npx lerna run build

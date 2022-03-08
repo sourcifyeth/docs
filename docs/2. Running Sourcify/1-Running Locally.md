@@ -38,7 +38,7 @@ See [Environment Variables](/docs/env-vars) section for details.
 
 ### RPC keys
 
-Set [Alchemy](https://www.alchemy.com/) API keys for each Ethereum and Polygon network you want to use. You can use the same key for all networks. Replace the RPC links to your liking in [`services/core/src/sourcify-chains.ts`](https://github.com/ethereum/sourcify/blob/master/services/core/src/sourcify-chains.ts) if you won't be using Alchemy. For the chains without an RPC in `sourcify-chains.ts`, the default RPCs from in [`services/core/src/chains.json`](https://github.com/ethereum/sourcify/blob/master/services/core/src/chains.json) will be used.
+Set [Alchemy](https://www.alchemy.com/) API keys for each Ethereum and Polygon chain you want to use. You can use the same key for all chains. Replace the RPC links to your liking in [`services/core/src/sourcify-chains.ts`](https://github.com/ethereum/sourcify/blob/master/services/core/src/sourcify-chains.ts) if you won't be using Alchemy. For the chains without an RPC in `sourcify-chains.ts`, the default RPCs from in [`services/core/src/chains.json`](https://github.com/ethereum/sourcify/blob/master/services/core/src/chains.json) will be used.
 
 ```
 ALCHEMY_ID_ETH_MAINNET=

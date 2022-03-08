@@ -19,13 +19,13 @@ Run all tests with
 npx lerna run test --stream
 ```
 
-## Network tests
+## Chain tests
 
-Additionally, tests for supported networks are defined under `test/networks/network-tests.js`. These test don't run with the above command `npx lerna run test --stream` as only tests directly under `test/` folder are run and not recursively.
+Additionally, tests for supported chains are defined under `test/chains/chain-tests.js`. These test don't run with the above command `npx lerna run test --stream` as only tests directly under `test/` folder are run and not recursively.
 
-These test run verifications for already existing contracts on each network. On test networks, the contract with immuatables under `test/networks/sources/shared` are deployed and used for tests. For other networks test sources are stored under `test/networks/sources/{chainId}`. When found, contracts with immutables are used for testing.
+These test run verifications for already existing contracts on each chain. On test chains, the contract with immuatables under `test/chain/sources/shared` are deployed and used for tests. For other chains test sources are stored under `test/chains/sources/{chainId}`. When found, contracts with immutables are used for testing.
 
-It is possible to run the tests for all networks with `npm run test:networks`. This test will be run weekly with the `test-networks-regularly` CircleCI workflow to keep track of the supported networks. Also, when adding new networks, it is possible to run tests for a single network. See [Chain Support](/docs/chain-support).
+It is possible to run the tests for all chains with `npm run test:chains`. This test will be run weekly with the `test-chains-regularly` CircleCI workflow to keep track of the supported chains. Also, when adding new chains, it is possible to run tests for a single chain. See [Chain Support](/docs/chain-support).
 
 ## Sources
 

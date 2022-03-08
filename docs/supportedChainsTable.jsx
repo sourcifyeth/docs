@@ -27,7 +27,7 @@ const Table = () => {
 
   const rows = sourcifyChains.map((chain, i) => {
     return (
-      <tr key={`network-row-${i}`}>
+      <tr key={`chain-row-${i}`}>
         <td>{chain.title || chain.name}</td>
         <td>
           <R>{chain.chainId}</R>
@@ -41,7 +41,7 @@ const Table = () => {
     <table>
       <thead>
         <tr>
-          <th>Network</th>
+          <th>Chain</th>
           <th>Chain ID</th>
           <th>Verification*</th>
           <th>Monitoring**</th>
