@@ -7,10 +7,14 @@ import Table from "./supportedChainsTable.jsx";
 
 # Supported Chains
 
+You can find the Sourcify chains, i.e. EVM chains that are supported by Sourcify, and the level of support below.
+
+Also on the right column are contract verification test results for each chain. Weekly, tests for verification of a standard simple contract and a contract with [immutable variables](/docs/immutables) is run for each chain. Since the immutable verification involves scraping the contract creation transaction, these tend to fail more, mostly because of a CAPTCHA requirement.
+
 \* Support for verifying contracts through the Sourcify UI or API.
 
 \*\* Automatic contract verification when contracts created in new blocks are published on IPFS ([Monitoring Service](/docs/monitoring)).
 
-<div className="centered-flex">
+<div>
   <Table />
 </div>
