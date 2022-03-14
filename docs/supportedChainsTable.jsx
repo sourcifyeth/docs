@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { renderToString } from "react-dom/server";
 import ReactTooltip from "react-tooltip";
+import LoadingOverlay from "../src/components/LoadingOverlay";
 
 const Yes = () => <div className="centered-flex">✅</div>;
 const No = () => <div className="centered-flex">❌</div>;
@@ -74,7 +75,7 @@ const Table = () => {
           "Error fetching chains from the Sourcify server\n\n" + err.message
         )
       );
-    fetch("http://localhost:5000/chain-tests")
+    fetch("https://sourcify.dev/server/chain-tests")
       .then((data) => data.json())
       .then((json) => {
         const testMap = formatRawTestReport(json.testReport);
@@ -102,8 +103,19 @@ const Table = () => {
     return error;
   }
 
-  if (!sourcifyChains || !testMap || !testReportObject) {
-    return "Loading";
+  if (!sourcifyChains) {
+    return (
+      <div style={{ margin: "8rem" }}>
+        <LoadingOverlay message="Loading Sourcify chains" />
+      </div>
+    );
+  }
+  if (!testMap || !testReportObject) {
+    return (
+      <div style={{ margin: "8rem" }}>
+        <LoadingOverlay message="Loading chain verification tests" />
+      </div>
+    );
   }
 
   const testRunCircleURL = `https://app.circleci.com/pipelines/github/ethereum/sourcify/${testReportObject.pipelineNumber}/workflows/${testReportObject.workflowId}/jobs/${testReportObject.jobNumber}`;
