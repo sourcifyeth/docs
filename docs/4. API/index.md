@@ -18,7 +18,8 @@ There are two ways to access files in the repository:
 
 Deployed server APIs are: `https://sourcify.dev/server` and `https://staging.sourcify.dev/server`.
 
-- [Check by addresses](/docs/api/server/check-by-addresses) : `GET /check-by-addresses?addresses={address}&chainIds={chainIds}`
+- [Check by addresses (full match)](/docs/api/server/check-by-addresses) : `GET /check-by-addresses?addresses={addresses}&chainIds={chainIds}`
+- [Check by addresses (full or partial match)](/docs/api/server/check-all-by-addresses) : `GET /check-by-all-addresses?addresses={addresses}&chainIds={chainIds}`
 - [Get file tree (full match)](/docs/api/server/get-file-tree-full) : `GET /files/tree/:chain/:address`
 - [Get file tree (full or partial match)](/docs/api/server/get-file-tree-all) : `GET /files/tree/any/:chain/:address`
 - [Get source files (full match)](/docs/api/server/get-source-files-full) : `GET /files/:chain/:address`
