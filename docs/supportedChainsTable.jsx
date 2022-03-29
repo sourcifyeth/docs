@@ -75,7 +75,8 @@ const Table = () => {
           "Error fetching chains from the Sourcify server\n\n" + err.message
         )
       );
-    fetch("https://sourcify.dev/server/chain-tests")
+    fetch("http://localhost:5000/chain-tests")
+      // fetch("https://sourcify.dev/server/chain-tests")
       .then((data) => data.json())
       .then((json) => {
         const testMap = formatRawTestReport(json.testReport);
@@ -119,7 +120,7 @@ const Table = () => {
   }
 
   const testRunCircleURL = `https://app.circleci.com/pipelines/github/ethereum/sourcify/${testReportObject.pipelineNumber}/workflows/${testReportObject.workflowId}/jobs/${testReportObject.jobNumber}`;
-  const testReportHtmlURL = `https://${testReportObject.jobNumber}-${testReportObject.CIRCLE_PROJECT_ID}-gh.circle-artifacts.com/0/chain-tests-report/report.html`;
+  const testReportHtmlURL = `https://dl.circleci.com/private/output/job/${testReportObject.jobId}/artifacts/0/chain-tests-report/report.html`;
 
   const rows = sourcifyChains.map((chain, i) => {
     return (
