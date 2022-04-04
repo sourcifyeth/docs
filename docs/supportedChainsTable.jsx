@@ -75,8 +75,8 @@ const Table = () => {
           "Error fetching chains from the Sourcify server\n\n" + err.message
         )
       );
-    fetch("http://localhost:5000/chain-tests")
-      // fetch("https://sourcify.dev/server/chain-tests")
+    // fetch("http://localhost:5000/chain-tests")
+    fetch("https://sourcify.dev/server/chain-tests")
       .then((data) => data.json())
       .then((json) => {
         const testMap = formatRawTestReport(json.testReport);
