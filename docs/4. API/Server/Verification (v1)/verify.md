@@ -18,6 +18,7 @@ Regardless of the Content-Type, the body should provide:
 
 - `address`
 - `chain`
+- `chosenContract` (optional) index of the contract, if the provided files contain multiple metadata files (i.e. multiple contracts). For instance [hardhat outputs](/docs/how-to-verify/#with-hardhat-output) contain the metadata file of all contracts used.
 
 If using `multipart/form-data`, the files should be in a field named `files`.
 If using `application/json`, the files should be in an object under the key `files` so the whole object is of the form:
@@ -27,9 +28,12 @@ If using `application/json`, the files should be in an object under the key `fil
     "address": ...,
     "chain": ...,
     "files": {
+        "metadata-1.json": ...,
+        "metadata-2.json": ...,
         "file-name1.sol": ...,
         "file-name2.sol": ...
-    }
+    },
+    "chosenContract": 1
 }
 ```
 
