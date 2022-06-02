@@ -4,11 +4,15 @@ title: Add input files
 slug: /api/server/v2/add-input-files
 ---
 
+import V2Note from './_v2Note.mdx'
+
 # Add new input files
 
 - Adds new input files and immediately scans through them, searching for new contracts.
 - Every contract is represented by its metadata file, a special file generated during the original compilation.
 - If possible, runs the process of verification, as described in [Verify](/docs/api/server/v2/verify-validated).
+
+<V2Note />
 
 **URL** : `/input-files`
 

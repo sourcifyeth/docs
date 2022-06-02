@@ -4,6 +4,8 @@ title: Verify validated contract
 slug: /api/server/v2/verify-validated
 ---
 
+import V2Note from './_v2Note.mdx'
+
 # Attempt contract verification
 
 - The received `address`, `chainId` and `compilerVersion` parameters are updated serverside for each provided contract.
@@ -12,6 +14,8 @@ slug: /api/server/v2/verify-validated
   - have all their parameters specified (`address`, `chainId`, `compilerVersion`)
   - are included in the received object
 - The result of verification is available under the `status` property of every contract .
+
+<V2Note/>
 
 **URL** : `/verify-validated`
 
