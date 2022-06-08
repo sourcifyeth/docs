@@ -32,33 +32,17 @@ curl "https://sourcify.dev/server/check-by-addresses?addresses=0xEb30853fc616Bbb
 [
   {
     "address": "0xEb30853fc616Bbb8f1444451A3c202cbcd08Fb47",
+    "status": "perfect",
     "chainIds": [
-      {
-        "chainId": "43114",
-        "status": "perfect"
-      },
-      {
-        "chainId": "137",
-        "status": "perfect"
-      }
+      "43114",
+      "137"
     ]
   },
   {
     "address": "0x00878Ac0D6B8d981ae72BA7cDC967eA0Fae69df4",
+    "status": "perfect",
     "chainIds": [
-      {
-        "chainId": "5",
-        "status": "perfect"
-      }
-    ]
-  },
-  {
-    "address": "0x0a06cc1Ce1105d90ce01752813449A029906aD7b",
-    "chainIds": [
-      {
-        "chainId": "3",
-        "status": "perfect"
-      }
+      "5"
     ]
   }
 ]
