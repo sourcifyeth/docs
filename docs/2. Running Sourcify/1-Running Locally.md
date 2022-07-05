@@ -34,6 +34,10 @@ REPOSITORY_PATH= # Path on host where verified contracts will be saved e.g. /hom
 IPFS_URL= # URL to an IPFS gateway e.g. https://ipfs.io/ipfs/ or if you run a local IPFS node http://localhost:8080/ipfs/ or http://ipfs-container-name:8080/ipfs/ etc.
 ```
 
+:::caution
+On Apple devices, the port `5000` can be occupied by the AirPlay (`ControlCenter`) [since Monterrey](https://apple.stackexchange.com/questions/431154/controlcenter-app-listens-to-port-5000-tcp-on-monterey-os-is-that-normal-why-d). You can change the port in the `.env` file as well as in the `.env.development` file in the `ui/`.
+:::
+
 See [Environment Variables](/docs/env-vars) section for details.
 
 ### RPC keys
