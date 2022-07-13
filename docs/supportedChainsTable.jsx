@@ -65,6 +65,7 @@ const Table = () => {
   const [error, setError] = useState();
   const [testReportObject, setTestReportObject] = useState();
   const [testMap, setTestMap] = useState();
+  const [testDate, setTestDate] = useState();
 
   useEffect(() => {
     fetch("https://sourcify.dev/server/chains")
@@ -79,6 +80,7 @@ const Table = () => {
     fetch("https://sourcify.dev/server/chain-tests")
       .then((data) => data.json())
       .then((json) => {
+        setTestDate(json.testReport.stats.end);
         const testMap = formatRawTestReport(json.testReport);
         setTestMap(testMap);
         setTestReportObject(json);
@@ -165,7 +167,7 @@ const Table = () => {
         <a target="_blank" rel="noreferrer" href={testRunCircleURL}>
           detailed CI output
         </a>{" "}
-        of the chain tests.
+        of the chain tests. Tested on: {testDate}
       </p>
       <ReactTooltip effect="solid" />
       <table>
