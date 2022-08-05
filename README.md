@@ -48,9 +48,8 @@ Simply run
 docker-compose up -d
 ```
 
-If you made changes, pull the changes and rebuild the container to update:
+# Publish changes
 
 ```
-git checkout main && git pull
-docker-compose up --build -d
+npm run publish
 ```
