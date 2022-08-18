@@ -10,7 +10,7 @@ const R = ({ children }) => (
   <div style={{ textAlign: "right", fontFamily: "monospace" }}>{children}</div>
 );
 
-const TestResult = ({ result, detailedUrl, type }) => {
+const TestResult = ({ result, detailedUrl, type, error }) => {
   const ToolTip = (
     <span>
       {`${type} contract verification for the chain failed`}
@@ -21,6 +21,13 @@ const TestResult = ({ result, detailedUrl, type }) => {
       </a>
     </span>
   );
+  if (error) {
+    return (
+      <div className="centered-flex" data-tip="Error gettings test results">
+        ⚠️
+      </div>
+    );
+  }
   if (result === true)
     return (
       <div
@@ -76,16 +83,22 @@ const Table = () => {
           "Error fetching chains from the Sourcify server\n\n" + err.message
         )
       );
-    // fetch("http://localhost:5000/chain-tests")
     fetch("https://sourcify.dev/server/chain-tests")
-      .then((data) => data.json())
+      .then((response) => {
+        console.log(response);
+        if (!response.ok) {
+          throw new Error("Error fetching chain tests \n\n");
+        }
+        return response.json();
+      })
       .then((json) => {
+        console.log("Setting testmap");
         setTestDate(json.testReport.stats.end);
         const testMap = formatRawTestReport(json.testReport);
         setTestMap(testMap);
         setTestReportObject(json);
       })
-      .catch((err) => setError("Error fetching chain tests\n\n" + err.message));
+      .catch((err) => setError(err.message));
   }, []);
 
   // Takes the raw mochawesome test report .json and formats with the result of the standard and immutable contract verification for each chain.
@@ -102,10 +115,6 @@ const Table = () => {
     return testMap;
   };
 
-  if (error) {
-    return error;
-  }
-
   if (!sourcifyChains) {
     return (
       <div style={{ margin: "8rem" }}>
@@ -113,7 +122,7 @@ const Table = () => {
       </div>
     );
   }
-  if (!testMap || !testReportObject) {
+  if ((!testMap || !testReportObject) && !error) {
     return (
       <div style={{ margin: "8rem" }}>
         <LoadingOverlay message="Loading chain verification tests" />
@@ -121,8 +130,12 @@ const Table = () => {
     );
   }
 
-  const testRunCircleURL = `https://app.circleci.com/pipelines/github/ethereum/sourcify/${testReportObject.pipelineNumber}/workflows/${testReportObject.workflowId}/jobs/${testReportObject.jobNumber}`;
-  const testReportHtmlURL = `https://dl.circleci.com/private/output/job/${testReportObject.jobId}/artifacts/0/chain-tests-report/report.html`;
+  const testRunCircleURL =
+    testReportObject &&
+    `https://app.circleci.com/pipelines/github/ethereum/sourcify/${testReportObject.pipelineNumber}/workflows/${testReportObject.workflowId}/jobs/${testReportObject.jobNumber}`;
+  const testReportHtmlURL =
+    testReportObject &&
+    `https://dl.circleci.com/private/output/job/${testReportObject.jobId}/artifacts/0/chain-tests-report/report.html`;
 
   const rows = sourcifyChains.map((chain, i) => {
     return (
@@ -138,7 +151,12 @@ const Table = () => {
             <TestResult
               detailedUrl={testRunCircleURL}
               type="Standard"
-              result={testMap[chain.chainId] && testMap[chain.chainId].normal}
+              result={
+                testMap &&
+                testMap[chain.chainId] &&
+                testMap[chain.chainId].normal
+              }
+              error={!!error}
             />
           }
         </td>
@@ -148,8 +166,11 @@ const Table = () => {
               detailedUrl={testRunCircleURL}
               type="Immutable"
               result={
-                testMap[chain.chainId] && testMap[chain.chainId].immutable
+                testMap &&
+                testMap[chain.chainId] &&
+                testMap[chain.chainId].immutable
               }
+              error={!!error}
             />
           }
         </td>
@@ -158,18 +179,25 @@ const Table = () => {
   });
   return (
     <>
-      <p>
-        You can check out the complete{" "}
-        <a target="_blank" rel="noreferrer" href={testReportHtmlURL}>
-          HTML report
-        </a>{" "}
-        and the{" "}
-        <a target="_blank" rel="noreferrer" href={testRunCircleURL}>
-          detailed CI output
-        </a>{" "}
-        of the chain tests. Tested on: {testDate}
-      </p>
+      {testReportObject && (
+        <p>
+          You can check out the complete{" "}
+          <a target="_blank" rel="noreferrer" href={testReportHtmlURL}>
+            HTML report
+          </a>{" "}
+          and the{" "}
+          <a target="_blank" rel="noreferrer" href={testRunCircleURL}>
+            detailed CI output
+          </a>{" "}
+          of the chain tests. Tested on: {testDate}
+        </p>
+      )}
       <ReactTooltip effect="solid" />
+      <div>
+        {error && (
+          <div style={{ textAlign: "center", color: "indianRed" }}>{error}</div>
+        )}
+      </div>
       <table>
         <thead>
           <tr>
