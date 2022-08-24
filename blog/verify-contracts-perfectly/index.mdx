@@ -63,7 +63,7 @@ This way of verifying contracts is what we call a **perfect verification**, (in 
 
 ## Contract Metadata
 
-The Solidity compiler by default [appends some information](https://docs.soliditylang.org/en/latest/metadata.html#encoding-of-the-metadata-hash-in-the-bytecode) to the contract's bytecode in CBOR encoding. This special field, sometimes referred as `auxdata`, usually contains the "Solidity version", and the "metadata hash". The encoded data and it's decoding looks like this:
+The Solidity compiler by default [appends some information](https://docs.soliditylang.org/en/latest/metadata.html#encoding-of-the-metadata-hash-in-the-bytecode) to the contract's bytecode in CBOR encoding. This special field, I like referring to as `auxdata`, usually contains the "Solidity version", the "metadata hash", and occasionally the "experimental" flag. The encoded data and it's decoding looks like this:
 
 ![Decoding of the auxdata appended to the bytecode](./playground.png)
 
@@ -76,7 +76,7 @@ To see how this cryptographically ensures the exactness of the source files we n
 
 The latter is the relevant field for our purposes. Specifically, the fact that **the metadata file contains source file hashes**. To illustrate this, let's walk through what happens when you compile a contract and what happens when you change a source file.
 
-When you compile a contract, the copmiler computes the hashes of the source files and embeds this information in the metadata file. On the right side, you see the relevant fields of the metadata file:
+When you compile a contract, the compiler computes the hashes of the source files and embeds this information in the metadata file. On the right side, you see the relevant fields of the metadata file:
 
 ![Embedding of the hash of the source files inside the metadata file](./metadata-1.png)
 
@@ -119,13 +119,13 @@ If you are familiar with IPFS and paid attention, you might ask: Can't we alread
 And yes, if published on IPFS, you can actually fetch the source code from the bytecode of a contract, because all the information is already there:
 
 - The metadata IPFS hash is appended to the bytecode so (if published) you can fetch the metadata file.
-- The metadata file contains the IPFS hashes of source files so you can fetch the complete source code from IPFS.
+- The metadata file contains (alongside the normal keccak256) the IPFS hashes of the source files so you can fetch the complete source code from IPFS.
 
 So there's only one thing that you need to do as a contract developer: **Publish your source files and metadata on IPFS**.
 
-Why do you need verification then?
+Why do you need verification then? Isn't the source file already out there?
 
-Although unlikely since the compiler does it automatically, someone can change the `auxdata` of the contract before deploying it and show you the malicious code. We make sure it really is the same code by doing a whole recompilation of the provided files and comparing the resulting bytecodes. Plus, we share all verified contracts in our repository on IPFS to make sure it's available.
+Although unlikely since the compiler does it automatically, someone can change the `auxdata` of the contract before deploying it and show you a different random source code. We make sure it really is the same code by doing a whole recompilation of the provided files and comparing the resulting bytecodes. Plus, we share all verified contracts in our [repository on IPFS](https://ipfs.io/ipns/repo.sourcify.dev) to make sure it's available.
 
 ## Conclusion
 
