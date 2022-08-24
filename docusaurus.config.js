@@ -43,7 +43,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      metadata: [
+      metadatas: [
         {
           property: "og:title",
           content: "Sourcify Docs",
