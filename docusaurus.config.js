@@ -43,6 +43,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      image: "img/sourcify_blue_rounded.png",
       metadatas: [
         {
           property: "og:title",
@@ -57,16 +58,12 @@ const config = {
           content: "Sourcify Documentation and Blog Page",
         },
         {
-          property: "og:image",
-          content: "https://docs.sourcify.dev/img/sourcify-eth-card.png",
-        },
-        {
           name: "twitter:site",
           content: "@sourcifyeth",
         },
         {
           name: "twitter:card",
-          content: "summary_large_image",
+          content: "summary",
         },
       ],
       navbar: {
