@@ -43,7 +43,8 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: "img/sourcify_blue_rounded.png",
+      image:
+        "https://raw.githubusercontent.com/sourcifyeth/assets/master/logo-assets-png/sourcify_blue_rounded.png",
       metadatas: [
         {
           property: "og:title",
