@@ -45,7 +45,7 @@ const config = {
     ({
       image:
         "https://raw.githubusercontent.com/sourcifyeth/assets/master/logo-assets-png/sourcify_blue_rounded.png",
-      metadata: [
+      metadatas: [
         {
           property: "og:title",
           content: "Sourcify Docs",
