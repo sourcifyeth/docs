@@ -33,8 +33,7 @@ Returns all verified contracts from the repository for the desired chain. Search
 }
 ```
 
-### OR
-
+---
 **Condition** : Chain is not available as both full match or partial match in the repository.
 
 **Code** : `404 Not Found`

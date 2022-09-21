@@ -56,8 +56,7 @@ If using `application/json`, the files should be in an object under the key `fil
 }
 ```
 
-### OR
-
+---
 **Condition** : The recompiled contract matches the deployed version `partial`ly.
 
 **Code** : `200 OK`
@@ -75,8 +74,7 @@ If using `application/json`, the files should be in an object under the key `fil
 }
 ```
 
-### OR
-
+---
 **Condition** : The contract at the provided address and chain has already been sourcified at timestamp indicated by `storageTimestamp`.
 
 **Code** : `200 OK`
@@ -95,8 +93,7 @@ If using `application/json`, the files should be in an object under the key `fil
 }
 ```
 
-### OR
-
+---
 **Condition** : Missing or invalid parameters received.
 
 **Code** : `400 Bad Request`
@@ -119,8 +116,7 @@ If using `application/json`, the files should be in an object under the key `fil
 }
 ```
 
-### OR
-
+---
 **Condition** : Provided valid address and chain input, but no files. This is interpreted as simply checking whether the contract at the provided address and chain has already been sourcified.
 
 **Code** : `404 Not Found`
@@ -133,8 +129,7 @@ If using `application/json`, the files should be in an object under the key `fil
 }
 ```
 
-### OR
-
+---
 **Condition** : Recompiled bytecode does not match the deployed bytecode.
 
 **Code** : `500 Internal Server Error`
@@ -147,8 +142,7 @@ If using `application/json`, the files should be in an object under the key `fil
 }
 ```
 
-### OR
-
+---
 **Condition** : The provided chain does not have a contract deployed at the provided address.
 
 **Code** : `500 Internal Server Error`
@@ -161,8 +155,7 @@ If using `application/json`, the files should be in an object under the key `fil
 }
 ```
 
-### OR
-
+---
 **Condition** : The provided chain is temporarily unavailable.
 
 **Code** : `500 Internal Server Error`
@@ -175,8 +168,7 @@ If using `application/json`, the files should be in an object under the key `fil
 }
 ```
 
-### OR
-
+---
 **Condition** : Some resources are missing and could not be fetched.
 
 **Code** : `500 Internal Server Error`
@@ -189,8 +181,7 @@ If using `application/json`, the files should be in an object under the key `fil
 }
 ```
 
-### OR
-
+---
 **Condition** : Verifying contracts with immutable variables is not supported for the provided chain.
 
 **Code** : `500 Internal Server Error`

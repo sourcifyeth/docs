@@ -19,8 +19,7 @@ Retrieve staticly served files over the server.
 
 **Content** : File content
 
-### OR
-
+---
 **Condition** : The file is not found at the path
 
 **Code** : `404 Not Found`

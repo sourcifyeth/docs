@@ -40,8 +40,7 @@ The body should provide:
 }
 ```
 
-### OR
-
+---
 **Condition** : The recompiled contract matches the deployed version `partial`ly.
 
 **Code** : `200 OK`
@@ -59,8 +58,7 @@ The body should provide:
 }
 ```
 
-### OR
-
+---
 **Condition** : The contract at the provided address and chain has already been sourcified at timestamp indicated by `storageTimestamp`.
 
 **Code** : `200 OK`
@@ -79,8 +77,7 @@ The body should provide:
 }
 ```
 
-### OR
-
+---
 **Condition** : Missing or invalid parameters received.
 
 **Code** : `400 Bad Request`
@@ -103,8 +100,7 @@ The body should provide:
 }
 ```
 
-### OR
-
+---
 **Condition** : Recompiled bytecode does not match the deployed bytecode.
 
 **Code** : `500 Internal Server Error`
@@ -117,8 +113,7 @@ The body should provide:
 }
 ```
 
-### OR
-
+---
 **Condition** : The provided chain does not have a contract deployed at the provided address.
 
 **Code** : `500 Internal Server Error`
@@ -131,8 +126,7 @@ The body should provide:
 }
 ```
 
-### OR
-
+---
 **Condition** : The provided chain is temporarily unavailable.
 
 **Code** : `500 Internal Server Error`
@@ -145,8 +139,7 @@ The body should provide:
 }
 ```
 
-### OR
-
+---
 **Condition** : Some resources are missing and could not be fetched.
 
 **Code** : `500 Internal Server Error`
@@ -159,8 +152,7 @@ The body should provide:
 }
 ```
 
-### OR
-
+---
 **Condition** : Verifying contracts with immutable variables is not supported for the provided chain.
 
 **Code** : `500 Internal Server Error`
@@ -173,8 +165,7 @@ The body should provide:
 }
 ```
 
-### OR
-
+---
 **Condition** : Etherscan API Limit reached
 
 **Code** : `400 Bad Request`
@@ -187,8 +178,7 @@ The body should provide:
 }
 ```
 
-### OR
-
+---
 **Condition** : Contract not verified on Etherscan
 
 **Code** : `400 Bad Request`

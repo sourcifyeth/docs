@@ -35,8 +35,7 @@ Returns repository URLs for every file in the source tree for the desired chain 
 }
 ```
 
-### OR
-
+---
 **Condition** : Contract is available as a partial match in the repository.
 
 **Code** : `200 OK`
@@ -62,8 +61,7 @@ Returns repository URLs for every file in the source tree for the desired chain 
 }
 ```
 
-### OR
-
+---
 **Condition** : Contract is not available in the repository.
 
 **Code** : `404 Not Found`

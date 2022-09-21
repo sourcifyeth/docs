@@ -38,8 +38,7 @@ Returns all verified sources from the repository for the desired contract addres
 }
 ```
 
-### OR
-
+---
 **Condition** : Contract is available as a partial match in the repository.
 
 **Code** : `200 OK`
@@ -64,8 +63,7 @@ Returns all verified sources from the repository for the desired contract addres
 }
 ```
 
-### OR
-
+---
 **Condition** : Contract is not available in the repository.
 
 **Code** : `404 Not Found`

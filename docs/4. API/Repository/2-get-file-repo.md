@@ -19,8 +19,7 @@ Gets the file from the repository server (http://repo.sourcify.dev and http://re
 
 **Content** : File content
 
-### OR
-
+---
 **Condition** : Chain is not available as both full match or partial match in the repository.
 
 **Code** : `404 Not Found`
