@@ -24,7 +24,7 @@ git clone https://github.com/ethereum/sourcify.git && cd sourcify
 
 ## Set environment variables
 
-Most of the settings are set with environment variables under the `environments/.env` file. You can copy the `environments/.env.dev` file and rename it to `.env` initially. You should at least configure the variables below to run the server and UI.
+Most of the settings are set with environment variables under the `environments/.env` file. You can copy the `environments/.env.dev` file and rename it to `environments/.env` initially. You should at least configure the variables below to run the server and UI.
 
 ```bash
 SERVER_URL=https://localhost:5000 # localhost:$SERVER_EXTERNAL_PORT
