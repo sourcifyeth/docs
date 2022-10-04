@@ -1,7 +1,7 @@
 ---
-id: v2-add-input-files
+id: session-add-input-files
 title: Add input files
-slug: /api/server/v2/add-input-files
+slug: /api/server/session/add-input-files
 ---
 
 import V2Note from './_v2Note.mdx'
@@ -10,11 +10,11 @@ import V2Note from './_v2Note.mdx'
 
 - Adds new input files and immediately scans through them, searching for new contracts.
 - Every contract is represented by its metadata file, a special file generated during the original compilation.
-- If possible, runs the process of verification, as described in [Verify](/docs/api/server/v2/verify-validated).
+- If possible, runs the process of verification, as described in [Verify](/docs/api/server/session/verify-validated).
 
 <V2Note />
 
-**URL** : `/input-files`
+**URL** : `/session/input-files`
 
 **Method** : `POST`
 
@@ -155,6 +155,6 @@ If using `application/json`, the files should be in an object under the key `fil
 
 ```json
 {
-  "error": "Too much session memory used. Delete some files or restart the session."
+  "error": "Too much session memory used. Delete some files or clear the session."
 }
 ```

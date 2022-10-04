@@ -26,22 +26,22 @@ Deployed server APIs are: `https://sourcify.dev/server` and `https://staging.sou
 - [Get source files (full or partial match)](/docs/api/server/get-source-files-all) : `GET /files/any/:chain/:address`
 - [Get contract addresses (full or partial match)](/docs/api/server/get-contract-addresses-all) : `GET /files/contracts/:chain`
 
-### Verification API (v1)
+### Verification API
 
-- [Verify](/docs/api/server/v1/verify) : `POST /` or `POST /verify`
-- [Verify from Etherscan](/docs/api/server/v1/verify-from-etherscan) : `POST /verify-from-etherscan-legacy`
+- [Verify](/docs/api/server/verify) : `POST /` or `POST /verify`
+- [Verify from Etherscan](/docs/api/server/verify-from-etherscan) : `POST /verify-from-etherscan`
 
-### Verification API (v2 - session based)
+### Session-based Verification API
 
-import V2Note from './Server/Verification (v2)/_v2Note.mdx'
+import V2Note from './Server/Session-based verification/_v2Note.mdx'
 
 <V2Note/>
 
-- [Add input files](/docs/api/server/v2/add-input-files) : `POST /input-files`
-- [Get session data](/docs/api/server/v2/get-session-data) : `GET /session-data`
-- [Restart session](/docs/api/server/v2/restart-session) : `POST /restart-session`
-- [Verify validated](/docs/api/server/v2/verify-validated) : `POST /verify-validated`
-- [Verify from Etherscan](/docs/api/server/v2/verify-from-etherscan) : `POST /verify-from-etherscan`
+- [Add input files](/docs/api/server/session/add-input-files) : `POST /session/input-files`
+- [Get session data](/docs/api/server/session/get-session-data) : `GET /session/data`
+- [Clear session](/docs/api/server/session/session/clear) : `POST /session/clear`
+- [Verify validated](/docs/api/server/session/verify-validated) : `POST /session/verify-validated`
+- [Verify from Etherscan](/docs/api/server/session/verify-from-etherscan) : `POST /session/verify-from-etherscan`
 
 ## Other
 

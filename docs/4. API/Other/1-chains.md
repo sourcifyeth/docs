@@ -23,7 +23,7 @@ Returns the chains (networks) added to the Sourcify. Contains both supported, un
     "name":"Ethereum Mainnet",
     "chain":"ETH",
     "network":"mainnet",
-    "icon":"ethereum","rpc":["http://10.10.42.102:8541","https://eth-mainnet.alchemyapi.io/v2/uVKT9HTDecBZGdlgmxin4Urp6sNr-pN8"],
+    "icon":"ethereum","rpc":["http://10.10.42.102:8541","https://eth-mainnet.alchemyapi.io/session/uVKT9HTDecBZGdlgmxin4Urp6sNr-pN8"],
     "faucets":[],
     "nativeCurrency":{"name":"Ether","symbol":"ETH","decimals":18},
     "infoURL":"https://ethereum.org",

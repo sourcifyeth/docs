@@ -1,7 +1,7 @@
 ---
-id: v1-verify
+id: verify
 title: Verify contract
-slug: /api/server/v1/verify
+slug: /api/server/verify
 ---
 
 # Attempt contract verification

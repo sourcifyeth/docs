@@ -1,7 +1,7 @@
 ---
-id: v1-verify-from-etherscan
+id: verify-from-etherscan
 title: Verify from Etherscan
-slug: /api/server/v1/verify-from-etherscan
+slug: /api/server/verify-from-etherscan
 ---
 
 
@@ -9,7 +9,7 @@ slug: /api/server/v1/verify-from-etherscan
 
 Send `address` and `chain` of a verified Etherscan contract
 
-**URL** : `/verify-from-etherscan-legacy`
+**URL** : `/verify-from-etherscan`
 
 **Method** : `POST`
 
@@ -18,7 +18,7 @@ The body should provide:
  * `chain`
 
 :::caution
-`/verify-from-etherscan-legacy` triggers a server side request to Etherscan API, this could cause reaching the Etherscan API Limit Rate.
+`/verify-from-etherscan` triggers a server side request to Etherscan API, this could cause reaching the Etherscan API Limit Rate.
 :::
 
 ## Responses

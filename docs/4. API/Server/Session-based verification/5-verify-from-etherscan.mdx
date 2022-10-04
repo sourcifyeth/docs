@@ -1,7 +1,7 @@
 ---
-id: v2-verify-from-etherscan
+id: session-verify-from-etherscan
 title: Verify from Etherscan
-slug: /api/server/v2/verify-from-etherscan
+slug: /api/server/session/verify-from-etherscan
 ---
 
 import V2Note from './_v2Note.mdx'
@@ -13,7 +13,7 @@ import V2Note from './_v2Note.mdx'
 
 <V2Note/>
 
-**URL** : `/verify-from-etherscan`
+**URL** : `/session/verify-from-etherscan`
 
 **Method** : `POST`
 
@@ -22,7 +22,7 @@ The body should provide:
  * `chain`
 
 :::caution
-`/verify-from-etherscan` triggers a server side request to Etherscan API, this could cause reaching the Etherscan API Limit Rate.
+`/session/verify-from-etherscan` triggers a server side request to Etherscan API, this could cause reaching the Etherscan API Limit Rate.
 :::
 
 ## Responses
