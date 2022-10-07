@@ -11,6 +11,26 @@ Different modules of Sourcify are built and run in Docker containers. The contai
 
 You can run the services with the `docker-compose up` command. For example the following command runs the server, ui, and repo in the background (`-d`).
 
+Make sure to set the Docker variables in the `.env` file properly:
+
+```
+# Docker config
+## Where to mount the downloaded compilers directory on the host machine
+SOLC_REPO_HOST=/home/gather/staging/data/solc-bin/linux-amd64
+SOLJSON_REPO_HOST=/home/gather/staging/data/solc-bin/bin
+## Ports to access containers from the host
+SERVER_EXTERNAL_PORT=5555
+UI_EXTERNAL_PORT=1234
+REPOSITORY_SERVER_EXTERNAL_PORT=10000
+MONITOR_EXTERNAL_PORT=3000
+IPFS_GW_EXTERNAL_PORT=5050
+IPFS_LIBP2P_EXTERNAL_PORT=4002
+IPFS_API_EXTERNAL_PORT=5002
+SERVER_URL=https://staging.sourcify.dev/server
+```
+
+Run containers with:
+
 ```
 docker-compose -f repository.yaml -f server.yaml -f ui.yaml up -d
 ```
