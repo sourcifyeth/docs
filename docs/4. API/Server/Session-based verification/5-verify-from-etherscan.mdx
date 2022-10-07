@@ -1,28 +1,29 @@
 ---
 id: session-verify-from-etherscan
 title: Verify from Etherscan
-slug: /api/server/session/verify-from-etherscan
+slug: /api/server/session/verify/etherscan
 ---
 
-import V2Note from './_v2Note.mdx'
+import V2Note from "./_v2Note.mdx";
 
 # Verify from Etherscan
 
 - The received `address` and `chainId` are used server side to call Etherscan API fetching the sources
 - If possible, runs the process of verification, as described in Verify.
 
-<V2Note/>
+<V2Note />
 
-**URL** : `/session/verify-from-etherscan`
+**URL** : `/session/verify/etherscan`
 
 **Method** : `POST`
 
 The body should provide:
- * `address` (the address of a verified contract on Etherscan)
- * `chain`
+
+- `address` (the address of a verified contract on Etherscan)
+- `chain`
 
 :::caution
-`/session/verify-from-etherscan` triggers a server side request to Etherscan API, this could cause reaching the Etherscan API Limit Rate.
+`/session/verify/etherscan` triggers a server side request to Etherscan API, this could cause reaching the Etherscan API Limit Rate.
 :::
 
 ## Responses
@@ -73,6 +74,7 @@ The body should provide:
 ```
 
 ---
+
 **Condition** : The contract at the provided `chainId` and `address` has already been verified at `2021-01-12T15:41:56.502Z`.
 
 **Code** : `200 OK`
@@ -102,6 +104,7 @@ The body should provide:
 ```
 
 ---
+
 **Condition** : Etherscan API Limit reached
 
 **Code** : `400 Bad Request`
@@ -115,6 +118,7 @@ The body should provide:
 ```
 
 ---
+
 **Condition** : Contract not verified on Etherscan
 
 **Code** : `400 Bad Request`
