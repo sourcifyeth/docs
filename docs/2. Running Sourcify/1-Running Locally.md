@@ -50,8 +50,8 @@ Set the variables below for the file paths. You can also change the other option
 
 ```bash
 REPOSITORY_PATH= # Path on host where verified contracts will be saved e.g. /home/user/sourcify/repository
-SOLC_REPO_HOST= # Path where Solidity compiler binaries will be saved. e.g. /home/user/solc/linux-amd64
-SOLJSON_REPO_HOST= # Path where Solidity JS (solc-js) compilers are saved e.g. /home/user/solc/js
+SOLC_REPO= # Path where Solidity compiler binaries will be saved. e.g. /home/user/solc/linux-amd64
+SOLJSON_REPO= # Path where Solidity JS (solc-js) compilers are saved e.g. /home/user/solc/js
 ```
 
 You also need to provide either Alchemy API keys or your own JSON-RPC node URL for Ethereum networks. If both provided, it will first query the custom JSON-RPC and fall back to Alchemy.
