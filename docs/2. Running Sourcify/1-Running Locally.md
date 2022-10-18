@@ -65,6 +65,17 @@ INFURA_ID=xxx
 ALCHEMY_ID=xxx
 ```
 
+For Ethereum chains JSON-RPC URLs:
+
+```bash
+# Custom nodes
+NODE_ADDRESS=http://localhost
+NODE_PORT_MAINNET=8545
+NODE_PORT_RINKEBY=
+NODE_PORT_GOERLI=
+NODE_PORT_SEPOLIA=
+```
+
 ### Run
 
 Start the server
@@ -126,4 +137,12 @@ However you need to pull the `/h5ai-nginx` submodule as the folder will be initi
 
 ```
 git submodule update --init --recursive
+```
+
+## Running the Monitor
+
+To run the monitor:
+
+```
+npm run monitor:start
 ```

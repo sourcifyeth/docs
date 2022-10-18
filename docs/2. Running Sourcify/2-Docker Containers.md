@@ -13,7 +13,7 @@ You can run the services with the `docker-compose up` command. For example the f
 
 Make sure to set the Docker variables in the `.env` file properly:
 
-```
+```bash
 # Docker config
 ## Where to mount the downloaded compilers directory on the host machine
 SOLC_REPO_HOST=/home/gather/staging/data/solc-bin/linux-amd64
@@ -31,6 +31,10 @@ SERVER_URL=https://staging.sourcify.dev/server
 
 Run containers with:
 
+```bash
+cd environments/
 ```
-docker-compose -f repository.yaml -f server.yaml -f ui.yaml up -d
+
+```bash
+docker-compose -f repository.yaml -f server.yaml -f ui.yaml up -f monitor.yaml -d
 ```
