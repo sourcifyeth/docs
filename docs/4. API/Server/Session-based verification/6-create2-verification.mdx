@@ -16,14 +16,23 @@ Verify counterfactual smart contracts created with the opcode `CREATE2` with ses
 
 **Method** : `POST`
 
-The body should provide:
+**body**
 
-- `deployerAddress`
-- `salt`
-- `constructorArgs`
-- `files`
-- `create2Address`
-- `clientToken`
+```json
+{
+  "verificationId": "0xedb48e28ff41f826b1fbb20a7601e5f79bd0b1c08c36214de5b6a1e00c1bdb46",
+  "deployerAddress": "0x0000...",
+  "salt": "0x0000000000000000000000000000000000000000000000000000000000000001",
+  "constructorArgs": [
+    { "type": "uint256", "value": "1" }
+  ],
+  "create2Address": "0x0000...",
+  "clientToken": "CREATE2_CLIENT_TOKEN"
+}
+```
+
+- The verificationId is the Sourcify's session contract id
+- The salt depends on the factory contract, please make sure to use the right type
 
 ## Responses
 
