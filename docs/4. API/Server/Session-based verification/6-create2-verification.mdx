@@ -31,7 +31,7 @@ Verify counterfactual smart contracts created with the opcode `CREATE2` with ses
 }
 ```
 
-- The verificationId is the Sourcify's session contract id
+- The verificationId is the Sourcify's session contract id, it needs to be the verificationId of a contract compiled by [/session/create2/compile](/docs/api/server/session/verify/create2/compile). On the UI it is done automatically.
 - The salt depends on the factory contract, please make sure to use the right type
 
 ## Responses
