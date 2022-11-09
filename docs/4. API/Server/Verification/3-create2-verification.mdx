@@ -12,14 +12,24 @@ Verify counterfactual smart contracts created with the opcode `CREATE2`.
 
 **Method** : `POST`
 
-The body should provide:
+**body**
 
-- `deployerAddress`
-- `salt`
-- `constructorArgs`
-- `files`
-- `create2Address`
-- `clientToken`
+```json
+{
+  "deployerAddress": "0x0000...",
+  "salt": "0x0000000000000000000000000000000000000000000000000000000000000001",
+  "constructorArgs": [
+    { "type": "uint256", "value": "1" }
+  ],
+  "files": {
+    "FILE_NAME": "FILE_CONTENT"
+  }
+  "create2Address": "0x0000...",
+  "clientToken": "CREATE2_CLIENT_TOKEN"
+}
+```
+
+- The salt depends on the factory contract, please make sure to use the right type
 
 ## Responses
 
