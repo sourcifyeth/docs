@@ -1,0 +1,184 @@
+---
+id: create2-verification
+title: Create2 Verification
+slug: /api/server/verify/create2
+---
+
+# Create2 Verification
+
+Verify counterfactual smart contracts created with the opcode `CREATE2`.
+
+**URL** : `/verify/create2`
+
+**Method** : `POST`
+
+**body**
+
+```json
+{
+  "deployerAddress": "0x0000...",
+  "salt": "0x0000000000000000000000000000000000000000000000000000000000000001",
+  "constructorArgs": [
+    { "type": "uint256", "value": "1" }
+  ],
+  "files": {
+    "FILE_NAME": "FILE_CONTENT"
+  }
+  "create2Address": "0x0000...",
+  "clientToken": "CREATE2_CLIENT_TOKEN"
+}
+```
+
+- The salt depends on the factory contract, please make sure to use the right type
+
+## Responses
+
+**Condition** : The recompiled contract matches the deployed version `perfectly`.
+
+**Code** : `200 OK`
+
+**Content** :
+
+```json
+{
+  "result": [
+    {
+      "address": "0x0001Db7722Fb4211C24d4aC5E1127353116323d3",
+      "status": "perfect"
+    }
+  ]
+}
+```
+
+---
+
+**Condition** : The recompiled contract matches the deployed version `partial`ly.
+
+**Code** : `200 OK`
+
+**Content** :
+
+```json
+{
+  "result": [
+    {
+      "address": "0x0001Db7722Fb4211C24d4aC5E1127353116323d3",
+      "status": "partial"
+    }
+  ]
+}
+```
+
+---
+
+**Condition** : The contract at the provided address and chain has already been sourcified at timestamp indicated by `storageTimestamp`.
+
+**Code** : `200 OK`
+
+**Content** :
+
+```json
+{
+  "result": [
+    {
+      "address": "0x0001Db7722Fb4211C24d4aC5E1127353116323d3",
+      "status": "perfect",
+      "storageTimestamp": "2020-11-10T14:12:15.665Z"
+    }
+  ]
+}
+```
+
+---
+
+**Condition** : Missing or invalid parameters received.
+
+**Code** : `400 Bad Request`
+
+**Content** :
+
+```json
+{
+  "message": "Validation Error: address, chain",
+  "errors": [
+    {
+      "field": "address",
+      "message": "Invalid value"
+    },
+    {
+      "field": "chain",
+      "message": "Invalid value"
+    }
+  ]
+}
+```
+
+---
+
+**Condition** : Recompiled bytecode does not match the deployed bytecode.
+
+**Code** : `500 Internal Server Error`
+
+**Content** :
+
+```json
+{
+  "error": "The deployed and recompiled bytecode don't match."
+}
+```
+
+---
+
+**Condition** : The provided chain does not have a contract deployed at the provided address.
+
+**Code** : `500 Internal Server Error`
+
+**Content** :
+
+```json
+{
+  "error": "Contract name: RandomName. Ethereum Mainnet does not have a contract deployed at 0x7c90F0C9Eb46391c93d0545dDF4658d3B8DF1866."
+}
+```
+
+---
+
+**Condition** : The provided chain is temporarily unavailable.
+
+**Code** : `500 Internal Server Error`
+
+**Content** :
+
+```json
+{
+  "error": "Contract name: RandomName. Ethereum Mainnet is temporarily unavailable."
+}
+```
+
+---
+
+**Condition** : Some resources are missing and could not be fetched.
+
+**Code** : `500 Internal Server Error`
+
+**Content** :
+
+```json
+{
+  "error": "Resource missing; unsuccessful fetching: browser/RandomName.sol"
+}
+```
+
+---
+
+**Condition** : Verifying contracts with immutable variables is not supported for the provided chain.
+
+**Code** : `500 Internal Server Error`
+
+**Content** :
+
+```json
+{
+  "error": "Contract name: RandomName. Verifying contracts with immutable variables is not supported for Ethereum Mainnet."
+}
+```

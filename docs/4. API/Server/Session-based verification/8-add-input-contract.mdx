@@ -1,0 +1,46 @@
+---
+id: session-add-input-contract
+title: Add input contract
+slug: /api/server/session/add-input-contract
+---
+
+import V2Note from './_v2Note.mdx'
+
+# Add new input contract
+
+- Import the contract metadata file and the source files from a deployed contract extracting the metadata IPFS CID from the contract's bytecode
+
+<V2Note />
+
+**URL** : `/session/input-contract`
+
+**Method** : `POST`
+
+**Content-Type** : `application/json`
+
+**Body**
+
+```json
+{
+    "address": "0x0000...",
+    "chainId": "1"
+}
+```
+
+## Responses
+
+> Check [add input files API](/docs/api/server/session/add-input-files) to see a complete list of responses
+
+**Conditions** :
+
+- The contract doesn't have a metadata IPFS CID 
+
+**Code** : `402`
+
+**Content** :
+
+```json
+{
+  "error": "The contract doesn't have a metadata IPFS CID"
+}
+```
