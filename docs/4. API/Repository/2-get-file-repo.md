@@ -11,6 +11,10 @@ Gets the file from the repository server (http://repo.sourcify.dev and http://re
 
 **Method** : `GET`
 
+## Example
+
+GET https://repo.sourcify.dev/contracts/full_match/100/0xC4c622862a8F548997699bE24EA4bc504e5cA865/metadata.json
+
 ## Responses
 
 **Condition** : The file is found at the path.
@@ -20,6 +24,7 @@ Gets the file from the repository server (http://repo.sourcify.dev and http://re
 **Content** : File content
 
 ---
+
 **Condition** : Chain is not available as both full match or partial match in the repository.
 
 **Code** : `404 Not Found`
@@ -29,7 +34,3 @@ Gets the file from the repository server (http://repo.sourcify.dev and http://re
 ```
 404 Not Found
 ```
-
-## Example
-
-GET https://repo.sourcify.dev/contracts/full_match/100/0xC4c622862a8F548997699bE24EA4bc504e5cA865/metadata.json

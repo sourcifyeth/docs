@@ -12,6 +12,10 @@ Ping the server and see if it is alive and ready for requests.
 
 **Method** : `GET`
 
+## Example
+
+`curl "https://sourcify.dev/server/health" `
+
 ## Success Response
 
 **Code** : `200 OK`

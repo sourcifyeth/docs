@@ -9,10 +9,8 @@ Sourcify provides a public server API for verification, and checking if a contra
 
 ## Repository
 
-There are two ways to access files in the repository:
-
-- [Get file from /repository](/docs/api/repository/get-file-static): `GET /repository/contracts/:full_match | partial_match/:chain/:address/:filePath`
 - [Get file from repo.sourcify.dev](/docs/api/repository/get-file-repository): `GET http://<repository-host>/contracts/:full_match | partial_match/:chain/:address/:filePath`
+- [Get repository stats](/docs/api/repository/stats): `GET http://<repository-host>/stats.json`
 
 ## Server
 
@@ -25,6 +23,7 @@ Deployed server APIs are: `https://sourcify.dev/server` and `https://staging.sou
 - [Get source files (full match)](/docs/api/server/get-source-files-full) : `GET /files/:chain/:address`
 - [Get source files (full or partial match)](/docs/api/server/get-source-files-all) : `GET /files/any/:chain/:address`
 - [Get contract addresses (full or partial match)](/docs/api/server/get-contract-addresses-all) : `GET /files/contracts/:chain`
+- [Get file from /repository](/docs/api/repository/get-file-static): `GET /repository/contracts/:full_match | partial_match/:chain/:address/:filePath`
 
 ### Verification API
 
@@ -46,7 +45,7 @@ import V2Note from "./Server/Session-based verification/_v2Note.mdx";
 - [Create2 Verification](/docs/api/server/session/verify/create2) : `POST /session/verify/create2`
 - [Create2 Compilation](/docs/api/server/session/verify/create2/compile) : `POST /session/verify/create2/compile`
 
-## Other
+### Other
 
 - [Get Sourcify chains](/docs/api/chains): `GET /chains`
 - [Server health](/docs/API/health) : `GET /health`

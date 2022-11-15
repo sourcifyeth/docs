@@ -7,9 +7,13 @@ slug: /api/repository/get-file-static
 
 Retrieve staticly served files over the server.
 
-**URL** : `/server/repository/contracts/:full_match | partial_match/:chain/:address/:filePath`
+**URL** : `/repository/contracts/:full_match | partial_match/:chain/:address/:filePath`
 
 **Method** : `GET`
+
+## Example
+
+GET [https://sourcify.dev/server/repository/contracts/full_match/1/0xca2ad74003502af6B727e846Fab40D6cb8Da0035/metadata.json](https://sourcify.dev/server/repository/contracts/full_match/1/0xca2ad74003502af6B727e846Fab40D6cb8Da0035/metadata.json)
 
 ## Responses
 
@@ -20,6 +24,7 @@ Retrieve staticly served files over the server.
 **Content** : File content
 
 ---
+
 **Condition** : The file is not found at the path
 
 **Code** : `404 Not Found`
@@ -29,7 +34,3 @@ Retrieve staticly served files over the server.
 ```
 Cannot GET <URL>
 ```
-
-## Example
-
-GET [https://sourcify.dev/server/repository/contracts/full_match/1/0xca2ad74003502af6B727e846Fab40D6cb8Da0035/metadata.json](https://sourcify.dev/server/repository/contracts/full_match/1/0xca2ad74003502af6B727e846Fab40D6cb8Da0035/metadata.json)

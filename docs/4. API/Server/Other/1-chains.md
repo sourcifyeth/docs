@@ -11,6 +11,10 @@ Returns the chains (networks) added to the Sourcify. Contains both supported, un
 
 **Method** : `GET`
 
+## Example
+
+`curl "https://sourcify.dev/server/chains" `
+
 ## Responses
 
 **Code** : `200 OK`
