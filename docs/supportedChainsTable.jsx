@@ -197,6 +197,13 @@ const Table = () => {
         {error && (
           <div style={{ textAlign: "center", color: "indianRed" }}>{error}</div>
         )}
+        {sourcifyChains.length > 0 && (
+          <div style={{ marginBottom: "16px" }}>
+            {" "}
+            Currently there are <b>{sourcifyChains.length} EVM chains</b>
+            supported by Sourcify.
+          </div>
+        )}
       </div>
       <table>
         <thead>
