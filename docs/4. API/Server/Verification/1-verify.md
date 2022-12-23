@@ -21,7 +21,7 @@ Regardless of the Content-Type, the body should provide:
 - `chosenContract` (optional) index of the contract, if the provided files contain multiple metadata files (i.e. multiple contracts). For instance [hardhat outputs](/docs/how-to-verify/#with-hardhat-output) contain the metadata file of all contracts used.
 - `contextVariables` (optional) are used to simulate the contract creation by executing the contract's creation code with these variables. For example, if the contract sets the `immutable owner` to `msg.sender`, then the `msgSender` has to be provided for a match.
 
-If using `multipart/form-data`, the files should be in a field named `files`.
+If using `multipart/form-data`, the files should be in a field named `files`. You can also pass `abiEncodedConstructorArguments` and `msgSender` directly in form-data as form-data does not allow nested objects.
 If using `application/json`, the files should be in an object under the key `files` so the whole object is of the form:
 
 ```json
