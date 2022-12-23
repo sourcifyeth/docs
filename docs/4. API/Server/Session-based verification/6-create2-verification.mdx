@@ -22,17 +22,15 @@ Verify counterfactual smart contracts created with the opcode `CREATE2` with ses
 {
   "verificationId": "0xedb48e28ff41f826b1fbb20a7601e5f79bd0b1c08c36214de5b6a1e00c1bdb46",
   "deployerAddress": "0x0000...",
-  "salt": "0x0000000000000000000000000000000000000000000000000000000000000001",
-  "constructorArgs": [
-    { "type": "uint256", "value": "1" }
-  ],
+  "salt": "0xa2fd", // hex string or number
+  "abiEncodedConstructorArguments": "0x0000000000000000000000000000000000000000000000000000000000000001",
   "create2Address": "0x0000...",
   "clientToken": "CREATE2_CLIENT_TOKEN"
 }
 ```
 
 - The verificationId is the Sourcify's session contract id, it needs to be the verificationId of a contract compiled by [/session/create2/compile](/docs/api/server/session/verify/create2/compile). On the UI it is done automatically.
-- The salt depends on the factory contract, please make sure to use the right type
+- The salt can be a hex string starting with `0x` or a decimal number in string format. The value will be padded to 32 bytes before being used in the `CREATE2` opcode.
 
 ## Responses
 
@@ -47,10 +45,15 @@ Verify counterfactual smart contracts created with the opcode `CREATE2` with ses
   "contracts": [
     {
       "verificationId": "0x8e2d0b6fef24d782a7c47e67ddfd2f5ca9cace335ce42bd10701ebba609e1244",
-      "constructorArguments": [
+      "constructorArgumentsArray": [
+        {
+          "internalType": "address",
+          "name": "_owner",
+          "type": "address"
+        },
         {
           "internalType": "uint256",
-          "name": "_number",
+          "name": "_value",
           "type": "uint256"
         }
       ],

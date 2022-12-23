@@ -19,6 +19,7 @@ Regardless of the Content-Type, the body should provide:
 - `address`
 - `chain`
 - `chosenContract` (optional) index of the contract, if the provided files contain multiple metadata files (i.e. multiple contracts). For instance [hardhat outputs](/docs/how-to-verify/#with-hardhat-output) contain the metadata file of all contracts used.
+- `contextVariables` (optional) are used to simulate the contract creation by executing the contract's creation code with these variables. For example, if the contract sets the `immutable owner` to `msg.sender`, then the `msgSender` has to be provided for a match.
 
 If using `multipart/form-data`, the files should be in a field named `files`.
 If using `application/json`, the files should be in an object under the key `files` so the whole object is of the form:
@@ -33,7 +34,13 @@ If using `application/json`, the files should be in an object under the key `fil
         "file-name1.sol": ...,
         "file-name2.sol": ...
     },
-    "chosenContract": 1
+    // optional
+    "chosenContract": 1,
+    // optional
+    "contextVariables": {
+      "abiEncodedConstructorArguments": ...,
+      "msgSender": ...
+    }
 }
 ```
 
@@ -57,6 +64,7 @@ If using `application/json`, the files should be in an object under the key `fil
 ```
 
 ---
+
 **Condition** : The recompiled contract matches the deployed version `partial`ly.
 
 **Code** : `200 OK`
@@ -75,6 +83,7 @@ If using `application/json`, the files should be in an object under the key `fil
 ```
 
 ---
+
 **Condition** : The contract at the provided address and chain has already been sourcified at timestamp indicated by `storageTimestamp`.
 
 **Code** : `200 OK`
@@ -94,6 +103,7 @@ If using `application/json`, the files should be in an object under the key `fil
 ```
 
 ---
+
 **Condition** : Missing or invalid parameters received.
 
 **Code** : `400 Bad Request`
@@ -117,6 +127,7 @@ If using `application/json`, the files should be in an object under the key `fil
 ```
 
 ---
+
 **Condition** : Provided valid address and chain input, but no files. This is interpreted as simply checking whether the contract at the provided address and chain has already been sourcified.
 
 **Code** : `404 Not Found`
@@ -130,6 +141,7 @@ If using `application/json`, the files should be in an object under the key `fil
 ```
 
 ---
+
 **Condition** : Recompiled bytecode does not match the deployed bytecode.
 
 **Code** : `500 Internal Server Error`
@@ -143,6 +155,7 @@ If using `application/json`, the files should be in an object under the key `fil
 ```
 
 ---
+
 **Condition** : The provided chain does not have a contract deployed at the provided address.
 
 **Code** : `500 Internal Server Error`
@@ -156,6 +169,7 @@ If using `application/json`, the files should be in an object under the key `fil
 ```
 
 ---
+
 **Condition** : The provided chain is temporarily unavailable.
 
 **Code** : `500 Internal Server Error`
@@ -169,6 +183,7 @@ If using `application/json`, the files should be in an object under the key `fil
 ```
 
 ---
+
 **Condition** : Some resources are missing and could not be fetched.
 
 **Code** : `500 Internal Server Error`
@@ -182,6 +197,7 @@ If using `application/json`, the files should be in an object under the key `fil
 ```
 
 ---
+
 **Condition** : Verifying contracts with immutable variables is not supported for the provided chain.
 
 **Code** : `500 Internal Server Error`

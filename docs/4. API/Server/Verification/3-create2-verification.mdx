@@ -17,10 +17,8 @@ Verify counterfactual smart contracts created with the opcode `CREATE2`.
 ```json
 {
   "deployerAddress": "0x0000...",
-  "salt": "0x0000000000000000000000000000000000000000000000000000000000000001",
-  "constructorArgs": [
-    { "type": "uint256", "value": "1" }
-  ],
+  "salt": "0xa2fd", // hex string or number
+  "abiEncodedConstructorArguments": "0x0000000000000000000000000000000000000000000000000000000000000001",
   "files": {
     "FILE_NAME": "FILE_CONTENT"
   }
@@ -29,7 +27,7 @@ Verify counterfactual smart contracts created with the opcode `CREATE2`.
 }
 ```
 
-- The salt depends on the factory contract, please make sure to use the right type
+- The salt can be a hex string starting with `0x` or a decimal number in string format. The value will be padded to 32 bytes before being used in the `CREATE2` opcode.
 
 ## Responses
 

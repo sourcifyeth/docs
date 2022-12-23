@@ -4,7 +4,7 @@ title: Verify validated contract
 slug: /api/server/session/verify-validated
 ---
 
-import V2Note from './_v2Note.mdx'
+import V2Note from "./_v2Note.mdx";
 
 # Attempt contract verification
 
@@ -15,18 +15,11 @@ import V2Note from './_v2Note.mdx'
   - are included in the received object
 - The result of verification is available under the `status` property of every contract .
 
-<V2Note/>
+<V2Note />
 
 **URL** : `/session/verify-validated`
 
 **Method** : `POST`
-
-## Responses
-
-**Assumptions for all example responses (except the last one)** :
-
-- There is one pending contract with all source files, but no `address` or `chainId`.
-- Supplying the following minimum object (extra properties would be ignored):
 
 ```json
 {
@@ -34,12 +27,26 @@ import V2Note from './_v2Note.mdx'
     {
       "address": "0x656d0062eC89c940213E3F3170EA8b2add1c0143",
       "chainId": "100",
-      "compilerVersion": "0.6.6+commit.6c089d02",
+      // optional
+      "contextVariables": {
+        "abiEncodedConstructorArguments": ...,
+        "msgSender": ...
+      },
       "verificationId": "0x3f67e9f57515bb1e7195c7c5af1eff630091567c0bb65ba3dece57a56da766fe"
     }
   ]
 }
 ```
+
+- `contextVariables` (optional) are used to simulate the contract creation by executing the contract's creation code with these variables. For example, if the contract sets the `immutable owner` to `msg.sender`, then the `msgSender` has to be provided for a match.
+  s
+
+## Responses
+
+**Assumptions for all example responses (except the last one)** :
+
+- There is one pending contract with all source files, but no `address` or `chainId`.
+- Supplying the following minimum object (extra properties would be ignored):
 
 **Condition** : The provided contract `perfect`ly matches the one at the provided `chainId` and `address`.
 
@@ -69,6 +76,7 @@ import V2Note from './_v2Note.mdx'
 ```
 
 ---
+
 **Condition** : The contract at the provided `chainId` and `address` has already been verified at `2021-01-12T15:41:56.502Z`.
 
 **Code** : `200 OK`
@@ -98,6 +106,7 @@ import V2Note from './_v2Note.mdx'
 ```
 
 ---
+
 **Condition** : No pending contracts.
 
 **Code** : `400 Bad Request`
