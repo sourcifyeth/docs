@@ -38,8 +38,7 @@ import V2Note from "./_v2Note.mdx";
 }
 ```
 
-- `contextVariables` (optional) are used to simulate the contract creation by executing the contract's creation code with these variables. For example, if the contract sets the `immutable owner` to `msg.sender`, then the `msgSender` has to be provided for a match.
-  s
+- `contextVariables` (optional) are used to simulate the contract creation by executing the contract's creation code with these variables. For example, if the contract sets the `immutable owner` to `msg.sender`, then the `msgSender` has to be provided for a match. These will be saved under the contract folder as `context-variables.json` later for the reproducability of the verification.
 
 ## Responses
 
