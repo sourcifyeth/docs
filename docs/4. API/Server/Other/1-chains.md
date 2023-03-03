@@ -5,7 +5,7 @@ slug: /api/chains
 
 # Get Sourcify chains
 
-Returns the chains (networks) added to the Sourcify. Contains both supported, unsupported, monitored, unmonitored chains. Formatted as a merge ofthe https://chainid.network/chains.json and [sourcify-chains.ts](https://github.com/ethereum/sourcify/blob/master/services/core/src/sourcify-chains.ts) output.
+Returns the chains (networks) added to the Sourcify. Contains both supported, unsupported, monitored, unmonitored chains. Formatted as a merge ofthe https://chainid.network/chains.json and [sourcify-chains.ts](https://github.com/ethereum/sourcify/blob/staging/src/sourcify-chains.ts) output.
 
 **URL** : `/chains`
 

@@ -56,7 +56,7 @@ SOLJSON_REPO= # Path where Solidity JS (solc-js) compilers are saved e.g. /home/
 
 You also need to provide either Alchemy API keys or your own JSON-RPC node URL for Ethereum networks. If both provided, it will first query the custom JSON-RPC and fall back to Alchemy.
 
-For other networks with Alchemy support such as Polygon, Optimism, Arbitrum etc., you also need to provide an API key. You can check those networks in the [`services/core/src/sourcify-chains.ts`](https://github.com/ethereum/sourcify/blob/master/services/core/src/sourcify-chains.ts#L60). For the chains without an RPC in `sourcify-chains.ts`, the default RPCs from in [`services/core/src/chains.json`](https://github.com/ethereum/sourcify/blob/master/services/core/src/chains.json) will be used.
+For other networks with Alchemy support such as Polygon, Optimism, Arbitrum etc., you also need to provide an API key. You can check those networks in the [`services/core/src/sourcify-chains.ts`](https://github.com/ethereum/sourcify/blob/staging/src/sourcify-chains.ts#L113). For the chains without an RPC in `sourcify-chains.ts`, the default RPCs from in [`services/core/src/chains.json`](https://github.com/ethereum/sourcify/blob/staging/src/chains.json) will be used.
 
 Infura is needed only for the Palm Network.
 
