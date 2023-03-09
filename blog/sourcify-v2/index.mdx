@@ -109,7 +109,7 @@ contract Child2{
 
 passing the `msgSender` variable allows `lib-sourcify` to assign this variable inside the bytecode, and be able to verify. If there are other potential variables that are used as a value to immutables in contracts, please let us know.
 
-### Creator Tx
+### Creator Tx Hash
 
 We can also verify contracts by looking at the `tx.input` of the transaction that created the contract. If this matches the creation bytecode of the compiled contract AND the address resulting from the `tx.from` and `tx.nonce` matches the given address, we can verify the contract.
 
@@ -122,7 +122,7 @@ const match = await verifyDeployed(
 );
 ```
 
-(_In the server API, find the field `creatorTx`_)
+(_In the server API, find the field `creatorTxHash`_)
 
 ### CREATE2
 
@@ -140,3 +140,9 @@ const match = await verifyCreate2(
 console.log(match.chainId); // '0'. create2 matches return 0 as chainId
 console.log(match.status); // 'perfect'
 ```
+
+### Questions? Feedback?
+
+As usualy feel free to reach us out on [Twitter](https://twitter.com/sourcifyeth), [Matrix chat](https://matrix.to/#/#ethereum_source-verify:gitter.im), or [Gitter](https://app.gitter.im/#/room/#ethereum_source-verify:gitter.im).
+
+✅ Happy verifying!
