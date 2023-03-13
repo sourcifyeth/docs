@@ -1,0 +1,149 @@
+---
+id: sourcify-v2
+title: Sourcify v2
+description: What's coming with Sourcify v2
+slug: /sourcify-v2
+authors:
+  - name: Kaan Uzdogan
+    url: https://github.com/kuzdogan
+    image_url: https://github.com/kuzdogan.png
+tags: [sourcify, v2, release]
+date: 2023-03-13
+---
+
+# Sourcify v2
+
+Today we released Sourcify v2 🎉
+
+The changes **do not affect the [Sourcify Server API](https://docs.sourcify.dev/docs/api/) in a non-backwards compatible way**. If you are using the Sourcify API you don't need to worry. However are some non-breaking additions detailed below.
+
+Why is this a major update then?
+
+- We are removing and deprecating the npm packages:
+  - [@ethereum-sourcify/core](https://www.npmjs.com/package/@ethereum-sourcify/core)
+  - [@ethereum-sourcify/verification](https://www.npmjs.com/package/@ethereum-sourcify/verification)
+  - [@ethereum-sourcify/validation](https://www.npmjs.com/package/@ethereum-sourcify/validation)
+- Introducing the backbone library [@ethereum-sourcify/lib-sourcify](https://www.npmjs.com/package/@ethereum-sourcify/lib-sourcify)
+- Rewriting the server and monitor code based on [@ethereum-sourcify/lib-sourcify](https://www.npmjs.com/package/@ethereum-sourcify/lib-sourcify).
+
+## Motivation
+
+The motivation for these changes is to make Sourcify verification more **reusable**. The `lib-sourcify` package can be imported into other projects and verify a contract given the source files, and chain&address. Another goal was to create **modularity** in the codebase with more separated concerns. With these changes, Sourcify server consumes the core `lib-sourcify` functionality, and takes care of the rest: providing an API, validating inputs, and storing the results (in the repo) etc.
+
+This is in line with what we want to achieve with **edge verification**. We beleive a contract verification should be easily reproducable and you should be able to verify contracts locally without relying on a third party.
+
+Imagine you're interacting with a contract on your wallet. Before you sign a transaction your wallet:
+
+- fetches the contract's source code from IPFS
+- compiles and verifies with `lib-sourcify`
+
+without even talking to Sourcify or any other verifier, everything happens on your local machine. Similarly a block explorer like [Otterscan](https://github.com/wmitsuda/otterscan) can give its users the option to either fetch the verified source code directly from a verifier (like Sourcify), or verify the contract locally on the frontend.
+
+However, the library as is it not compatible with browsers yet and we are working on it. If you are knowledgable on this front and want to help us, please reach us out.
+
+## lib-sourcify
+
+The brand new [@ethereum-sourcify/lib-sourcify](https://www.npmjs.com/package/@ethereum-sourcify/lib-sourcify) is the library that will do all the weightlifting of assembling a contract (e.g. source files) into a compilable `CheckedContract`, compiling, and verifying it. You can pass `checkFiles` your contract source code and [metadata.json](https://docs.sourcify.dev/docs/metadata/) to pack compilable `CheckedContract`s.
+
+```ts
+const pathBuffers: PathBuffer[] = [];
+pathBuffers.push({
+  path: filePath,
+  buffer: fs.readFileSync(filePath),
+});
+const checkedContracts: CheckedContract[] = await checkFiles(pathBuffers);
+```
+
+Then you can verify this `CheckedContract` against a contract that is deployed on a **chain** at an **address**.
+
+```ts
+const goerliChain =   {
+  name: "Goerli",
+  rpc: [
+    "https://locahlhost:8545/"
+    "https://goerli.infura.io/v3/${INFURA_API_KEY}",
+  ],
+  chainId: 5,
+},
+
+const match = await verifyDeployed(
+  checkedContract[0],
+  goerliChain,
+  '0x00878Ac0D6B8d981ae72BA7cDC967eA0Fae69df4'
+)
+
+console.log(match.status) // 'perfect'
+```
+
+### Context Variables
+
+In [previous versions](https://github.com/ethereum/sourcify/releases/tag/v1.2.0) we introduced ["verification with simulation"](https://github.com/ethereum/sourcify/pull/864), that is, executing the contract's compiled creation bytecode on an EVM to see if it will yield the same **onchain deployed bytecode** at the given chainId & address. This allows us to verify "contracts with immutables created by factory contracts".
+
+With this we let the user pass `contextVariables` to the "simulation". These variables are useful when they are used as a value to an immutable variable in the contract's constructor. Currently you can pass two types of variables:
+
+```ts
+const contextVariables = {
+  msgSender: '0x00878Ac0D6B8d981ae72BA7cDC967eA0Fae69df4',
+  abiEncodedConstructorArguments: "0x0000000000000000000000000000000000000000000000000000000000038efe",
+}
+
+const match = await verifyDeployed(
+  checkedContract[0],
+  goerliChain,
+  '0x00878Ac0D6B8d981ae72BA7cDC967eA0Fae69df4'
+  contextVariables
+)
+```
+
+(_In the server API, find the field [`contextVariables`](https://docs.sourcify.dev/docs/api/server/verify/)_)
+
+For example, if you have a contract like this:
+
+```solidity
+contract Child2{
+    address immutable public owner;
+    constructor(){
+       owner = msg.sender;
+    }
+}
+```
+
+passing the `msgSender` variable allows `lib-sourcify` to assign this variable inside the bytecode, and be able to verify, because it's an [immutable variable](https://docs.sourcify.dev/docs/immutables/). If there are other potential variables that are used as a value to immutables in contracts, please let us know.
+
+### Creator Tx Hash
+
+We can also verify contracts by looking at the `tx.input` of the transaction that created the contract. If this matches the creation bytecode of the compiled contract AND the address resulting from the `tx.from` and `tx.nonce` matches the given address, we can verify the contract.
+
+```ts
+const match = await verifyDeployed(
+  checkedContract[0],
+  goerliChain,
+  "0x00878Ac0D6B8d981ae72BA7cDC967eA0Fae69df4".undefined,
+  "0xe75fb554e433e03763a1560646ee22dcb74e5274b34c5ad644e7c0f619a7e1d0" //tx hash
+);
+```
+
+(_In the server API, find the field [`creatorTxHash`](https://docs.sourcify.dev/docs/api/server/verify/)_)
+
+### CREATE2
+
+You can also verify CREATE2 created contracts:
+
+```ts
+const match = await verifyCreate2(
+  checkedContract[0],
+  deployerAddress,
+  salt,
+  create2Address,
+  abiEncodedConstructorArguments
+);
+
+console.log(match.chainId); // '0'. create2 matches return 0 as chainId
+console.log(match.status); // 'perfect'
+```
+
+### Questions? Feedback?
+
+As usualy feel free to reach us out on [Twitter](https://twitter.com/sourcifyeth), [Matrix chat](https://matrix.to/#/#ethereum_source-verify:gitter.im), or [Gitter](https://app.gitter.im/#/room/#ethereum_source-verify:gitter.im).
+
+✅ Happy verifying!
