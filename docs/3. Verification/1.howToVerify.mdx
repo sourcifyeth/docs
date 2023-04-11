@@ -4,7 +4,9 @@ title: How to Verify Contracts
 slug: /how-to-verify
 ---
 
-# How to Verify
+# How to Verify Contracts
+
+## Using the UI (legacy)
 
 1. Drag and drop the folder containing your source files and metadata, or add them seperately.
 2. Input the contract address you want to verify. If a contract at that address is verified in any of the chains it will be shown above.
@@ -13,19 +15,45 @@ slug: /how-to-verify
 
 ![How to verify screen recording](/img/verification.gif)
 
-## Truffle
+## Foundry
 
-If you were using Truffle to compile contracts, you can use the output file at `build/contracts/<contract-name>.json` for the metadata file. Then add the source files as usual.
+Foundry natively supports Sourcify verification. You can verify contracts with the additional verify flags in Forge:
 
-### truffle-verify-plugin
+Deploy and verify a contract:
 
-If you've deployed your contracts with Truffle, you can use the [truffle-plugin-verify](https://github.com/rkalis/truffle-plugin-verify) to verify contracts on Sourcify. The plugin verifies on Sourcify by default.
-
-```bash
-$ truffle run verify MyFirstContract MySecondContract --network goerli
+```
+forge create --rpc-url <your_rpc_url> \
+  --constructor-args "ForgeUSD" "FUSD" 18 1000000000000000000000 \
+  --private-key <your_private_key> \
+  src/MyToken.sol:MyToken \
+  --verify \
+  --verification-provider sourcify
 ```
 
-## With Hardhat output
+```
+forge verify-contract MyToken \
+ 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
+  --chain-id 11155111 \
+  --verifier sourcify
+```
+
+```
+forge verify-check 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
+  --chain-id 11155111 \
+  --verifier sourcify
+```
+
+## Hardhat
+
+### hardhat-deploy plugin
+
+The Hardhat plugin [@wighawag/hardhat-deploy](https://github.com/wighawag/hardhat-deploy#5-hardhat-sourcify) has Sourcify support. After deploying your contracts with the plugin you can easily verify your contracts with:
+
+```
+hardhat --network mainnet sourcify
+```
+
+### With Hardhat output
 
 :::info
 Only after Hardhat version v2.6.8 the metadata files were output by default. If you are using an earlier version, you need to add the metadata to compilation outputs manually as [described here](/docs/metadata/#hardhat---earlier-than-v268)
@@ -40,3 +68,34 @@ Only after Hardhat version v2.6.8 the metadata files were output by default. If 
     <source src="/videos/hardhat-sourcify.mp4" type="video/mp4" />
   </video>
 </div>
+
+## Truffle
+
+If you were using Truffle to compile contracts, you can use the output file at `build/contracts/<contract-name>.json` for the metadata file. Then add the source files as usual.
+
+### truffle-verify-plugin
+
+If you've deployed your contracts with Truffle, you can use the [truffle-plugin-verify](https://github.com/rkalis/truffle-plugin-verify) to verify contracts on Sourcify. The plugin verifies on Sourcify by default.
+
+```bash
+$ truffle run verify MyFirstContract MySecondContract --network goerli
+```
+
+## Remix Plugin
+
+Sourcify has a remix plugin to aid with contract verification and lookup.
+The plugin can be found in this repository [https://github.com/sourcifyeth/remix-sourcify](https://github.com/sourcifyeth/remix-sourcify)
+
+### Verifying
+
+[![Verifier](https://cdn.loom.com/sessions/thumbnails/b203977174b3444ea5b223ae45250580-with-play.gif)](https://www.loom.com/share/b203977174b3444ea5b223ae45250580 "Verifier")
+
+### Fetching
+
+[![Fetcher](https://cdn.loom.com/sessions/thumbnails/5b6cb81a9fae4dd1ad3cee6a1e658af1-with-play.gif)](https://www.loom.com/share/5b6cb81a9fae4dd1ad3cee6a1e658af1 "Fetcher")
+
+### Installation
+
+1. Navigate to the Remix Plugin manager
+2. Search for `Sourcify` and click on Activate when you see it.
+3. Another option would be to click on the Sourcify logo on Remix Homepage to activate the plugin
