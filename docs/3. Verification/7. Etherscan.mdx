@@ -1,0 +1,19 @@
+---
+id: etherscan
+title: Import from Etherscan
+slug: /etherscan
+---
+
+# Import from Etherscan
+
+import EtherscanInstances from "./etherscanInstancesTable.jsx";
+
+It is possible to import contracts already verified on Etherscan instances.
+
+Usually, if the contract is verified via the "Standard JSON Input", it reveals a "full match" instead of "partial".
+
+[![Etherscan import](./etherscanScreenshot.png)](./etherscanScreenshot.png)
+
+Sourcify supports the following Etherscan instances, as laid out in [config.ts](https://github.com/ethereum/sourcify/blob/staging/src/config.ts)
+
+<EtherscanInstances />
