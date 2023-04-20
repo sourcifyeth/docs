@@ -9,11 +9,15 @@ slug: /how-to-verify
 ## Using the UI (legacy)
 
 1. Drag and drop the folder containing your source files and metadata, or add them seperately.
-2. Input the contract address you want to verify. If a contract at that address is verified in any of the chains it will be shown above.
+2. Input the contract address you want to verify.
 3. Select the chain the contract is deployed to.
 4. Click "Verify".
 
-![How to verify screen recording](/img/verification.gif)
+<div>
+  <video width="100%" height="100%" playsinline autoplay muted controls>
+    <source src="/videos/simple-verify.mp4" type="video/mp4" />
+  </video>
+</div>
 
 ## Foundry
 
@@ -54,6 +58,8 @@ hardhat --network mainnet sourcify
 ```
 
 ### With Hardhat output
+
+Sourcify can parse the Hardhat `.json` output file under `artifacts/build-info` to verify contracts.
 
 :::info
 Only after Hardhat version v2.6.8 the metadata files were output by default. If you are using an earlier version, you need to add the metadata to compilation outputs manually as [described here](/docs/metadata/#hardhat---earlier-than-v268)
