@@ -139,13 +139,18 @@ const Table = () => {
 
   const rows = sourcifyChains.map((chain, i) => {
     return (
-      <tr key={`chain-row-${i}`}>
+      <tr
+        key={`chain-row-${i}`}
+        style={!chain.supported ? { color: "#ccc" } : {}}
+      >
         <td>{chain.title || chain.name}</td>
         <td>
           <R>{chain.chainId}</R>
         </td>
-        <td>{chain.supported ? <Yes /> : <No />}</td>
-        <td>{chain.monitored ? <Yes /> : <No />}</td>
+        <td style={{ textAlign: "center", fontSize: "0.85rem" }}>
+          {chain.supported ? "Verification" : "Not Supported"} <br />
+          {chain.monitored ? "Monitoring" : ""}
+        </td>
         <td>
           {
             <TestResult
@@ -155,20 +160,6 @@ const Table = () => {
                 testMap &&
                 testMap[chain.chainId] &&
                 testMap[chain.chainId].normal
-              }
-              error={!!error}
-            />
-          }
-        </td>
-        <td>
-          {
-            <TestResult
-              detailedUrl={testRunCircleURL}
-              type="Immutable"
-              result={
-                testMap &&
-                testMap[chain.chainId] &&
-                testMap[chain.chainId].immutable
               }
               error={!!error}
             />
@@ -200,24 +191,28 @@ const Table = () => {
         {sourcifyChains.length > 0 && (
           <div style={{ marginBottom: "16px" }}>
             {" "}
-            Currently there are <b>{sourcifyChains.length} EVM chains</b>
-            supported by Sourcify.
+            Currently there are{" "}
+            <b>
+              {sourcifyChains.filter((c) => c.supported).length} EVM chains
+            </b>{" "}
+            supported for verification on Sourcify.
+            <br />
+            {sourcifyChains.filter((c) => c.monitored).length} chains support{" "}
+            <a href="/docs/monitoring">
+              monitoring (i.e. automatic verification)
+            </a>
+            . Including the previously supported chains, there are{" "}
+            {sourcifyChains.length} chains in total.
           </div>
         )}
       </div>
       <table>
         <thead>
           <tr>
-            <th rowSpan={2}>Chain</th>
-            <th rowSpan={2}>Chain ID</th>
-            <th colSpan={2}>Support Type</th>
-            <th colSpan={2}>Verification Tests</th>
-          </tr>
-          <tr style={{ backgroundColor: "var(--ifm-background-color)" }}>
-            <th>Verification*</th>
-            <th>Monitoring**</th>
-            <th>Standard</th>
-            <th>Immutables</th>
+            <th>Chain</th>
+            <th>Chain ID</th>
+            <th>Support Type</th>
+            <th>Verification Tests</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
