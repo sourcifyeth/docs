@@ -7,7 +7,7 @@ _paq.push(["enableLinkTracking"]);
   _paq.push(["setTrackerUrl", u + "matomo.php"]);
   _paq.push(["setSiteId", "31"]);
   var secondaryTracker = "https://ethereumfoundation.matomo.cloud/matomo.php";
-  var secondaryWebsiteId = "16";
+  var secondaryWebsiteId = "31";
   _paq.push(["addTracker", secondaryTracker, secondaryWebsiteId]);
   var d = document,
     g = d.createElement("script"),
