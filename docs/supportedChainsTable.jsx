@@ -93,8 +93,10 @@ const Table = () => {
       })
       .then((json) => {
         console.log("Setting testmap");
+        console.log(json);
         setTestDate(json.testReport.stats.end);
         const testMap = formatRawTestReport(json.testReport);
+        console.log(testMap);
         setTestMap(testMap);
         setTestReportObject(json);
       })
@@ -107,7 +109,9 @@ const Table = () => {
     const testMap = {};
     testsArr.forEach((test) => {
       const context = JSON.parse(test.context);
+      if (!context) return;
       const chainId = context.value.chainId;
+      console.log(chainId);
       const testType = context.value.testType; // either "normal" or "immutable"
       if (!testMap[chainId]) testMap[chainId] = {};
       testMap[chainId][testType] = test.pass;
