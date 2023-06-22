@@ -15,7 +15,7 @@ date: 2023-03-13
 
 Today we released Sourcify v2 🎉
 
-The changes **do not affect the [Sourcify Server API](https://docs.sourcify.dev/docs/api/) in a non-backwards compatible way**. If you are using the Sourcify API you don't need to worry. However are some non-breaking additions detailed below.
+The changes **do not affect the [Sourcify Server API](https://sourcify.dev/server/api-docs/) in a non-backwards compatible way**. If you are using the Sourcify API you don't need to worry. However are some non-breaking additions detailed below.
 
 Why is this a major update then?
 
@@ -75,41 +75,6 @@ const match = await verifyDeployed(
 console.log(match.status) // 'perfect'
 ```
 
-### Context Variables
-
-In [previous versions](https://github.com/ethereum/sourcify/releases/tag/v1.2.0) we introduced ["verification with simulation"](https://github.com/ethereum/sourcify/pull/864), that is, executing the contract's compiled creation bytecode on an EVM to see if it will yield the same **onchain deployed bytecode** at the given chainId & address. This allows us to verify "contracts with immutables created by factory contracts".
-
-With this we let the user pass `contextVariables` to the "simulation". These variables are useful when they are used as a value to an immutable variable in the contract's constructor. Currently you can pass two types of variables:
-
-```ts
-const contextVariables = {
-  msgSender: '0x00878Ac0D6B8d981ae72BA7cDC967eA0Fae69df4',
-  abiEncodedConstructorArguments: "0x0000000000000000000000000000000000000000000000000000000000038efe",
-}
-
-const match = await verifyDeployed(
-  checkedContract[0],
-  goerliChain,
-  '0x00878Ac0D6B8d981ae72BA7cDC967eA0Fae69df4'
-  contextVariables
-)
-```
-
-(_In the server API, find the field [`contextVariables`](https://docs.sourcify.dev/docs/api/server/verify/)_)
-
-For example, if you have a contract like this:
-
-```solidity
-contract Child2{
-    address immutable public owner;
-    constructor(){
-       owner = msg.sender;
-    }
-}
-```
-
-passing the `msgSender` variable allows `lib-sourcify` to assign this variable inside the bytecode, and be able to verify, because it's an [immutable variable](https://docs.sourcify.dev/docs/immutables/). If there are other potential variables that are used as a value to immutables in contracts, please let us know.
-
 ### Creator Tx Hash
 
 We can also verify contracts by looking at the `tx.input` of the transaction that created the contract. If this matches the creation bytecode of the compiled contract AND the address resulting from the `tx.from` and `tx.nonce` matches the given address, we can verify the contract.
@@ -123,7 +88,7 @@ const match = await verifyDeployed(
 );
 ```
 
-(_In the server API, find the field [`creatorTxHash`](https://docs.sourcify.dev/docs/api/server/verify/)_)
+(_In the server API, find the field [`creatorTxHash`](https://sourcify.dev/server/api-docs/#/Stateless%20Verification/post_verify_solc_json)_)
 
 ### CREATE2
 
