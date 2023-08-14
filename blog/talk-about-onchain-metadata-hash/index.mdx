@@ -1,0 +1,56 @@
+---
+id: talk-about-onchain-metadata-hash
+title: We Need to Talk About the On-Chain Metadata Hash
+authors:
+  - name: Kaan Uzdogan
+    url: https://github.com/kuzdogan
+    image_url: https://github.com/kuzdogan.png
+tags: [Sourcify, Solidity, metadata, CBOR, IPFS]
+date: 2023-08-13
+---
+
+# We Need to Talk About the On-Chain Metadata Hash
+
+## Introduction
+
+Solidity compiler has a feature, not known by everyone, that appends the IPFS hash of the [contract metadata](/docs/metadata/) to the contract bytecode. This effectively acts as a fingerprint of the compilation, and when deployed goes onchain. With that, we can verify the contracts ["perfectly"](/docs/full-vs-partial-match/) and fetch the contract source code from IPFS. One of our
+missions at Sourcify is to make this feature more known and used, but [not everyone is a fan of it](https://github.com/ethereum/solidity/issues/1571).
+
+I will argue this is a useful and at times a necessary feature for correctly verifying contracts. Yes, it is sometimes painful to verify contracts because of the indeterminism caused by the metadata hash. But as long as the tooling is there (we are getting there), you will not have to worry about it most of the times.
+
+Finally, I will call upon an open discussion on the usefulness of the metadata hash. I'd really like to see counter-arguments and hopefully we can come up with a better solution. I think other languages should also consider this feature, and we should come up with a standard for it.
+
+If don't full understand what I'm talking about, you can go to [our playground](https://playground.sourcify.dev/) to see it in action.
+
+## Source code verification is (sometimes) hard
+
+Sometimes because most of the times it's good enough.
+
+- Why foolproof source code verification is hard
+- Cases where partial matches are misleading
+
+### Runtime code vs Creation code
+
+When you compile a contract you get two bytecodes. The runtime code is the actual code of the contract that will be stored on blockchain and will be executed when the contract is called. The creation code is the code that will be executed by the EVM when the contract is being deployed, which will store the runtime code at contract's address.
+
+One can say that the counterparty of a contract written in a high level language (like Solidity) is the creation bytecode. So the verification should be done against the creation bytecode. The problem is that the creation bytecode is not stored onchain, unless the contract is created with a transaction to receiver address null. Then the tx is saved. But for factory contracts, for example, it is executed once and then discarded. So someone needs to index and save the creation bytecodes somewhere and you need to trust them. Whereas the runtime bytecode is stored onchain and you can request it from your node with `eth_getCode`. But the creation bytecode is not necessarily the output of the compiler. The creation bytecode can be any code that will execute and store the runtime bytecode at the contract address. See [@ricmoo's CREATE2 example](https://devpost.com/software/will-o-the-wisp). He demonstrates how to deploy `SELFDESTRUCT` a contract and deploy a completely different contract at the same address. He uses `CREATE2` but the same can be done with `CREATE`. That means the same creation code can be used to deploy different contracts and we can't always assume we can use it to verify the source code.
+
+On the other hand the runtime bytecode is the actual code of the contract and is readily available at `eth_getCode`. The compiler also outputs the runtime bytecode so one get verfiy contracts with the runtime bytecode too. However, not everything in high-level contract code is represented in the runtime bytecode. Imagine this contract excerpt:
+
+```solidity
+    constructor() {
+        owner = msg.sender;
+        emit OwnerSet(address(0), owner);
+    }
+```
+
+I can deploy this contract but verify it with a slightly different contract with the following constructor, which can have huge implications:
+
+```solidity
+    constructor() {
+        owner = tx.origin;
+        emit OwnerSet(address(0), owner);
+    }
+```
+
+This is because this constructor code part will not be included in the runtime bytecode.
