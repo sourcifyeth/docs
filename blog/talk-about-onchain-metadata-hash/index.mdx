@@ -13,14 +13,14 @@ date: 2023-08-13
 
 ## Introduction
 
-Solidity compiler has a feature, not known by everyone, that appends the IPFS hash of the [contract metadata](/docs/metadata/) to the contract bytecode. This hash effectively acts as a fingerprint of the compilation, and when deployed goes onchain. With that, we can verify the contracts ["perfectly"](/docs/full-vs-partial-match/) and fetch the contract source code from IPFS. One of our
+Solidity compiler has a feature, not known by everyone, that appends the IPFS hash of the [contract metadata](/docs/metadata/) to the contract bytecode. This hash effectively acts as a _fingerprint_ of the compilation, and when deployed, goes onchain. With that, we can verify the contracts ["perfectly"](/docs/full-vs-partial-match/) and fetch the contract source code from IPFS. One of our
 missions at Sourcify is to make this feature more known and used, but [not everyone is a fan of it](https://github.com/ethereum/solidity/issues/1571).
 
-I will argue this is a useful and at times a necessary feature for correctly verifying contracts. Yes, it is sometimes painful to verify contracts because of the indeterminism caused by the metadata hash. But as long as the tooling is there (we are getting there), you will not have to worry about it most of the times.
+Yes, it is sometimes painful to verify contracts because of the indeterminism caused by the metadata hash. But I will argue this is a useful and at times a necessary feature for correctly verifying contracts. Plus, as long as the tooling is there (we are getting there), you will not have to worry about it most of the times.
 
 Finally, I will call for an open discussion on the metadata hash. I'd really like to see counter-arguments and hopefully we can come up with a better solution. I think other languages should also consider this feature, and if we can agree this is a useful feature, we should come up with a standard for it.
 
-(If don't fully the metadata hash check out [our playground](https://playground.sourcify.dev/) to see it in action.)
+(If you don't fully understand the metadata hash check out [our playground](https://playground.sourcify.dev/) to see it in action.)
 
 ## Runtime code vs Creation code
 
@@ -36,23 +36,25 @@ Since the terms are not well defined, some terminology:
 
 - "code" = "bytecode" in this context. Sometimes people just call it "runtime code", or "creation code".
 - "Init code" = "Creation bytecode". This is usually used in [`create2` context](https://eips.ethereum.org/EIPS/eip-1014).
-- "Deployed Bytecode" = "Runtime Bytecode". This is another common way to refer to the runtime bytecode by the Solidity compiler and frameworks. I refrain from using this as sometime the contract is not deployed and "runtime code" is more accurate.
+- "Deployed Bytecode" = "Runtime Bytecode". This is another common way to refer to the runtime bytecode by the Solidity compiler and frameworks. I refrain from using this as sometimes the contract is not deployed and "runtime code" is more accurate.
 - `evm.bytecode` = "Creation bytecode". The [Solidity compiler](https://docs.soliditylang.org/en/latest/using-the-compiler.html) refers to it as this in the output.
 - `evm.deployedBytecode` = "Runtime bytecode". Same as above.
 
 ### Which bytecode?
 
-Let's go back to the source code verification. The problem we are trying to solve is we have a contract, and we want to see the _original_ source code of it. Because we humans, can't really read bytecodes. However, a contract has two bytecodes, which one should we compare the source code to?
+Let's go back to the source code verification. The problem we are trying to solve is we have a contract, and we want to see the _original_ source code of it. Because we humans, can't really read bytecodes.
+
+However, a contract has two bytecodes, which one should we compare the source code to?
 
 ### Verifying with Creation Bytecode
 
 One can say that the bytecode counterparty of a contract written in a high level language is the creation bytecode. Because, in a typical contract deployment this is what you _give_ to the EVM to execute.
 
-The problem with the creation bytecode is that it's not always stored onchain. The only time you see this is when you deploy a contract from an Externally Owned Account (EOA) by putting the creation bytecode in the `tx.data` and setting the receiver `tx.to` to `null`. In that case you'll see the bytecode if you look at the transaction.
+The problem with the creation bytecode is that it's not always stored onchain. The only time you see this is when you deploy a contract from an Externally Owned Account (EOA) by putting the creation bytecode in the `tx.data` and setting the receiver `tx.to` to `null`. In that case you'll see the creation bytecode if you look at the transaction.
 
 However, for contracts created by other contracts (e.g. factories) it is executed once and then discarded. So someone needs to index and save the creation bytecodes somewhere and you need to trust them. Whereas the runtime bytecode is stored onchain and you can request it from your node with `eth_getCode`.
 
-On the other hand, the creation bytecode of a contract is not necessarily what the compiler outputs. The creation bytecode can be any code that will execute and store the runtime bytecode at the contract address. See [@ricmoo's CREATE2 example](https://devpost.com/software/will-o-the-wisp). He demonstrates how to deploy and `SELFDESTRUCT` contract, and finally deploy a completely different contract at the same address, even though CREATE2 addreses depend on the init code. In this case the init code is the same but it dynamically gets and writes the contract code from somewhere else. If you change the code where it's dynamically fetched from, you deploy a different contract at the same address. So for this contract, even if we knew its original source code, we can't compile and compare against its creation code.
+On the other hand, the creation bytecode of a contract is not necessarily what the compiler outputs. The creation bytecode can be any code that will execute and store the runtime bytecode at the contract address. See [@ricmoo's CREATE2 example](https://devpost.com/software/will-o-the-wisp). He demonstrates how to deploy and `SELFDESTRUCT` a contract, and finally deploy a completely different contract at the same address, even though CREATE2 addreses depend on the init code. In this case the init code is the same but it dynamically gets and writes the contract code from somewhere else. If you change the code where it's dynamically fetched from, you deploy a different contract at the same address. So for this contract, even if we knew its original source code, we can't compile and compare against its creation code.
 
 ### Verifying with the Runtime Bytecode
 
@@ -92,7 +94,7 @@ I believe this needs to be the default way to verify contracts, and only when yo
 
 ## Conclusion
 
-Although at Sourcify we base our verification on this, most of the ecosystem don't make this distinction or are just aware of it.
+The two bytecodes associated with a contract are not always sufficient to correctly verify a contract. The only foolproof way to do it is to use the runtime bytecode with the metadata hash appended to it. Although at Sourcify we base our verification on this, most of the ecosystem don't make this distinction or are just aware of it.
 
 As an outcome of this article I'd really want to see:
 
