@@ -35,10 +35,14 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
       - name: Print pushed image info
+        env:
+          DIGEST: ${{ steps.buildpush.outputs.digest }}
+          IMAGE_ID: ${{ steps.buildpush.outputs.imageid }}
+          METADATA: ${{ steps.buildpush.outputs.metadata }}
         run: |
-          echo ${{ steps.buildpush.outputs.digest }};
-          echo ${{ steps.buildpush.outputs.imageid }};
-          echo ${{ steps.buildpush.outputs.metadata }};
+          echo $DIGEST;
+          echo $IMAGE_ID;
+          echo $METADATA;
       - name: Dispatch deployment
         uses: peter-evans/repository-dispatch@26b39ed245ab8f31526069329e112ab2fb224588
         with:
