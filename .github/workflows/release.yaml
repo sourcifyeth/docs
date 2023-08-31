@@ -46,7 +46,7 @@ jobs:
       - name: Dispatch deployment
         uses: peter-evans/repository-dispatch@26b39ed245ab8f31526069329e112ab2fb224588
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_DISPATCH_TOKEN }}
           repository: sourcifyeth/infra
           event-type: deploy-docs
           client-payload: >-
