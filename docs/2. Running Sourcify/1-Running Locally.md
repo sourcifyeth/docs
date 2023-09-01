@@ -20,23 +20,21 @@ git clone https://github.com/ethereum/sourcify.git && cd sourcify
 
 ## Install and Build
 
-Install server dependencies
+Install dependencies
 
 ```
 npm install
 ```
 
-Install all modules with [lerna](https://github.com/lerna/lerna)
+This will install dependencies for the server (root folder) as well as the UI (`ui/` folder) and other `packages/` with [lerna](https://lerna.js.org/docs/introduction).
 
-```
-npx lerna bootstrap
-```
-
-And build
+Then build with
 
 ```
 npx lerna run build
 ```
+
+which will build each of the packages.
 
 ## Create .env
 
@@ -54,26 +52,25 @@ SOLC_REPO= # Path where Solidity compiler binaries will be saved. e.g. /home/use
 SOLJSON_REPO= # Path where Solidity JS (solc-js) compilers are saved e.g. /home/user/solc/js
 ```
 
-You also need to provide either Alchemy API keys or your own JSON-RPC node URL for Ethereum networks. If both provided, it will first query the custom JSON-RPC and fall back to Alchemy.
-
-For other networks with Alchemy support such as Polygon, Optimism, Arbitrum etc., you also need to provide an API key. You can check those networks in the [`services/core/src/sourcify-chains.ts`](https://github.com/ethereum/sourcify/blob/staging/src/sourcify-chains.ts#L113). For the chains without an RPC in `sourcify-chains.ts`, the default RPCs from in [`services/core/src/chains.json`](https://github.com/ethereum/sourcify/blob/staging/src/chains.json) will be used.
-
-Infura is needed only for the Palm Network.
+You also need to provide either Alchemy API keys or your own JSON-RPC node URL for Ethereum networks. If both provided, it will first query the `NODE_URL_{chain}` and fall back to Alchemy.
 
 ```bash
-INFURA_ID=xxx
 ALCHEMY_ID=xxx
 ```
 
-For Ethereum chains JSON-RPC URLs:
-
 ```bash
 # Custom nodes
-NODE_ADDRESS=http://localhost
-NODE_PORT_MAINNET=8545
-NODE_PORT_RINKEBY=
-NODE_PORT_GOERLI=
-NODE_PORT_SEPOLIA=
+NODE_URL_MAINNET=
+NODE_URL_GOERLI=
+NODE_URL_SEPOLIA=
+```
+
+For other networks with Alchemy support such as Polygon, Optimism, Arbitrum etc., you also need to provide an API key. You can check those networks in the [`services/core/src/sourcify-chains.ts`](https://github.com/ethereum/sourcify/blob/staging/src/sourcify-chains.ts#L113). For the chains without an `rpc` field in `sourcify-chains.ts`, the default RPCs from in [`services/core/src/chains.json`](https://github.com/ethereum/sourcify/blob/staging/src/chains.json) will be used.
+
+Infura is needed only for the Palm Network and not used for Ethereum, Arbitrum, Optimism, Polygon etc.
+
+```bash
+INFURA_ID=xxx
 ```
 
 ### Run
@@ -97,6 +94,8 @@ REACT_APP_IPNS=repo.staging.sourcify.dev
 REACT_APP_TAG=latest
 ```
 
+`REACT_APP_AUTH0` variables are needed for authenticating CREATE2 verification. You can create an account in https://auth0.com/ and enter credentials with the correct callback.
+
 ### Run
 
 ```bash
@@ -110,13 +109,28 @@ The repository (https://repo.sourcify.dev) is a simple web UI on top of the file
 
 The easiest way to run the contract repository is to directly run the docker container using the docker-compose file `environments/repository.yaml`.
 
+First, set the environment variables in `environments/.env` for the container:
+
+```bash
+# Repository path in the host machine
+REPOSITORY_PATH_HOST=/path/to/repo
 ```
+
+Make sure the folder exists with `mkdir -p /path/to/repo`
+
+```bash
 docker-compose -f environments/repository.yaml up
 ```
 
 This will pull and run the `ethereum/source-verify:repository-${TAG}` docker container from [our Docker hub](https://hub.docker.com/r/ethereum/source-verify) on port `REPOSITORY_SERVER_EXTERNAL_PORT`.
 
 You can also build your own container by changing the `image` of the container to a local container `build` context:
+
+However you need to pull the `/h5ai-nginx` submodule as the folder will be initially empty:
+
+```bash
+git submodule update --init --recursive
+```
 
 ```yaml
 # environments/repository.yaml
@@ -131,12 +145,6 @@ services:
       dockerfile: Dockerfile
     container_name: repository-${TAG}
     volumes:
-```
-
-However you need to pull the `/h5ai-nginx` submodule as the folder will be initially empty:
-
-```
-git submodule update --init --recursive
 ```
 
 ## Running the Monitor
