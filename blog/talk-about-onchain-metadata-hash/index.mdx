@@ -16,11 +16,9 @@ date: 2023-08-13
 Solidity compiler has a feature, not known by everyone, that appends the IPFS hash of the [contract metadata](/docs/metadata/) to the contract bytecode. This hash effectively acts as a _fingerprint_ of the compilation, and when deployed, goes onchain. With that, we can verify the contracts ["perfectly"](/docs/full-vs-partial-match/) and fetch the contract source code from IPFS. One of our
 missions at Sourcify is to make this feature more known and used, but [not everyone is a fan of it](https://github.com/ethereum/solidity/issues/1571).
 
-Yes, it is sometimes painful to verify contracts because of the indeterminism caused by the metadata hash. But I will argue this is a useful and at times a necessary feature for correctly verifying contracts. Plus, as long as the tooling is there (we are getting there), you will not have to worry about it most of the times.
-
-Finally, I will call for an open discussion on the metadata hash. I'd really like to see counter-arguments and hopefully we can come up with a better solution. I think other languages should also consider this feature, and if we can agree this is a useful feature, we should come up with a standard for it.
-
 (If you don't fully understand the metadata hash check out [our playground](https://playground.sourcify.dev/) to see it in action.)
+
+I argue this is the only foolproof way to verify contracts. Languages and tooling should come together and come up with a common standard. We should look back at what worked and what didn't, and come up with a better next version.
 
 ## Runtime code vs Creation code
 
@@ -86,20 +84,40 @@ This is because this constructor code part will not be included in the runtime b
 
 There's a way around this problem. If you verify a contract with its [metadata hash appended](https://docs.soliditylang.org/en/latest/metadata.html#encoding-of-the-metadata-hash-in-the-bytecode) to the runtime bytecode, you'll get a [full match](http://localhost:3000/docs/full-vs-partial-match/). This means the source code you are looking at is exactly the same as the one that was originally compiled, because if you change anything about the contract (even a whitespace), the metadata hash will change and you will not get a "full match" but a "partial match".
 
-This, I'd argue, is the only foolproof way to verify a contract's source code. This method covers all the cases above and the ones I haven't mentioned or we don't know about yet. By being based on the runtime code, this also removes the need to trust a third party to index the creation bytecode, and instead you can get the bytecode from your own execution client.
+This, I'd argue, is the only foolproof way to verify a contract's source code. This method covers all the cases above and the ones I haven't mentioned or we don't know about yet. By being based on the runtime code, this also removes the need to trust a third party to index the creation bytecode, and instead you can get the bytecode from your own execution client's JSON RPC interface.
 
-Yes, the indeterminism caused by the metadata hash makes it harder to fully verify contracts. But if we can get the tooling right, we can verify contracts at the deployment pipeline (i.e. right at the point when they are deployed) without causing any changes to the metadata hashes. This also means we need to stop flattening contracts and, if not via metadata, verify with the standard JSON output of the contract.
+### Problems with the Metadata Hash
 
-I believe this needs to be the default way to verify contracts, and only when you can't do it, you should fall back to the partial match.
+The main critisism of this feature is that the hash is too _sensitive_. It's both a bug and a feature that the hash changes even with a whitespace change.
+
+A bigger problem is with the paths of the `.sources`.
+
+```json
+  ...
+  "sources": {
+    "myDirectory/myFile.sol": {
+      "keccak256": "0x123...",
+      "license": "MIT",
+      "urls": [ "bzz-raw://7d7a...", "dweb:/ipfs/QmN..." ]
+    }
+  }
+```
+
+The keys here are actually not file paths but [source-unit names](https://docs.soliditylang.org/en/latest/path-resolution.html#virtual-filesystem), meaning they can be arbitrary strings. This is especially a problem for projects deploying with CREATE2, where the address of the contract depends on the init code. Any difference in "path" will be a different metadata hash --> diferent bytecode --> different contract address. As a result, most of them just turn off this feature.
+
+It's a bigger problem if the same codebase does not compile to the same bytecode on different platforms. The differences caused by comments/whitespaces are not that big of a deal if we can verify contracts at the deployment pipeline i.e. right at the point when they are deployed. This also means we need to stop [flattening contracts](https://ethereum.stackexchange.com/questions/131591/how-to-flatten-imported-contracts). Ideally you never drag and drop any files to a website, but use a verification plugin on your tooling (Foundry, Hardhat) or IDE (Remix). No medium size contract would manually be verified.
+
+What would be a more clever way to do this? If we are able get this right, we solve most of the problems.
 
 ## Conclusion
 
-The two bytecodes associated with a contract are not always sufficient to correctly verify a contract. The only foolproof way to do it is to use the runtime bytecode with the metadata hash appended to it. Although at Sourcify we base our verification on this, most of the ecosystem don't make this distinction or are just aware of it.
+The two bytecodes associated with a contract are not always sufficient to correctly verify a contract. The only foolproof and decentralized way to do it is to use the runtime bytecode with the metadata hash appended to it. I believe this needs to be the default way to verify contracts, and only when you can't do it (like [this bug](https://github.com/ethereum/solidity/issues/14494)), you should fall back to the partial match. Although at Sourcify we base our verification on this, most of the ecosystem don't make the partial vs full match distinction or are just aware of it.
 
 As an outcome of this article I'd really want to see:
 
 1. Other cases where a runtime bytecode or creation bytecode fails to correctly verify a contract.
 2. Counter-arguments to the usefulness of the metadata hash.
-3. Languages other than Solidity adopting this feature, and coming up with a standard for it.
+3. Clever ways to mitigate the problems with the metadata hash.
+4. Languages other than Solidity adopting this feature, and coming up with a standard for it.
 
 Do have anything to add for these points above? Please reach out to me on [Twitter](https://twitter.com/kuzdogan) or add your remarks in the discussion issue for this article (I'll link). I'll also be updating this article with the feedback I get, and be linking to discussions. This will be a living document.
