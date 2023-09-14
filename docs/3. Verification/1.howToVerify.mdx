@@ -35,8 +35,8 @@ forge create --rpc-url <your_rpc_url> \
 ```
 
 ```
-forge verify-contract MyToken \
- 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
+forge verify-contract 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
+  src/MyToken.sol:MyToken \
   --chain-id 11155111 \
   --verifier sourcify
 ```
