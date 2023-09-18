@@ -57,6 +57,14 @@ The Hardhat plugin [@wighawag/hardhat-deploy](https://github.com/wighawag/hardha
 hardhat --network mainnet sourcify
 ```
 
+### hardhat-sourcify plugin
+
+The plugin [@xtools-at/hardhat-sourcify](https://github.com/xtools-at/hardhat-sourcify) can verify any contract deployed with Hardhat. After adding the plugin to your _hardhat.config_ file, you can verify your contracts using:
+
+```
+hardhat --network mainnet verify-sourcify --contract "MyContract" --address 0x12345...
+```
+
 ### With Hardhat output
 
 Sourcify can parse the Hardhat `.json` output file under `artifacts/build-info` to verify contracts.
