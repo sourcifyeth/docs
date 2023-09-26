@@ -58,7 +58,7 @@ Simply drag and drop the output `.json` file of the contract you want to verify 
 
 Hardhat stores the outputs of the compilations under the `artifacts/build-info/` folder inside the project. The `.json` file under the folder contains the [Standard JSON Input-Output](https://docs.soliditylang.org/en/latest/using-the-compiler.html#compiler-input-and-output-json-description) of the Solidity compiler for all contracts.
 
-Since [v2.6.8](https://github.com/nomiclabs/hardhat/releases/tag/hardhat%402.6.8), Hardhat outputs the metadata files of each contract by default under the JSON's `.output.contracts.<contract-path>.<contract-name>.metadata` field. You don't have to extract the metadata manually. To verify via the Hardhat output:
+Since [v2.6.8](https://github.com/nomiclabs/hardhat/releases/tag/hardhat%402.6.8), Hardhat outputs the metadata files of each contract by default under the JSON's `.output.contracts.<contract-path>.<contract-name>.metadata` field. You don't have to extract the metadata manually. To verify via the Hardhat output you can provide the JSON containing the artifacts to Sourcify via UI or API. See [Hardhat verification](/docs/how-to-verify/#with-hardhat-output) for more details. If the file is too large, try zippping it and uploading the zip file.
 
 ### Hardhat - earlier than v2.6.8
 
