@@ -74,10 +74,26 @@ const Table = () => {
   const [testMap, setTestMap] = useState();
   const [testDate, setTestDate] = useState();
 
+  const addMonitoredSupportFrom = async (url, supportedChains) => {
+    try {
+      // Try to fetch monitor information
+      const req = await fetch(url)
+      const res = await req.json()
+      res.forEach(monitoredChain => {
+        supportedChains.find(supportedChain => supportedChain.chainId === monitoredChain.chainId).monitored = true
+      })
+    } catch(e) {
+      setError("Cannot get monitor data from url: " + url)
+    }
+  }
+
   useEffect(() => {
     fetch("https://sourcify.dev/server/chains")
       .then((res) => res.json())
-      .then((chains) => setSourcifyChains(chains))
+      .then(async (chains) => {
+        await addMonitoredSupportFrom('https://raw.githubusercontent.com/ethereum/sourcify/staging/services/monitor/chains.json', chains)
+        setSourcifyChains(chains)
+      })
       .catch((err) =>
         setError(
           "Error fetching chains from the Sourcify server\n\n" + err.message
