@@ -49,6 +49,24 @@ forge verify-check 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
 
 ## Hardhat
 
+### hardhat-verify plugin
+
+The Hardhat plugin [@nomicfoundation/hardhat-verify](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-verify) has official Sourcify support.
+
+In order to enable Sourcify support, add this to `hardhat.config.js`:
+
+```
+sourcify: {
+  enabled: true,
+}
+```
+
+After deploying your contracts you can verify on Sourcify with:
+
+```
+npx hardhat verify --network mainnet DEPLOYED_CONTRACT_ADDRESS
+```
+
 ### hardhat-deploy plugin
 
 The Hardhat plugin [@wighawag/hardhat-deploy](https://github.com/wighawag/hardhat-deploy#5-hardhat-sourcify) has Sourcify support. After deploying your contracts with the plugin you can easily verify your contracts with:
