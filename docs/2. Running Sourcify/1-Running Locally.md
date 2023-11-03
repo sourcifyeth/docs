@@ -36,9 +36,9 @@ npx lerna run build
 
 which will build each of the packages.
 
-## Create .env
+## Create .env for server
 
-Make a copy of the `environments/.env.dev` and rename it to `environments/.env`.
+Make a copy of the `services/server/.env.dev` and rename it to `services/server/.env`.
 
 ## Running the Server
 
@@ -73,6 +73,15 @@ Infura is needed only for the Palm Network and not used for Ethereum, Arbitrum, 
 INFURA_ID=xxx
 ```
 
+Fill also the Auth0 environment variables, if you want to skip this step you can set the variables as follows, but the functionality will not work.
+
+```
+AUTH0_AUDIENCE=null
+AUTH0_ISSUERBASEURL=null
+AUTH0_TOKENSIGNINGALG=
+AUTH0_CLIENTID=
+```
+
 ### Run
 
 Start the server
@@ -102,6 +111,19 @@ REACT_APP_TAG=latest
 cd ui/
 npm start
 ```
+
+### Running with docker
+
+The server docker container uses the .env file into `services/server/`, in particular these are the environment variables that need to be set in order to mount the host volumes into the container.
+
+```
+DOCKER_HOST_SERVER_PORT= # this is the host port that is going to be forwarded to SERVER_PORT
+DOCKER_HOST_SOLC_REPO= # this is the host volume that is going to be mounted to SOLC_REPO
+DOCKER_HOST_SOLJSON_REPO= # this is the host volume that is going to be mounted to SOLJSON_REPO
+DOCKER_HOST_REPOSITORY_PATH= # this is the host volume that is going to be mounted to REPOSITORY_PATH
+```
+
+Then simply run `docker-compose up` from `services/server/`
 
 ## Running the Repository
 
