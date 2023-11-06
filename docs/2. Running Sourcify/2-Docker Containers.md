@@ -5,39 +5,43 @@ description: Containerized Sourcify Modules
 slug: /docker-containers
 ---
 
-# Docker Containers
+# Server
 
-Different modules of Sourcify are built and run in Docker containers. The containers `build-*.yaml` are used for building the Docker images. These images are then pushed to the [ethereum/source-verify Docker hub](https://hub.docker.com/r/ethereum/source-verify/tags) with the CI workflows `build-publish-*` under [.circleci/config.yaml](https://github.com/ethereum/sourcify/blob/staging/.circleci/config.yml). For example the server container is built with the [environments/build-server.yaml](https://github.com/ethereum/sourcify/blob/staging/environments/build-server.yaml) which has the context [src/Dockerfile.server](https://github.com/ethereum/sourcify/blob/staging/src/Dockerfile.server) file.
+Server is into the `services/server` folder. We provide a `docker-compose.yml` file for convenience.
 
-You can run the services with the `docker-compose up` command. For example the following command runs the server, ui, and repo in the background (`-d`).
-
-Make sure to set the Docker variables in the `.env` file properly:
+To run in a container you can use this compose file and provide these environment variables for your host machine:
 
 ```bash
-# Docker config
-## Relevant if your're running in a container
-## Where to mount the downloaded compilers directory on the host machine
-SOLC_REPO_HOST=/home/gather/staging/data/solc-bin/linux-amd64
-SOLJSON_REPO_HOST=/home/gather/staging/data/solc-bin/bin
-# Repository path in the host machine
-REPOSITORY_PATH_HOST=/tmp/sourcify/repository
-## Ports to access containers from the host
-SERVER_EXTERNAL_PORT=5555
-UI_EXTERNAL_PORT=1234
-REPOSITORY_SERVER_EXTERNAL_PORT=10000
-MONITOR_EXTERNAL_PORT=3000
-IPFS_GW_EXTERNAL_PORT=5050
-IPFS_LIBP2P_EXTERNAL_PORT=4002
-IPFS_API_EXTERNAL_PORT=5002
-SERVER_URL=https://staging.sourcify.dev/server
+DOCKER_HOST_SERVER_PORT=
+DOCKER_HOST_SOLC_REPO=
+DOCKER_HOST_SOLJSON_REPO=
+DOCKER_HOST_REPOSITORY_PATH=
 ```
 
-Run containers with:
+Also update these as these will be different in the container than in your host machine:
 
 ```bash
-cd environments/
+SERVER_PORT=5555
+SOLC_REPO=/data/solc-bin/linux-amd64
+SOLJSON_REPO=/data/solc-bin/soljson
+REPOSITORY_PATH=/data/repository
 ```
 
+Then run:
+
 ```bash
-docker-compose -f repository.yaml -f server.yaml -f ui.yaml up -f monitor.yaml -d
+docker-compose up
+```
+
+# Monitor
+
+See [Running Locally](/docs/run-locally/#running-the-monitor) to learn more about the monitor's configuration.
+
+```bash
+docker run \
+  -v /path/to/chains.json:/home/app/services/monitor/chains.json \
+  -v /path/to/config.json:/home/app/services/monitor/config.json \
+  -e ALCHEMY_API_KEY=xxx \
+  -e INFURA_API_KEY=xxx \
+  ethereum/source-verify:monitor-stable
 ```
