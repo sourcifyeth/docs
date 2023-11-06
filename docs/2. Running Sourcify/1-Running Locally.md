@@ -90,6 +90,19 @@ Start the server
 npm run server:start
 ```
 
+### Running with docker
+
+The server docker container uses the .env file into `services/server/`, in particular these are the environment variables that need to be set in order to mount the host volumes into the container.
+
+```
+DOCKER_HOST_SERVER_PORT= # this is the host port that is going to be forwarded to SERVER_PORT
+DOCKER_HOST_SOLC_REPO= # this is the host volume that is going to be mounted to SOLC_REPO
+DOCKER_HOST_SOLJSON_REPO= # this is the host volume that is going to be mounted to SOLJSON_REPO
+DOCKER_HOST_REPOSITORY_PATH= # this is the host volume that is going to be mounted to REPOSITORY_PATH
+```
+
+Then simply run `docker-compose up` from `services/server/`
+
 ## Running the UI
 
 ### Set Environment Variables
@@ -111,19 +124,6 @@ REACT_APP_TAG=latest
 cd ui/
 npm start
 ```
-
-### Running with docker
-
-The server docker container uses the .env file into `services/server/`, in particular these are the environment variables that need to be set in order to mount the host volumes into the container.
-
-```
-DOCKER_HOST_SERVER_PORT= # this is the host port that is going to be forwarded to SERVER_PORT
-DOCKER_HOST_SOLC_REPO= # this is the host volume that is going to be mounted to SOLC_REPO
-DOCKER_HOST_SOLJSON_REPO= # this is the host volume that is going to be mounted to SOLJSON_REPO
-DOCKER_HOST_REPOSITORY_PATH= # this is the host volume that is going to be mounted to REPOSITORY_PATH
-```
-
-Then simply run `docker-compose up` from `services/server/`
 
 ## Running the Repository
 
