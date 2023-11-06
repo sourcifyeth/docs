@@ -129,11 +129,11 @@ First you need to provide which chains to monitor in a json file.
 
 Infura and Alchemy keys must be formatted as above in `{}`
 
-See [chains.json](./chains.json) for a full example and to see which chains we monitor ourselves. You can also use the [chainid.network/chains.json](https://chainid.network/chains.json) to find chains.
+See `./chains.json` for a full example and to see which chains we monitor ourselves. You can also use the [chainid.network/chains.json](https://chainid.network/chains.json) to find chains.
 
 #### Monitor Config
 
-Optionally you can pass a monitor config in a `config.json` file. If you don't, the [default config](src/defaultConfig.js) will be used. If you leave any field blank, it will be filled with the default config.
+Optionally you can pass a monitor config in a `config.json` file. If you don't, the default config `src/defaultConfig.js` will be used. If you leave any field blank, it will be filled with the default config.
 
 The structure of the file is as such:
 
