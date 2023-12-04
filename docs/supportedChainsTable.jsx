@@ -6,9 +6,7 @@ import LoadingOverlay from "../src/components/LoadingOverlay";
 const Yes = () => <div className="centered-flex">✅</div>;
 const No = () => <div className="centered-flex">❌</div>;
 const C = ({ children }) => <div className="centered-flex">{children}</div>;
-const R = ({ children }) => (
-  <div style={{ textAlign: "right", fontFamily: "monospace" }}>{children}</div>
-);
+const R = ({ children }) => <div style={{ textAlign: "right", fontFamily: "monospace" }}>{children}</div>;
 
 const TestResult = ({ result, detailedUrl, type, error }) => {
   const ToolTip = (
@@ -30,38 +28,22 @@ const TestResult = ({ result, detailedUrl, type, error }) => {
   }
   if (result === true)
     return (
-      <div
-        className="centered-flex"
-        data-tip={`${type} contract verification for the chain working`}
-      >
+      <div className="centered-flex" data-tip={`${type} contract verification for the chain working`}>
         ✅
       </div>
     );
   if (result === false)
     return (
       <>
-        <ReactTooltip
-          effect="solid"
-          delayHide={500}
-          clickable={true}
-          id="failed-test"
-        />
-        <div
-          className="centered-flex"
-          data-html={true}
-          data-tip={renderToString(ToolTip)}
-          data-for="failed-test"
-        >
+        <ReactTooltip effect="solid" delayHide={500} clickable={true} id="failed-test" />
+        <div className="centered-flex" data-html={true} data-tip={renderToString(ToolTip)} data-for="failed-test">
           ❌
         </div>
       </>
     );
   if (result === undefined)
     return (
-      <div
-        className="centered-flex"
-        data-tip="No tests were given for this chain"
-      >
+      <div className="centered-flex" data-tip="No tests were given for this chain">
         🤷
       </div>
     );
@@ -77,47 +59,73 @@ const Table = () => {
   const addMonitoredSupportFrom = async (url, supportedChains) => {
     try {
       // Try to fetch monitor information
-      const req = await fetch(url)
-      const res = await req.json()
-      res.forEach(monitoredChain => {
-        supportedChains.find(supportedChain => supportedChain.chainId === monitoredChain.chainId).monitored = true
-      })
-    } catch(e) {
-      setError("Cannot get monitor data from url: " + url)
+      const req = await fetch(url);
+      const res = await req.json();
+      res.forEach((monitoredChain) => {
+        const foundChain = supportedChains.find((supportedChain) => supportedChain.chainId === monitoredChain.chainId);
+        if (!foundChain) return; // Could be that a chain that is not supported by Sourcify
+        foundChain.monitored = true;
+      });
+    } catch (e) {
+      setError("Cannot get monitor data from url: " + url);
     }
-  }
+  };
 
   useEffect(() => {
     fetch("https://sourcify.dev/server/chains")
       .then((res) => res.json())
       .then(async (chains) => {
-        await addMonitoredSupportFrom('https://raw.githubusercontent.com/ethereum/sourcify/staging/services/monitor/chains.json', chains)
-        setSourcifyChains(chains)
+        await addMonitoredSupportFrom(
+          "https://raw.githubusercontent.com/ethereum/sourcify/staging/services/monitor/chains.json",
+          chains
+        );
+        sortChains(chains);
+        setSourcifyChains(chains);
       })
-      .catch((err) =>
-        setError(
-          "Error fetching chains from the Sourcify server\n\n" + err.message
-        )
-      );
+      .catch((err) => setError("Error fetching chains from the Sourcify server\n\n" + err.message));
     fetch("https://sourcify.dev/server/chain-tests")
       .then((response) => {
-        console.log(response);
         if (!response.ok) {
           throw new Error("Error fetching chain tests \n\n");
         }
         return response.json();
       })
       .then((json) => {
-        console.log("Setting testmap");
-        console.log(json);
         setTestDate(json.testReport.stats.end);
         const testMap = formatRawTestReport(json.testReport);
-        console.log(testMap);
         setTestMap(testMap);
         setTestReportObject(json);
       })
       .catch((err) => setError(err.message));
   }, []);
+
+  function sortChains(chains) {
+    return chains.sort((a, b) => {
+      const ETHEREUM_CHAINS = [1, 5, 11155111, 1700, 3, 4];
+      const hasEthereumA = ETHEREUM_CHAINS.includes(parseInt(a.chainId));
+      const hasEthereumB = ETHEREUM_CHAINS.includes(parseInt(b.chainId));
+
+      const isMonitoredA = a.monitored === true;
+      const isMonitoredB = b.monitored === true;
+
+      // Ethereum chains on top
+      if (hasEthereumA && !hasEthereumB) {
+        return -1;
+      } else if (!hasEthereumA && hasEthereumB) {
+        return 1;
+      }
+
+      // 'monitored' come next
+      if (isMonitoredA && !isMonitoredB) {
+        return -1;
+      } else if (!isMonitoredA && isMonitoredB) {
+        return 1;
+      }
+
+      // Sort the rest alphabetically by chain.name
+      return a.name.localeCompare(b.name);
+    });
+  }
 
   // Takes the raw mochawesome test report .json and formats with the result of the standard and immutable contract verification for each chain.
   const formatRawTestReport = (rawReport) => {
@@ -159,10 +167,7 @@ const Table = () => {
 
   const rows = sourcifyChains.map((chain, i) => {
     return (
-      <tr
-        key={`chain-row-${i}`}
-        style={!chain.supported ? { color: "#ccc" } : {}}
-      >
+      <tr key={`chain-row-${i}`} style={!chain.supported ? { color: "#ccc" } : {}}>
         <td>{chain.title || chain.name}</td>
         <td>
           <R>{chain.chainId}</R>
@@ -176,11 +181,7 @@ const Table = () => {
             <TestResult
               detailedUrl={testRunCircleURL}
               type="Standard"
-              result={
-                testMap &&
-                testMap[chain.chainId] &&
-                testMap[chain.chainId].normal
-              }
+              result={testMap && testMap[chain.chainId] && testMap[chain.chainId].normal}
               error={!!error}
             />
           }
@@ -205,24 +206,26 @@ const Table = () => {
       )}
       <ReactTooltip effect="solid" />
       <div>
-        {error && (
-          <div style={{ textAlign: "center", color: "indianRed" }}>{error}</div>
-        )}
+        {error && <div style={{ textAlign: "center", color: "indianRed" }}>{error}</div>}
         {sourcifyChains.length > 0 && (
           <div style={{ marginBottom: "16px" }}>
             {" "}
-            Currently there are{" "}
-            <b>
-              {sourcifyChains.filter((c) => c.supported).length} EVM chains
-            </b>{" "}
-            supported for verification on Sourcify.
-            <br />
-            {sourcifyChains.filter((c) => c.monitored).length} chains support{" "}
-            <a href="/docs/monitoring">
-              monitoring (i.e. automatic verification)
-            </a>
-            . Including the previously supported chains, there are{" "}
-            {sourcifyChains.length} chains in total.
+            Current number of EVM chains and their support type:
+            <ul>
+              <li>
+                <a href="/docs/monitoring">Monitoring (i.e. automatic verification)</a> and Verification support:{" "}
+                <b>{sourcifyChains.filter((c) => c.monitored).length}</b>
+              </li>
+              <li>
+                Verification support: <b>{sourcifyChains.filter((c) => c.supported).length}</b>
+              </li>
+              <li>
+                Not Supported (deprecated): <b>{sourcifyChains.filter((c) => !c.supported).length}</b>
+              </li>
+              <li>
+                <b>Total: {sourcifyChains.length}</b>
+              </li>
+            </ul>
           </div>
         )}
       </div>
