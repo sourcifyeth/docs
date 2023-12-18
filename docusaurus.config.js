@@ -43,9 +43,8 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image:
-        "https://raw.githubusercontent.com/sourcifyeth/assets/master/logo-assets-png/sourcify_blue_rounded.png",
-      metadatas: [
+      image: "https://raw.githubusercontent.com/sourcifyeth/assets/master/logo-assets-png/sourcify_blue_rounded.png",
+      metadata: [
         {
           property: "og:title",
           content: "Sourcify Docs",
