@@ -47,14 +47,18 @@ To have the metadata in the ouput of the compilation with Solidity's [standard J
       ...
     }
 ```
+### Foundry
 
-### Truffle
+Foundry stores the contract compilation outputs to `out/CONTRACT_NAME` folder. The `.json` file contains the metadata of the contract under `"rawMetadata"` and `"metadata"` fields. However you don't need to extract the metadata manually for verification.
 
-Truffle stores the contract compilation outputs to `build/contracts/` folder. The `.json` file contains the metadata of the contract. You don't need to extract the metadata manually.
+You can use the `forge verify-contract` command to verify a contract. See [Foundry verification](/docs/how-to-verify/#Foundry) for more details.
 
-Simply drag and drop the output `.json` file of the contract you want to verify to the [sourcify.dev](https://sourcify.dev) UI.
+Simply drag and drop the output `.json` file of the contract you want to verify to the [sourcify.dev](https://sourcify.dev) UI or provide it as the metadata file to the [API](/docs/api).
+
 
 ### Hardhat
+
+You can use the native Hardhat [verify plugin](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-verify#verifying-on-sourcify) to verify your contracts. See [Hardhat verification](/docs/how-to-verify/#with-hardhat-plugin) for more details.
 
 Hardhat stores the outputs of the compilations under the `artifacts/build-info/` folder inside the project. The `.json` file under the folder contains the [Standard JSON Input-Output](https://docs.soliditylang.org/en/latest/using-the-compiler.html#compiler-input-and-output-json-description) of the Solidity compiler for all contracts.
 
@@ -90,3 +94,9 @@ module.exports = {
 ```
 
 In theory, if you haven't changed any of the compilation settings, it should result in the same metadata file and you should get a full match. Otherwise you will be able to get a partial match only.
+
+### Truffle
+
+Truffle stores the contract compilation outputs to `build/contracts/` folder. The `.json` file contains the metadata of the contract. You don't need to extract the metadata manually.
+
+Simply drag and drop the output `.json` file of the contract you want to verify to the [sourcify.dev](https://sourcify.dev) UI.
