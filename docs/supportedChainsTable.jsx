@@ -176,6 +176,9 @@ const Table = () => {
           {chain.supported ? "Verification" : "Not Supported"} <br />
           {chain.monitored ? "Monitoring" : ""}
         </td>
+        <td style={{ textAlign: "center" }}>
+          {chain.etherscanAPI ? "✅" : ""}
+        </td>
         <td>
           {
             <TestResult
@@ -235,6 +238,7 @@ const Table = () => {
             <th>Chain</th>
             <th>Chain ID</th>
             <th>Support Type</th>
+            <th>Import from Etherscan</th>
             <th>Verification Tests</th>
           </tr>
         </thead>
