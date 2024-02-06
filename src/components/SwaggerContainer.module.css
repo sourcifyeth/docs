@@ -1,0 +1,3 @@
+:global(.swagger-ui .info .title small pre) {
+  background-color: transparent !important;
+}
