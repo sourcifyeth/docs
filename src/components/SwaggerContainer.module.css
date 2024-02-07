@@ -1,3 +1,12 @@
 :global(.swagger-ui .info .title small pre) {
   background-color: transparent !important;
 }
+
+/* Swagger dark */
+:global([data-theme="dark"] .swagger-ui) {
+  filter: invert(88%) hue-rotate(180deg);
+}
+
+:global([data-theme="dark"] .microlight) {
+  filter: invert(100%) hue-rotate(180deg);
+}
