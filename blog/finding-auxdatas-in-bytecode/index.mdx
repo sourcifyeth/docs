@@ -28,8 +28,8 @@ However this is not always trivial especially in these cases:
 
 1. The **creation bytecode** of a contract does not necessarily have the CBOR encoded part at the very end of the bytecode. Although sometimes it’s found there, this field can be anywhere. In fact the only reason the CBOR encoded part is in the creation bytecode is because the *runtime bytecode* is embedded inside the creation bytecode as a whole. 
 
-  When executing the creation bytecode i.e. deploying the contract, the contract’s runtime bytecode needs to be returned. The runtime bytecode is alread inside the creation bytecode so this part is extracted and returned by taking the offset and the length for the related bytecode and returning it. This can be anywhere inside the code. (Check [this article](https://medium.com/@hayeah/diving-into-the-ethereum-vm-part-5-the-smart-contract-creation-process-cb7b6133b855) for a comprehensive deep dive into contract creation)
-2. The **runtime bytecode** has the CBOR encoded part always at the end of the contract (unless [turned off](https://docs.soliditylang.org/en/latest/using-the-compiler.html#input-description) with `appendCbor: false`). But the bytecode can contain other contract bytecodes nested inside, which also can have their own auxdatas, and these parts need to be ignored for a partial verification. This is found for example in factory contracts where a contract creates another contract and the child contract’s code is nested in the factory’s bytecode.
+  When executing the creation bytecode i.e. deploying the contract, the contract’s runtime bytecode needs to be returned. The runtime bytecode is already inside the creation bytecode so this part is extracted and returned by taking the offset and the length for the related bytecode and returning it. This can be anywhere inside the code. (Check [this article](https://medium.com/@hayeah/diving-into-the-ethereum-vm-part-5-the-smart-contract-creation-process-cb7b6133b855) for a comprehensive deep dive into contract creation)
+2. The **runtime bytecode** has the CBOR encoded part always at the end of the contract (unless [turned off](https://docs.soliditylang.org/en/latest/using-the-compiler.html#input-description) with `appendCbor: false`). But the bytecode can contain other contract bytecodes nested inside, which also can have their own auxdatas, and these parts need to be ignored for a verification. This is found for example in factory contracts where a contract creates another contract and the child contract’s code is nested in the factory’s bytecode.
 
 Now for other “special” parts of the bytecode, the compiler outputs the positions such as [immutables](https://docs.soliditylang.org/en/latest/contracts.html#immutable) in `immutableReferences`. Unfortunately this is not the case for auxdatas and we need to look elsewhere and find workarounds.
 
@@ -107,7 +107,7 @@ But we need one more thing: Now we know where the **metadata hashes** are but th
 
 One way to do this is to start at the metadata hash positions we've found by comparing and go extend the byte substring byte-by-byte and each time try to decode the whole byte string in CBOR. If at one point successful, we know that the auxdata ends here. Remember that right after the CBOR encoding you'll find the length of the encoded part, so we know where it starts as well. 
 
-Indeed this is [how Blockscout finds](https://web.telegram.org/a/#90529061:~:text=https%3A//github.com/blockscout/blockscout%2Drs/blob/60649839881c88f83eb5d248dcbcb2812f215672/smart%2Dcontract%2Dverifier/smart%2Dcontract%2Dverifier/src/verifier/bytecode.rs%23L264) the auxdata positions. 
+Indeed this is [how Blockscout finds](https://github.com/blockscout/blockscout-rs/blob/60649839881c88f83eb5d248dcbcb2812f215672/smart-contract-verifier/smart-contract-verifier/src/verifier/bytecode.rs#L264) the auxdata positions. 
 
 ### Sourcify solution
 
