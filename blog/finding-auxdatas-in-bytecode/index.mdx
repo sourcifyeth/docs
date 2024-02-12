@@ -1,0 +1,171 @@
+---
+id: finding-auxdatas-in-the-bytecode
+title: Finding Auxdatas in the Bytecode
+authors:
+  - name: Kaan Uzdogan
+    url: https://github.com/kuzdogan
+    image_url: https://github.com/kuzdogan.png
+  - name: Marco Castignoli
+    url: https://github.com/marcocastignoli
+    image_url: https://github.com/marcocastignoli.png
+tags: [Sourcify, Solidity, metadata, CBOR, IPFS]
+date: 2023-08-13
+---
+
+# Finding Auxdatas in the Bytecode
+
+## The problem
+
+Source code verification requires compiling a contract written in a high-level language (e.g. Solidity, Vyper) to the bytecode, and comparing the compiled bytecode with the onchain bytecode. If there’s a match, we can say the given high-level code is the source-code of the contract at the given address.
+
+The runtime bytecode of contracts by default also contain a special field at the end in CBOR encoding (auxdata). This field contains the hash of the [contract metadata](https://docs.soliditylang.org/en/latest/metadata.html) file (metadata hash), which acts as a fingerprint of the compilation. The metadata file has compiler settings, and source file hashes so the slightest change in the compiler settings or even a whitespace in any of the source files will cause a change in the metadata hash. 
+
+For a visual explanation of everything above, check out [playground.sourcify.dev](https://playground.sourcify.dev/)
+
+Because of its sensitivity, some verifiers leave this field out in verification. In Sourcify’s case, if the recompiled bytecode and the onchain bytecodes match each other exactly (including the auxdata), it’s great. This will give us a [“full match”](https://docs.sourcify.dev/docs/full-vs-partial-match/). If not, we need to find the auxdatas and leave them out when comparing to be able to get at least a "partial match". 
+
+However this is not always trivial especially in these cases:
+
+1. The **creation bytecode** of a contract does not necessarily have the CBOR encoded part at the very end of the bytecode. Although sometimes it’s found there, this field can be anywhere. In fact the only reason the CBOR encoded part is in the creation bytecode is because the *runtime bytecode* is embedded inside the creation bytecode as a whole. 
+
+  When executing the creation bytecode i.e. deploying the contract, the contract’s runtime bytecode needs to be returned. The runtime bytecode is alread inside the creation bytecode so this part is extracted and returned by taking the offset and the length for the related bytecode and returning it. This can be anywhere inside the code. (Check [this article](https://medium.com/@hayeah/diving-into-the-ethereum-vm-part-5-the-smart-contract-creation-process-cb7b6133b855) for a comprehensive deep dive into contract creation)
+2. The **runtime bytecode** has the CBOR encoded part always at the end of the contract (unless [turned off](https://docs.soliditylang.org/en/latest/using-the-compiler.html#input-description) with `appendCbor: false`). But the bytecode can contain other contract bytecodes nested inside, which also can have their own auxdatas, and these parts need to be ignored for a partial verification. This is found for example in factory contracts where a contract creates another contract and the child contract’s code is nested in the factory’s bytecode.
+
+Now for other “special” parts of the bytecode, the compiler outputs the positions such as [immutables](https://docs.soliditylang.org/en/latest/contracts.html#immutable) in `immutableReferences`. Unfortunately this is not the case for auxdatas and we need to look elsewhere and find workarounds.
+
+## Workarounds 
+
+If not the exact positions of the auxdatas, the compiler at least outputs the *values.* **Inside the legacyAssembly** object of the [compiler output](https://docs.soliditylang.org/en/latest/using-the-compiler.html#output-description) we can find the auxdata, which is under the key `.auxdata`
+
+example `legacyAssembly`:
+
+```json
+{
+	".code": [],
+	".data": {
+		"0": {
+			".auxdata": "a26469706673582212203a05097003697b26b1da819218bcd95779598eaa90539e82a59ecbe4c09757e364736f6c63430007000033",
+			".code": [...]
+		}
+	}
+}
+```
+
+At this point, one could think to do a simple string search in the bytecode for the auxdatas found in legacyAssembly, but it would be possible for an attacker to trick the search function and falsely ignore parts of the bytecode that are not supposed to be ignored.
+
+### The vulnerability
+
+Imagine we have the auxdata string from the compiler’s `legacyAssembly`  above. 
+
+```
+a26469706673582212203a05097003697b26b1da819218bcd95779598eaa90539e82a59ecbe4c09757e364736f6c63430007000033
+```
+
+This could be the auxdata of a simple child contract inside the whole bytecode that we know won’t be affected by the changes of our main contract. 
+
+For this specific example the attacker could embed these bytes inside the bytecode such a code in the main contract:
+
+```js
+assembly {
+	// Split the code from a push opcode:
+	// a26469706673582212203a05097003697b26b1da819218bcd957
+	// 79 (PUSH26)
+	// 598eaa90539e82a59ecbe4c09757e364736f6c63430007000033
+
+	mstore(0x598eaa90539e82a59ecbe4c09757e364736f6c63430007000033, 0xa26469706673582212203a05097003697b26b1da819218bcd957)
+    // PUSH26 0xa26469706673582212203a05097003697b26b1da819218bcd957
+	// PUSH26 0x598eaa90539e82a59ecbe4c09757e364736f6c63430007000033
+	// MSTORE
+}
+```
+
+By chance (really) this auxdata of 53 bytes is split into two exactly from the middle but this doesn’t have to be the case. Remember the large middle portion of the CBOR encoding contains the IPFS hash so one can salt and iterate it. 
+
+Imagine the source code of the attacker compiles to the code below. Putting new lines to demonstrate the (allegedly) auxdata part:
+
+```
+0x6080...b732b960691b604482015260640160405180910390fd5b5f80546040516001600160a01b03808516939216917f342827c97908e5e2f71151c08502a66d44b6f758e3ac2f1de95f02eb95f0a73591a35f80546001600160a01b0319166001600160a01b039290921691909117905579
+  a26469706673582212203a05097003697b26b1da819218bcd95779598eaa90539e82a59ecbe4c09757e364736f6c63430007000033
+  52565b5f6a636f6e736f6c652e6c6f6790505f80835160208501845afa505050565b6101756101a4565b565b5f60208284031215610187575f80fd5b81356001600160a01b038116811461019d575f80fd5b9392505050565b634e487b7160e01b5f52605160045260245ffdfea2646970667358221220212c0514e8c0db310d02690fc2def199f4fba3828f2401ec2b8d7104e450b8b164736f6c63430008180033
+```
+
+This is what we get from the source code the attacker gives us to verify. So we go: “Oh right there's an auxdata `a26469706673582212203a05097003697b26b1da819218bcd95779598eaa90539e82a59ecbe4c09757e364736f6c63430007000033` in this bytecode. We should ignore the corresponding part in the (onchain) bytecode to have a partial match.”
+
+Oops now we are ignoring a part in the bytecode that we're not supposed to. These code parts are only meant for non-executable code whereas we embedded this with an assembly block. 
+
+In the attacker’s **onchain bytecode** (what actually will be executed vs. the verified code) the attacker could have placed anything in this assembly block for 53 bytes. I leave it up to your imagination what can be done with this ignored bytecode block.
+
+**The gist is**, we need to make sure these to-be-ignored blocks are actually auxdatas and not coming for an executable code block. How do we do it? 
+
+## The solution(s)
+
+Well, we know that the IPFS hash inside the auxdata is the hash of the metadata file and the metadata file contains the source file hashes. So we can touch all source files to change their hashes, e.g. by adding a whitespace at the end of each. By touching every single source file, we make sure the nested auxdatas will be modified as well. If we compile again, we will have the exact same bytecode just with differences at the metadata hashes. Then we can locate the metadata hashes by comparing the original and edited bytecodes side by side.
+
+But we need one more thing: Now we know where the **metadata hashes** are but that is just a substring of the whole **CBOR auxdata**. So we need to figure out where the CBOR auxdata starts and ends.
+
+### Blockscout solution
+
+One way to do this is to start at the metadata hash positions we've found by comparing and go extend the byte substring byte-by-byte and each time try to decode the whole byte string in CBOR. If at one point successful, we know that the auxdata ends here. Remember that right after the CBOR encoding you'll find the length of the encoded part, so we know where it starts as well. 
+
+Indeed this is [how Blockscout finds](https://web.telegram.org/a/#90529061:~:text=https%3A//github.com/blockscout/blockscout%2Drs/blob/60649839881c88f83eb5d248dcbcb2812f215672/smart%2Dcontract%2Dverifier/smart%2Dcontract%2Dverifier/src/verifier/bytecode.rs%23L264) the auxdata positions. 
+
+### Sourcify solution
+
+The way we approach this in Sourcify is by again making use of the `legacyAssembly`. 
+
+These are roughly the steps:
+
+1. **Use bytecodes:** Compare the original bytecode to the whitespaced (edited) contract’s bytecode. This will give us the `positions`  of the **metadata hashes,** remember not the whole auxdata.
+2. **Use legacyAssembly:** Compare the auxdatas from `legacyAssembly` s of both contracts. We will get a `auxdataDiff` between each auxdata (1st auxdata in original vs 1st in edited etc.). The diff will not exactly be the whole **metadata hashes** because CIDv0 IPFS hashes start with `Qm` but the rest of the hash. The other parts of the auxdatas will be the same. We also keep the position of the diff inside the whole auxdata `diffStart`: 
+	```ts
+	interface AuxdataDiff {
+		real: string;
+		diffStart: number;
+		diff: string;
+	}
+	```
+3. Remember these are the metadata hashes. If they are equal, we can now find where the whole auxdata starts with:
+	```js
+	for (const position of positions) {
+		for (const auxdataDiff of auxdataDiffs) {
+			// Compare if the diff from raw bytecode is equal the diff from `legacyAssembly` auxdatas
+			if (editedBytecode.substring(position + auxdataDiff.diff.length) === auxdataDiff.diff)
+				return originalBytecode.substring(position - auxdataDiff.diffStart, position + auxdataDiff.diff.length);
+		}
+	}
+	```
+
+Original:
+<pre>
+	<code>
+{"0x6080...                "}<span style={{textDecoration: "underline"}}>CBOR auxdata</span>{"     \n"}
+	1909117905579<span style={{textDecoration: "underline"}}>a26469706673582212203a05097003697b26b1da819218bcd95779598eaa90539e82a59ecbe4c09757e364736f6c63430007000033</span>52565b5f6a636f6e736f6c652e6c6{"\n"}
+	</code>
+</pre>
+
+Edited:
+<pre>
+	<code>
+{"0x6080...                "}<span style={{textDecoration: "underline"}}>CBOR auxdata</span>{"     \n"}
+	1909117905579<span style={{textDecoration: "underline"}}>a2646970667358221220<span style={{color: "red"}}>dceca8706b29e917dacf25fceef95acac8d90d765ac926663ce4096195952b61</span>64736f6c63430007000033</span>52565b5f6a636f6e736f6c652e6c6{"\n"}
+	{"             └──────────────────┘↑\n"}
+	{"                diffStart        position"}
+	</code>
+</pre>
+
+### An Alternative
+
+1. Start with a string search inside the bytecode for the auxdatas from `legacyAssembly` of the contract. Now we have the positions of *potential* auxdatas of the **original contract**.
+2. Next we whitespace the source files and compile the contract again. Let’s call it the **edited contract**.
+3. Finally we check if the bytecode substrings from the original contract and the edited contract have changed at the positions we found at the 1st step. We expect these to change if they indeed contain a real auxdata and not some custom bytecode. 
+
+Thanks to Rim from Blockscout for pointing out this alternative.
+
+## Making life easier for verifiers
+
+To avoid doing all these nitty workarounds we just proposed the Solidity compiler to output the positions of the auxdatas, similar to the `immutableReferences` field: https://github.com/ethereum/solidity/issues/14827 
+
+We are still going to need to do this for the compiler versions before this gets implemented but still it would be less work in verification, particularly not having to compile contracts twice.
+
+Since we edited the original source code with whitespaces and compiled the contract, we also have the `legacyAssembly`  for the edited contract, which contain auxdatas. If we compare all the auxdatas extracted from `legacyAssembly` s of both, we will get a diff of each auxdata field which will be the metadata hashes. The rest of the auxdatas will be the same.
+
