@@ -9,6 +9,9 @@ import Table from "./supportedChainsTable.jsx";
 
 You can find the Sourcify chains, i.e. EVM chains that are supported by Sourcify, and the level of support below.
 
+_If the tests for a chain will fail two weeks in a row, we will assume the chain is not being maintained and remove it from the supported chains list. The tests can be seen [in CircleCI](https://app.circleci.com/pipelines/github/ethereum/sourcify?branch=master) under "test-chains-regularly" workflow_
+
 <div>
   <Table />
 </div>
+
