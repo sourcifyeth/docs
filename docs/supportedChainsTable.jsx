@@ -76,7 +76,7 @@ const Table = () => {
       .then((res) => res.json())
       .then(async (chains) => {
         await addMonitoredSupportFrom(
-          "https://raw.githubusercontent.com/ethereum/sourcify/staging/services/monitor/chains.json",
+          "https://raw.githubusercontent.com/ethereum/sourcify/staging/services/monitor/monitorChains.json",
           chains
         );
         sortChains(chains);
@@ -176,9 +176,7 @@ const Table = () => {
           {chain.supported ? "Verification" : "Not Supported"} <br />
           {chain.monitored ? "Monitoring" : ""}
         </td>
-        <td style={{ textAlign: "center" }}>
-          {chain.etherscanAPI ? "✅" : ""}
-        </td>
+        <td style={{ textAlign: "center" }}>{chain.etherscanAPI ? "✅" : ""}</td>
         <td>
           {
             <TestResult
