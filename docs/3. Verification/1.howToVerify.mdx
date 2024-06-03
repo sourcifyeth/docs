@@ -35,6 +35,8 @@ forge create --rpc-url <your_rpc_url> \
   --verifier-url https://localhost:5555 # optional, defaults to https://sourcify.dev
 ```
 
+Verify an already deployed (and compiled) contract
+
 ```
 forge verify-contract 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
   src/MyToken.sol:MyToken \
@@ -43,6 +45,7 @@ forge verify-contract 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
   --verifier-url https://localhost:5555 # optional, defaults to https://sourcify.dev
 ```
 
+Check if a contract is verified
 ```
 forge verify-check 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
   --chain-id 11155111 \
