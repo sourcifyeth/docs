@@ -20,7 +20,7 @@ jobs:
         uses: "google-github-actions/auth@v2"
         with:
           workload_identity_provider: "projects/1019539084286/locations/global/workloadIdentityPools/github/providers/sourcify"
-          service_account: "1019539084286-compute@developer.gserviceaccount.com"
+          service_account: "sourcify-docs-cd@sourcify-project.iam.gserviceaccount.com"
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
