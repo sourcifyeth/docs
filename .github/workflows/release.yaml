@@ -33,6 +33,6 @@ jobs:
         uses: "google-github-actions/upload-cloud-storage@v2"
         with:
           path: "build"
-          destination: "docs.sourcify.dev"
+          destination: "sourcify-docs-bucket"
           parent: false
           glob: "**/*"
