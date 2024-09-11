@@ -1,0 +1,135 @@
+import TotalRepoSize from "./TotalRepoSize"
+
+# File Repositories
+
+This page describes the `RepositoryV1` and `RepositoryV2`, which are file systems. See [All Repositories](/docs/repository) for details.
+
+## Table of Contents
+
+- [RepositoryV1 vs RepositoryV2](#repositoryv1-vs-repositoryv2)
+  - [RepositoryV1](#repositoryv1)
+  - [RepositoryV2](#repositoryv2)
+- [Download](#download)
+
+
+## RepositoryV1 vs RepositoryV2
+
+### RepositoryV1
+RepositoryV1 is the legacy storage backend for files. It is simply a file system based on how file paths are given in the [Solidity metadata](/docs/metadata). file.
+
+An [example metadata](https://repo.sourcify.dev/contracts/full_match/1/0x801f3983c7baBF5E6ae192c84E1257844aDb4b4D/metadata.json) source file paths look like this for the "full_match" contract `0x801f3983c7baBF5E6ae192c84E1257844aDb4b4D` on Ethereum Mainnet (1):
+```json
+{
+  "sources": {
+    "erc20/IERC20.sol": {
+      "keccak256": "0xa38ec4e151e4d397d05bdfb94e6e4eb91e57a9fca3bc1c655289a4adf31a58fa",
+      "license": "MIT",
+      "urls": [
+        "bzz-raw://312e850e36efbf0f2450896c213b23dc0a28150e051bcbf933a8b9211627c44b",
+        "dweb:/ipfs/QmWsyisPjDwTJrTMhsGZa4JHiCS63mWfsyVQKbaijWGdmK"
+      ]
+    },
+    "erc20/airdrop.sol": {
+      "keccak256": "0xea27a3e2c4179a064caf9fe9a198addd526fd1d1ea467ea474a0c069e6eac957",
+      "urls": [
+        "bzz-raw://6a86bc69b99876768bdbddba504410cf60b33681e1203a36d98840bf2ab8a42b",
+        "dweb:/ipfs/QmRZSqNfAPduoPoUJ6BM4NpBTbTKBqg5Mz5YBNpaUz4TfQ"
+      ]
+    }
+  },
+}
+```
+
+These files will be like below ([see in repo](https://repo.sourcify.dev/contracts/full_match/1/0x801f3983c7baBF5E6ae192c84E1257844aDb4b4D/)):
+```
+contracts/full_match/1/0x801f3983c7baBF5E6ae192c84E1257844aDb4b4D/
+├── metadata.json
+└── sources/
+    └── erc20/
+        ├── IERC20.sol
+        └── airdrop.sol
+```
+The problem with this is the part `"erc20/airdrop.sol"` is not necessarily a valid file path but a ["source unit name"](https://docs.soliditylang.org/en/v0.8.27/path-resolution.html#virtual-filesystem:~:text=assigned%20a%20unique-,source%20unit%20name,-which%20is%20an) in Solidity, i.e. arbitrary strings. This may cause issues on file systems as well as when pinning to IPFS.
+
+### RepositoryV2
+
+RepositoryV2 is the format where we normalize the file names with their keccak256 hashes (source files must have a `keccak256` field in the metadata). So the example above would look like this:
+
+```
+contracts/full_match/1/0x801f3983c7baBF5E6ae192c84E1257844aDb4b4D/
+├── metadata.json
+└── sources/
+    └── 0xa38ec4e151e4d397d05bdfb94e6e4eb91e57a9fca3bc1c655289a4adf31a58fa.sol
+    └── 0xea27a3e2c4179a064caf9fe9a198addd526fd1d1ea467ea474a0c069e6eac957.sol
+```
+
+The files are exactly the same so their IPFS hashes will not change, and you can look up the metadata file to find the original path-alike source unit names.
+
+## IPFS
+
+Unfortunatelly publishing under IPNS is temporarily disabled. This is because of the difficulty of managing the whole filesystem over IPFS (with MFS etc.) and updating the IPNS regularly. 
+
+We still pin all the files on IPFS so you can access them over their individual CIDs (e.g. [`QmVij3h9z536ZG5cRpUmTfdoN9KR1Xp4ix2P7to9dPHgE5`](https://ipfs.io/ipfs/QmVij3h9z536ZG5cRpUmTfdoN9KR1Xp4ix2P7to9dPHgE5)).
+
+Look at the [Download section](#download) to learn how to download the whole repository.
+
+## Web
+
+Moved to [repo.sourcify.dev](/docs/repository/repo.sourcify.dev).
+
+## Download
+
+We compress the **RepositoryV2** weekly and publish on Cloudflare R2 under https://repo-backup.sourcify.dev ( `.dev` redirects to `.app` domain, which also belongs to Sourcify). 
+
+<TotalRepoSize/>
+
+[repo-backup.sourcify.dev](https://repo-backup.sourcify.dev) will redirect to a `manifest.json` file:
+
+<details>
+<summary>manifest.json</summary>
+
+```json
+{
+  "description": "Manifest file for when the Sourcify file repository was uploaded",
+  "timestamp": 1726030203254,
+  "dateStr": "2024-09-11T04:50:03.254904Z",
+  "files": [
+    {
+      "path": "sourcify-repository-2024-09-10T13-36-47/sourcify-repository-2024-09-10T13-36-47.part.gz.aa",
+      "sizeInBytes": 2097152000
+    },
+    ...
+    {
+      "path": "sourcify-repository-2024-09-10T13-36-47/sourcify-repository-2024-09-10T13-36-47.part.gz.ap",
+      "sizeInBytes": 800472503
+    }
+  ]
+}
+```
+</details>
+
+You can download all files in the `files` array and unzip them:
+
+1. Download the manifest file (`-L` to follow redirects):
+   ```bash
+   curl -L -O https://repo-backup.sourcify.dev/manifest.json
+   ```
+
+2. Extract file paths and download each file:
+   ```bash
+   jq -r '.files[].path' manifest.json | xargs -I {} curl -L -O https://repo-backup.sourcify.dev/{}
+   ```
+
+3. Concatenate the downloaded parts:
+   ```bash
+   cat sourcify-repository-*.part.gz.* > sourcify-repository.gz
+   ```
+
+4. Unzip the concatenated file:
+   ```bash
+   gunzip sourcify-repository.gz
+   ```
+5. Extract the contents:
+   ```bash
+   tar -xvf sourcify-repository.gz
+   ```
