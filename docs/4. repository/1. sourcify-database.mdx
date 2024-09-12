@@ -23,12 +23,14 @@ JSON fields of `verified_contracts` table:
 - `runtime_values`
 - `runtime_transformations`
 
+The transformations and values are the operations done on a bytecode from a compilation to reach the final matching onchain bytecode.
+
 JSON fields of `compiled_contracts` table:
-- `sources`
+- `sources`: Source code files of a contract
 - `compiler_settings`
-- `compilation_artifacts`
-- `creation_code_artifacts`
-- `runtime_code_artifacts`
+- `compilation_artifacts`: Fields from the compilation output JSON. Fields: `abi`, `userdoc`, `devdoc`, `sources` (AST identifiers), `storageLayout`
+- `creation_code_artifacts`: Fields under `evm.bytecode` field. Fields: `sourceMap`, `linkReferences`, `cborAuxdata`
+- `runtime_code_artifacts`: Fields under `evm.deployedBytecode` field. Fields: `sourceMap`, `linkReferences`, `cborAuxdata`, `immutableReferences`
 
 ## Download
 
