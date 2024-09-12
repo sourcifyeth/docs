@@ -19,8 +19,7 @@ const RepositoryStats = () => {
 
         setTotalSize(totalSizeGB);
 
-        // TODO: Remove x1000 when manifest.json is updated to use milliseconds
-        const date = new Date(manifestData.timestamp * 1000);
+        const date = new Date(manifestData.timestamp);
         const formattedDate = date
           .toUTCString()
           .replace(/^[A-Za-z]+, /, "")
