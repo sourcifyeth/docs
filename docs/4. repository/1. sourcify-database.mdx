@@ -3,7 +3,7 @@
 Sourcify Database is the main storage backend for Sourcify. It is a PostgreSQL database that follows the [Verified Alliance Schema](https://github.com/verifier-alliance/database-specs) as its base with few modifications.
 
 On a high level, these modifications are: 
-- Sourcify DB does accept contracts without the deployment details such as `block_number`, `transaction_hash` as well as without without an onchain creation bytecode (`contracts.creation_code_hash`). 
+- Sourcify DB does accept contracts without the deployment details such as `block_number`, `transaction_hash` as well as without an onchain creation bytecode (`contracts.creation_code_hash`). 
 - Stores the Solidity metadata separately in the `sourcify_matches` table.
 - Introduces tables for other purposes.
 
