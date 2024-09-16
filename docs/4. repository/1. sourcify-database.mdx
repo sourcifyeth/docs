@@ -1,0 +1,111 @@
+# Sourcify Database
+
+Sourcify Database is the main storage backend for Sourcify. It is a PostgreSQL database that follows the [Verified Alliance Schema](https://github.com/verifier-alliance/database-specs) as its base with few modifications.
+
+On a high level, these modifications are: 
+- Sourcify DB does accept contracts without the deployment details such as `block_number`, `transaction_hash` as well as without an onchain creation bytecode (`contracts.creation_code_hash`). 
+- Stores the Solidity metadata separately in the `sourcify_matches` table.
+- Introduces tables for other purposes.
+
+You can follow the [`services/database/migrations`](https://github.com/ethereum/sourcify/tree/staging/services/database/migrations) folder for the initial schema and the changes made to it. These are not necessarily the differences between Sourcify DB and the Verified Alliance Schema, but any changes made to the schema over time.
+
+## Schema
+
+You can access the live schema of the database [here](https://dbdiagram.io/d/Sourcify-DB-66e1a0076dde7f4149c77e3a) or in the embedded frame below.
+
+<iframe src='https://dbdiagram.io/e/66e1a0076dde7f4149c77e3a/66e1a0196dde7f4149c78072' style={{width: "100%", height: "500px"}}> </iframe>
+
+In short:
+- Every verified contract is a coupling between a deployed contract (`contract_deployments`) and a compilation (`compiled_contracts`)
+- "Transformations" are applied to reach the final matching onchain bytecode from a bytecode from a compilation. 
+- Contract bytecodes are "normalized" for deduplication. A bytecode of a popular contract like `ERC20.sol` will only be stored once.
+
+For more information about the schemas of the json fields below check the [Verifier Alliance repo](https://github.com/verifier-alliance/database-specs/tree/master/json-schemas).
+
+JSON fields of `verified_contracts` table:
+- `creation_values`
+- `creation_transformations`
+- `runtime_values`
+- `runtime_transformations`
+
+The transformations and values are the operations done on a bytecode from a compilation to reach the final matching onchain bytecode.
+
+JSON fields of `compiled_contracts` table:
+- `sources`: Source code files of a contract
+- `compiler_settings`
+- `compilation_artifacts`: Fields from the compilation output JSON. Fields: `abi`, `userdoc`, `devdoc`, `sources` (AST identifiers), `storageLayout`
+- `creation_code_artifacts`: Fields under `evm.bytecode` field. Fields: `sourceMap`, `linkReferences`, `cborAuxdata`
+- `runtime_code_artifacts`: Fields under `evm.deployedBytecode` field. Fields: `sourceMap`, `linkReferences`, `cborAuxdata`, `immutableReferences`
+
+## Download
+
+We dump the whole database daily in [Parquet](https://en.wikipedia.org/wiki/Apache_Parquet) format and upload it to a Cloudflare R2 storage. You can access the manifest file at https://export.sourcify.dev ( `.dev` redirects to `.app` domain, which also belongs to Sourcify). The script that does the dump is at [sourcifyeth/parquet-export](https://github.com/sourcifyeth/parquet-export).
+
+
+[export.sourcify.dev](https://export.sourcify.dev) will redirect to a `manifest.json` file:
+
+<details>
+<summary>manifest.json</summary>
+
+```json
+{
+  "timestamp": 1726030203254,
+  "dateStr": "2024-09-11T04:50:03.254904Z",
+  "files": {
+    "code": [
+      "code/code_0_100000.parquet",
+      "code/code_100000_200000.parquet",
+      ...
+      "code/code_2700000_2800000.parquet"
+    ],
+    "contracts": [
+      "contracts/contracts_0_1000000.parquet",
+      ...
+      "contracts/contracts_4000000_5000000.parquet"
+    ],
+    "contract_deployments": [
+      "contract_deployments/contract_deployments_0_1000000.parquet",
+      ...
+      "contract_deployments/contract_deployments_5000000_6000000.parquet"
+    ],
+    "compiled_contracts": [
+      "compiled_contracts/compiled_contracts_0_5000.parquet",
+      ...
+      "compiled_contracts/compiled_contracts_815000_820000.parquet"
+    ],
+    "verified_contracts": [
+      "verified_contracts/verified_contracts_0_1000000.parquet",
+      ...
+      "verified_contracts/verified_contracts_5000000_6000000.parquet"
+    ],
+    "sourcify_matches": [
+      "sourcify_matches/sourcify_matches_0_100000.parquet",
+      ...
+      "sourcify_matches/sourcify_matches_5300000_5400000.parquet"
+    ]
+  }
+}
+```
+</details>
+
+You can download all the files and use a parquet client to query, inspect, or process the data.
+
+1. Download the manifest file (`-L` to follow redirects):
+   ```bash
+   curl -L -O https://export.sourcify.dev/manifest.json
+   ```
+
+2. Download all the tables listed in the manifest:
+   ```bash
+   jq -r '.files | keys[] as $k | .[$k][]' manifest.json | xargs -I {} curl -L -O https://export.sourcify.dev/{}
+   ```
+
+For example you can install the [`parquet-cli`](https://github.com/apache/parquet-java/blob/master/parquet-cli/README.md) to do basic inspection:
+
+```bash
+brew install parquet-cli
+
+parquet meta compiled_contracts_0_5000.parquet
+```
+
+alternatively use your favorite data processing tool or import this data into a database.
