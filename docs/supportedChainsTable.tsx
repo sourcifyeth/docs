@@ -48,15 +48,16 @@ const TestResult = ({ result, detailedUrl, type, error }) => {
         🤷
       </div>
     );
+  return null;
 };
 
 const Table = () => {
-  const [sourcifyChains, setSourcifyChains] = useState();
-  const [error, setError] = useState();
-  const [testReportObject, setTestReportObject] = useState();
-  const [testMap, setTestMap] = useState();
-  const [testDate, setTestDate] = useState();
-  const [stats, setStats] = useState();
+  const [sourcifyChains, setSourcifyChains] = useState<any>();
+  const [error, setError] = useState("");
+  const [testReportObject, setTestReportObject] = useState<any>();
+  const [testMap, setTestMap] = useState<any>();
+  const [testDate, setTestDate] = useState<any>();
+  const [stats, setStats] = useState<any>();
 
   const sourcifyChainMap = useMemo(() => {
     return sourcifyChains?.reduce(function (

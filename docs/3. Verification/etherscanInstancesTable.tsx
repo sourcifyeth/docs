@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import LoadingOverlay from "../../src/components/LoadingOverlay";
 
 export default function EtherscanInstancesTable() {
-  const [etherscanInstances, setEtherscanInstances] = useState();
-  const [error, setError] = useState();
+  const [etherscanInstances, setEtherscanInstances] = useState<any>();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetch("https://sourcify.dev/server/chains")
