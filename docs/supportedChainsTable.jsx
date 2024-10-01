@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { renderToString } from "react-dom/server";
 import ReactTooltip from "react-tooltip";
 import LoadingOverlay from "../src/components/LoadingOverlay";
+import Chart from "./Chart";
 
 const Yes = () => <div className="centered-flex">✅</div>;
 const No = () => <div className="centered-flex">❌</div>;
@@ -55,6 +56,18 @@ const Table = () => {
   const [testReportObject, setTestReportObject] = useState();
   const [testMap, setTestMap] = useState();
   const [testDate, setTestDate] = useState();
+  const [stats, setStats] = useState();
+
+  const sourcifyChainMap = useMemo(() => {
+    return sourcifyChains?.reduce(function (
+      acc,
+      currentChain
+    ) {
+      acc[currentChain.chainId] = currentChain;
+      return acc;
+    },
+    {});
+  }, [sourcifyChains]);
 
   const addMonitoredSupportFrom = async (url, supportedChains) => {
     try {
@@ -99,6 +112,13 @@ const Table = () => {
       .catch((err) => setError(err.message));
   }, []);
 
+  useEffect(() => {
+    fetch(`https://repo.sourcify.dev/stats.json`)
+      .then((res) => res.json())
+      .then((json) => setStats(json))
+      .catch(() => {});
+  }, []);
+
   function sortChains(chains) {
     return chains.sort((a, b) => {
       const ETHEREUM_CHAINS = [1, 5, 11155111, 1700, 3, 4];
@@ -135,7 +155,6 @@ const Table = () => {
       const context = JSON.parse(test.context);
       if (!context) return;
       const chainId = context.value.chainId;
-      console.log(chainId);
       const testType = context.value.testType; // either "normal" or "immutable"
       if (!testMap[chainId]) testMap[chainId] = {};
       testMap[chainId][testType] = test.pass;
@@ -154,6 +173,13 @@ const Table = () => {
     return (
       <div style={{ margin: "8rem" }}>
         <LoadingOverlay message="Loading chain verification tests" />
+      </div>
+    );
+  }
+  if (!stats) {
+    return (
+      <div style={{ margin: "8rem" }}>
+        <LoadingOverlay message="Loading Sourcify stats" />
       </div>
     );
   }
@@ -207,6 +233,15 @@ const Table = () => {
       )}
       <ReactTooltip effect="solid" />
       <div>
+        <h2>Chains by Verified Contracts</h2>
+        <Chart 
+          stats={stats}
+          sourcifyChainMap={sourcifyChainMap}
+          sourcifyChains={sourcifyChains}
+        />
+      </div>
+      <div>
+      <h2>Chains by Type of Support</h2>
         {error && <div style={{ textAlign: "center", color: "indianRed" }}>{error}</div>}
         {sourcifyChains.length > 0 && (
           <div style={{ marginBottom: "16px" }}>
@@ -229,19 +264,19 @@ const Table = () => {
             </ul>
           </div>
         )}
+        <table>
+          <thead>
+            <tr>
+              <th>Chain</th>
+              <th>Chain ID</th>
+              <th>Support Type</th>
+              <th>Import from Etherscan</th>
+              <th>Verification Tests</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </table>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Chain</th>
-            <th>Chain ID</th>
-            <th>Support Type</th>
-            <th>Import from Etherscan</th>
-            <th>Verification Tests</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </table>
     </>
   );
 };
