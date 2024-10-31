@@ -60,14 +60,10 @@ const Table = () => {
   const [stats, setStats] = useState<any>();
 
   const sourcifyChainMap = useMemo(() => {
-    return sourcifyChains?.reduce(function (
-      acc,
-      currentChain
-    ) {
+    return sourcifyChains?.reduce(function (acc, currentChain) {
       acc[currentChain.chainId] = currentChain;
       return acc;
-    },
-    {});
+    }, {});
   }, [sourcifyChains]);
 
   const addMonitoredSupportFrom = async (url, supportedChains) => {
@@ -143,6 +139,26 @@ const Table = () => {
         return 1;
       }
 
+      // Chains with trace support come next
+      const hasTraceA = a?.traceSupportedRPCs?.length > 0;
+      const hasTraceB = b?.traceSupportedRPCs?.length > 0;
+
+      if (hasTraceA && !hasTraceB) {
+        return -1;
+      } else if (!hasTraceA && hasTraceB) {
+        return 1;
+      }
+
+      // Chains with Etherscan API come next
+      const hasEtherscanA = a?.etherscanAPI;
+      const hasEtherscanB = b?.etherscanAPI;
+
+      if (hasEtherscanA && !hasEtherscanB) {
+        return -1;
+      } else if (!hasEtherscanA && hasEtherscanB) {
+        return 1;
+      }
+
       // Sort the rest alphabetically by chain.name
       return a.name.localeCompare(b.name);
     });
@@ -203,6 +219,7 @@ const Table = () => {
           {chain.supported ? "Verification" : "Not Supported"} <br />
           {chain.monitored ? "Monitoring" : ""}
         </td>
+        <td style={{ textAlign: "center" }}>{chain?.traceSupportedRPCs?.length > 0 ? "✅" : ""}</td>
         <td style={{ textAlign: "center" }}>{chain.etherscanAPI ? "✅" : ""}</td>
         <td>
           {
@@ -235,14 +252,10 @@ const Table = () => {
       <ReactTooltip effect="solid" />
       <div>
         <h2>Chains by Verified Contracts</h2>
-        <Chart 
-          stats={stats}
-          sourcifyChainMap={sourcifyChainMap}
-          sourcifyChains={sourcifyChains}
-        />
+        <Chart stats={stats} sourcifyChainMap={sourcifyChainMap} sourcifyChains={sourcifyChains} />
       </div>
       <div>
-      <h2>Chains by Type of Support</h2>
+        <h2>Chains by Type of Support</h2>
         {error && <div style={{ textAlign: "center", color: "indianRed" }}>{error}</div>}
         {sourcifyChains.length > 0 && (
           <div style={{ marginBottom: "16px" }}>
@@ -257,6 +270,10 @@ const Table = () => {
                 Verification support: <b>{sourcifyChains.filter((c) => c.supported).length}</b>
               </li>
               <li>
+                That has an RPC with trace support:{" "}
+                <b>{sourcifyChains.filter((c) => c.traceSupportedRPCs?.length > 0).length}</b>
+              </li>
+              <li>
                 Not Supported (deprecated): <b>{sourcifyChains.filter((c) => !c.supported).length}</b>
               </li>
               <li>
@@ -265,12 +282,43 @@ const Table = () => {
             </ul>
           </div>
         )}
+        <ReactTooltip effect="solid" delayHide={500} clickable={true} id="rpc-trace-support" />
         <table>
           <thead>
             <tr>
               <th>Chain</th>
               <th>Chain ID</th>
               <th>Support Type</th>
+              <th
+                data-html={true}
+                data-tip={renderToString(
+                  <div style={{ maxWidth: "300px" }}>
+                    <p>This allows verifying contracts created with factories with the creation bytecode.</p>
+                    <p>
+                      If not supported, contracts can be verified normally with the runtime bytecode, but also with the
+                      creation bytecode if they were created by an EOA, ie. the creation bytecode is in the transaction
+                      payload that created the contract.
+                    </p>
+                  </div>
+                )}
+                data-for="rpc-trace-support"
+              >
+                RPCs with trace support{" "}
+                <span
+                  style={{
+                    border: "1px solid",
+                    borderRadius: "100%",
+                    width: "20px",
+                    height: "20px",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "gray",
+                  }}
+                >
+                  ?
+                </span>
+              </th>
               <th>Import from Etherscan</th>
               <th>Verification Tests</th>
             </tr>
