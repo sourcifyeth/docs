@@ -68,6 +68,9 @@ html[data-theme="dark"] .navbar__title {
   justify-content: center;
 }
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=VT323&display=swap");
+/** Font for Solidity logo */
+@import url("https://fonts.cdnfonts.com/css/overpass");
+@import url("https://fonts.cdnfonts.com/css/overpass-mono");
 
 .menu__link--active:not(.menu__link--sublist) {
   background: var(--ifm-color-primary-lightestest);
