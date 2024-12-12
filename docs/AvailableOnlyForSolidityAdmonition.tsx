@@ -43,8 +43,19 @@ const SolidityLogo = () => {
 export default ({ description }: { description: string }) => {
   return (
     <div>
-      <div className="theme-admonition theme-admonition-tip alert alert--info admonition_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-styles-module">
-        <div className="admonitionHeading_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-styles-module">
+      <div
+        className="theme-admonition theme-admonition-tip alert alert--info"
+        style={{
+          marginBottom: "1em",
+        }}
+      >
+        <div
+          style={{
+            font: "var(--ifm-heading-font-weight) var(--ifm-h5-font-size)/var(--ifm-heading-line-height) var(--ifm-heading-font-family)",
+            marginBottom: "0.3rem",
+            textTransform: "uppercase",
+          }}
+        >
           <span
             style={{
               verticalAlign: "middle",
