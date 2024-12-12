@@ -75,8 +75,8 @@ export default ({ description }: { description: string }) => {
             Solidity
           </span>
         </div>
-        <div className="admonitionContent_node_modules-@docusaurus-theme-classic-lib-theme-Admonition-styles-module">
-          <p>{description}</p>
+        <div>
+          <p style={{ marginBottom: "0" }}>{description}</p>
         </div>
       </div>
     </div>
