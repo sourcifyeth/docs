@@ -4,9 +4,12 @@ slug: /running-server
 ---
 
 import EmbedReadme from "../EmbedReadme";
-const URL = "https://raw.githubusercontent.com/ethereum/sourcify/master/services/server/README.md";
-const displayURL = URL.replace("https://raw.githubusercontent.com/", "");
-export const ReadmeLink = () => (<a href={URL}>{displayURL}</a>);
+const repo = "ethereum/sourcify";
+const branch = "master"
+const readmePath = "/services/server/README.md";
+const rawBaseUrl = "https://raw.githubusercontent.com";
+const pageBaseUrl = "https://github.com";
+export const ReadmeLink = () => (<a href={`${pageBaseUrl}/${repo}/tree/${branch}${readmePath}`}>{repo + readmePath}</a>);
 
 *Content from <ReadmeLink/>*
-<EmbedReadme url={URL}/>
+<EmbedReadme repo={repo} branch={branch} readmePath={readmePath} rawBaseUrl={rawBaseUrl} pageBaseUrl={pageBaseUrl}/>
