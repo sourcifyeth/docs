@@ -35,8 +35,15 @@ export default function EmbedReadme({ repo, branch, readmePath, rawBaseUrl, page
       });
   }, []);
 
-  console.log(rawBaseUrl);
-
   if (!content) return "Loading from " + rawBaseUrl + readmePath + "...";
-  return <div dangerouslySetInnerHTML={{ __html: content }} />;
+  return (
+    <div>
+      <div>
+        <i>
+          Content from <a href={`${pageBaseUrl}/${repo}/tree/${branch}${readmePath}`}>{repo + readmePath}</a>
+        </i>
+      </div>
+      <div dangerouslySetInnerHTML={{ __html: content }} />{" "}
+    </div>
+  );
 }
