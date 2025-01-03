@@ -9,7 +9,5 @@ const branch = "master";
 const readmePath = "/services/monitor/README.md";
 const rawBaseUrl = "https://raw.githubusercontent.com";
 const pageBaseUrl = "https://github.com";
-export const ReadmeLink = () => (<a href={`${pageBaseUrl}/${repo}/tree/${branch}${readmePath}`}>{repo + readmePath}</a>);
 
-*Content from <ReadmeLink/>*
 <EmbedReadme repo={repo} branch={branch} readmePath={readmePath} rawBaseUrl={rawBaseUrl} pageBaseUrl={pageBaseUrl}/>
