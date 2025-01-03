@@ -59,7 +59,7 @@ User request to Sourcify:
 ```
 
 
-For now the metadata.json is the main way to submit contracts to Sourcify. All other methods such as "Import from Etherscan" all workaround to generate the metadata file in some way, and continue verification from there. This is will change with the [Vyper verification](https://github.com/ethereum/sourcify/pull/1784) and in our [APIv2](https://github.com/ethereum/sourcify/milestone/18?closed=1). In Vyper users will give us a [standard JSON](https://docs.vyperlang.org/en/stable/compiling-a-contract.html#compiler-input-and-output-json-description) and we will generate a "fake" metadata.json for backward compatability reasons. In our APIv2 we will no longer use the metadata file as the base of our verification, but the standard JSON as the base.
+For now the metadata.json is the main way to submit contracts to Sourcify. All other methods such as "Import from Etherscan" all workaround to generate the metadata file in some way, and continue verification from there. This is will change with the [Vyper verification](https://github.com/ethereum/sourcify/pull/1784) and in our [APIv2](https://github.com/ethereum/sourcify/milestone/18?closed=1). In Vyper, users will give us a [standard JSON](https://docs.vyperlang.org/en/stable/compiling-a-contract.html#compiler-input-and-output-json-description) and we generate a "fake" metadata.json for backward compatability reasons. In our APIv2 we will no longer use the metadata file as the base of our verification, but the standard JSON as the base.
 
 <details>
 <summary>Example metadata.json file</summary>
@@ -121,7 +121,7 @@ For now the metadata.json is the main way to submit contracts to Sourcify. All o
 
 </details>
 
-Anyway for now we continue with our metadata.json. To be able to compile we first need to make sure we have everything we need. That is, all the source files outlined in the metadata.json. The JSON file has a `sources` field that looks like this
+Anyway for now we continue with our metadata.json. To be able to compile we first need to make sure we have everything we need, that are, all the source files and settings outlined in the metadata.json. The JSON file has a `sources` field that looks like this
 
 ```js
   "sources": {
@@ -137,7 +137,7 @@ Anyway for now we continue with our metadata.json. To be able to compile we firs
   }
 ```
 
-What do we do with this information and all other `.sol` files the user gave us?
+And with the file hashes we can validate the source files user gave us and make sure we have all the source files needed. Taking the user request, we:
 1. Find the metadata file in the user request `.files` (assume the rest are source files)
 1. Hash all other files and keep their keccak
 1. Additionally generate new line and whitespace variations of the source files to account for the OS and platform differences.
@@ -217,17 +217,19 @@ The compiler will give us an **output** that looks like this:
 }
 ```
 
-We are only interested in the `compilationTarget` (e.g. `contracts/1_Storage.sol` and `Storage`) and not all other contracts provided. The two fields are of our interest are `evm.bytecode.object` and `evm.deployedBytecode.object`. 
+We are only interested in the `compilationTarget` (e.g. `contracts/1_Storage.sol` and `Storage`) and not all other contracts provided. The two fields of our interest are `evm.bytecode.object` and `evm.deployedBytecode.object`. 
 
 ### Onchain vs. Recompiled Bytecodes
 
 Essentially we need to compare some onchain data against a compilation. We will find the **onchain bytecode**s using the `chainId` + `address` provided through an RPC. The **recompiled bytecode**s will come from the compilation output above.
 
-**onchain** vs **recompiled** refer to where these bytecodes are coming from. Onchain, obviously, comes from a contract that is deployed on a live blockchain. Recompiled, comes from a compilation we perform from source code to obtain bytecodes.
+:::info
+**Onchain** vs **recompiled** refer to where these bytecodes are coming from. Onchain, obviously, comes from a contract that is deployed on a live blockchain. Recompiled, comes from a compilation we perform from source code to obtain bytecodes.
+:::
 
 ### Runtime vs. Creation Bytecodes
 
-We talked about the onchain and recompiled bytecodes. In addition this, there are also two associated bytecode types to a contract we can perform the verification on. 
+We talked about the onchain and recompiled bytecodes. In addition to this, there are also two associated bytecode types to a contract we can perform the verification on. 
 
 **Runtime bytecode** is the bytecode that gets stored at the contract's address and that will be executed when this contract is called.
 - The **recompiled runtime bytecode** is found under `evm.deployedBytecode` field of the compiler outputs.
@@ -720,7 +722,7 @@ Onchain runtime bytecode:
 
 ## After matching
 
-If we got a match, it means we can start from recompiled bytecodes, apply each runtime or creation transformations on top of the respective recompiled bytecodes, and obtain the onchain bytecodes. It also means that the provided source code and metadata can be associated with the contract at this chainId and address and we mark this contract as verified.
+If we got a match, it means that the provided source code and metadata can be associated with the contract at this chainId and address and we mark this contract as verified. It also means we can start from recompiled bytecodes, apply each runtime or creation transformations on top of the respective recompiled bytecodes, and obtain the onchain bytecodes.
 
 Finally, we store our contract in our storage backend of choice. Currently this can be a file system or a SQL database in Sourcify's case. By default we do both. See the [Contract Repository docs](https://docs.sourcify.dev/docs/repository/) for more information.
 
@@ -728,6 +730,6 @@ Finally, we store our contract in our storage backend of choice. Currently this 
 
 Big changes to how the EVM bytecode is structured is coming up with the [EVM Object Format](https://evmobjectformat.org/) proposal. According to how the compilers implement these changes, the verification process face changes and verifying pre-EOF contracts will be different than the EOF contracts. 
 
-One nice feature of the EOF is it separates code from data and gives structure to code. This makes us verifiers' lives much easier compared to the completely unstructured legacy EVM code. A current example can be seen in our post [Finding Auxdatas in the Bytecode](/blog/finding-auxdatas-in-bytecode/). However as of now, the metadata is still not fully isolated from the contract code as there is no separate section for that information. Current compiler implementations put the metadata in the `data_section` of EOF and this unfortunately does affect the contract's code. That's why we are proposing a separate `metadata_section` in the EVM Object Format that cannot be reached by the EVM and any changes to that will not affect the contract's code. If this is implemented, verifiers can completely ignore the metadata parts of a container, and won't have to look for workarounds.
+One nice feature of the EOF is it separates code from data and gives structure to code. This makes us verifiers' lives much easier compared to the completely unstructured legacy EVM code. The legacy EVM example can be seen in our post [Finding Auxdatas in the Bytecode](/blog/finding-auxdatas-in-bytecode/). However as of the current specification, the metadata is still not fully isolated from the contract code as there is no separate section for that information. Current compiler implementations put the metadata in the `data_section` of EOF and this unfortunately does affect the contract's code. That's why we are proposing a separate `metadata_section` in the EVM Object Format that cannot be reached by the EVM and any changes to that will not affect the contract's code. If this is implemented, verifiers can completely ignore the metadata parts of a container, and won't have to look for workarounds.
 
 You can check our proposal [EIP-7834](https://eips.ethereum.org/EIPS/eip-7834)
