@@ -46,6 +46,7 @@ forge verify-contract 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
 ```
 
 Check if a contract is verified
+
 ```
 forge verify-check 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
   --chain-id 11155111 \
@@ -108,8 +109,8 @@ $ truffle run verify MyFirstContract MySecondContract --network goerli
 
 ## Remix Plugin
 
-Sourcify has a remix plugin to aid with contract verification and lookup.
-The plugin can be found in this repository [https://github.com/sourcifyeth/remix-sourcify](https://github.com/sourcifyeth/remix-sourcify)
+Remix has a plugin to aid with contract verification and lookup.
+Please click this link to activate the plugin in Remix: [https://remix.ethereum.org/?#activate=contract-verification](https://remix.ethereum.org/?#activate=contract-verification)
 
 ### Verifying
 
@@ -117,30 +118,35 @@ To verify:
 
 1. Select the contract you want to verify in the file explorer
 2. Compile the contract
-3. Click on the Sourcify icon on the plugin manager
+3. Click on the Contract Verification icon on the left sidebar
 4. Enter the chain and the address of the contract you want to verify
-5. Click on Verify
+5. Select the contract you just compiled
+6. Make sure Sourcify is selected
+7. Click on Verify
 
-[![Verifier](https://cdn.loom.com/sessions/thumbnails/b203977174b3444ea5b223ae45250580-with-play.gif)](https://www.loom.com/share/b203977174b3444ea5b223ae45250580 "Verifier")
+<div>
+  <video width="100%" height="100%" playsinline autoplay muted controls>
+    <source src="/videos/remix-verify.mp4" type="video/mp4" />
+  </video>
+</div>
 
 ### Fetching
 
-You can also "fetch" contracts that are verified on Sourcify into your Remix IDE.
+You can also check if contracts are verified on Sourcify and download their source code into your Remix IDE.
 To fetch:
 
-1. Click on the Sourcify icon on the plugin manager
-2. Enter the chain and the address of the contract you want to fetch
-3. Click on Fetch
+1. Click on the Contract Verification icon on the left sidebar
+2. Select "Lookup" on the top of the plugin view
+3. Enter the chain and the address of the contract you want to fetch
+4. Click on "Open in Remix" below the Sourcify status
 
 The contract files will be saved in the file explorer.
 
-[![Fetcher](https://cdn.loom.com/sessions/thumbnails/5b6cb81a9fae4dd1ad3cee6a1e658af1-with-play.gif)](https://www.loom.com/share/5b6cb81a9fae4dd1ad3cee6a1e658af1 "Fetcher")
-
-### Installation
-
-1. Navigate to the Remix Plugin manager
-2. Search for `Sourcify` and click on Activate when you see it.
-3. Another option would be to click on the Sourcify logo on Remix Homepage to activate the plugin
+<div>
+  <video width="100%" height="100%" playsinline autoplay muted controls>
+    <source src="/videos/remix-lookup.mp4" type="video/mp4" />
+  </video>
+</div>
 
 ## Other Sourcify wrappers and tools
 
