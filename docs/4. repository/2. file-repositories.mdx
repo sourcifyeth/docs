@@ -95,18 +95,21 @@ We compress the **RepositoryV2** weekly and publish on Cloudflare R2 under https
   "dateStr": "2024-09-11T04:50:03.254904Z",
   "files": [
     {
-      "path": "sourcify-repository-2024-09-10T13-36-47/sourcify-repository-2024-09-10T13-36-47.part.gz.aa",
+      "path": "/sourcify-repository-2025-01-06T03-00-24/full_match.1.00.tar.gz"
       "sizeInBytes": 2097152000
     },
-    ...
     {
-      "path": "sourcify-repository-2024-09-10T13-36-47/sourcify-repository-2024-09-10T13-36-47.part.gz.ap",
+      "path": "/sourcify-repository-2025-01-06T03-00-24/full_match.1.01.tar.gz"
       "sizeInBytes": 800472503
-    }
+    },
+    ...
   ]
 }
 ```
 </details>
+
+The files are split by match type, chain and the first byte of the contract address. 
+E.g. `/full_match.1.2F.tar.gz` will contain all the full_match contracts for chain 1 starting with `0x2F`.
 
 You can download all files in the `files` array and unzip them:
 
