@@ -31,7 +31,7 @@
     "react-select-search": "3.0.10",
     "react-tooltip": "^4.2.21",
     "recharts": "2.12.7",
-    "swagger-ui-react": "^4.15.2",
+    "swagger-ui-react": "^5.18.3",
     "url-loader": "^4.1.1"
   },
   "devDependencies": {
@@ -52,5 +52,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "swagger-ui-react": {
+      "react": "$react",
+      "react": "$react-dom",
+      "react-redux": "^8"
+    }
   }
 }
