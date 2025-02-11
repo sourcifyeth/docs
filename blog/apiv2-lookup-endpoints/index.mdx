@@ -1,0 +1,394 @@
+---
+title: "APIv2: Getting Verified Contracts"
+authors:
+  - name: Kaan Uzdogan
+    url: https://github.com/kuzdogan
+    image_url: https://github.com/kuzdogan.png
+tags: [Sourcify, Verified Contracts]
+date: 2025-02-11
+---
+
+We have been working on the new APIv2 for Sourcify and just shipped the first set of endpoints to lookup verified contracts and GET various types of information about the verified contract. The new information-rich endpoints allows selectively fetching the specific fields needed about the verified contract and provides a wide selection of fields. 
+
+In this post we will walkthrough the new functionality brought by these endpoints and see how to use them.
+
+## Background 
+
+APIv2 has been the biggest priority of our project since Q4 2024 and we aim to ship it fully by Q1 2025. We've been discussing and having fruitful conversations around how to design the new API as can be seen in the [design issue](https://github.com/ethereum/sourcify/issues/1545). Thanks everyone who contributed to the conversation!
+
+The main problems we wanted to solve with and the main features we wanted from the APIv2 were the following:
+- With the legacy API users had to wait for the response ie. wait for the compilation and the verification to finish. This can easily take couple minutes and the requests are left hanging. The new design should have ticketing/job-ids and users should poll with this id.
+- The  "perfect" vs "partial" naming is confusing.
+- The legacy API is fully based on the metadata.json. While we want to keep full support for metadata.json verification and "perfect" matching, we wanted to have standard JSON input as our main endpoint's base.
+
+You can read more in [this issue](https://github.com/ethereum/sourcify/issues/1470).
+
+In the end we settled for the following API design (as of 11 Feb 2025) https://sourcify.stoplight.io/docs/sourcify-apiv2/branches/main/8ujkqluwvkwbl-sourcify-v2-draft. 
+
+The design specifies endpoints to "Verify Contracts", check for "Verification Jobs", and to do "Contract Lookup". Here we'll talk about the "Contract Lookup" that we shipped. The others are still being developed.
+
+## New endpoints
+
+With [this release](https://github.com/ethereum/sourcify/releases/tag/sourcify-server%402.6.0) we have 2 new endpoints:
+
+- GET `/v2/contracts/{chainId}`: retrieve the latest verified contracts for a chain
+- GET `/v2/contract/{chainId}/{address}`: retrieve a specific contract and related information
+
+### GET `/v2/contracts/{chainId}`
+
+This enpoint is fairly straightforward and returns an array of verified contracts. Users can provide the following parameters:
+
+- `limit`: number of contracts to return (max. 200)
+- `sort`: by most recent first (`desc`, default), or by oldest first (`asc`)
+- `afterMatchId`: The last `matchId` (an incremental contract ID) returned to get contracts older or newer than it (depending on sort)
+
+<details>
+<summary> Response </summary>
+
+```json
+{
+  "results": [
+    {
+      "match": "exact_match",
+      "creationMatch": "exact_match",
+      "runtimeMatch": "exact_match",
+      "chainId": "11155111",
+      "address": "0x7Bec3080cdf73a9a39997C860c19377Ac1E6E6BE",
+      "verifiedAt": "2025-02-11T11:49:45Z",
+      "matchId": "855557"
+    },
+	...
+	]
+}
+```
+</details>
+
+Check this example:
+
+https://sourcify.dev/server/v2/contracts/1?limit=10&sort=asc 
+
+### GET `/v2/contract/{chainId}/{address}`
+
+This endpoint is the more interesting one, in that, it allows us to get all details beyond just if a contract is verified.
+
+By default this endpoint returns the minimal verification information:
+
+https://sourcify.dev/server/v2/contract/1/0x00000000219ab540356cBB839Cbe05303d7705Fa
+
+```json
+{
+  "matchId": "2115",
+  "creationMatch": "exact_match",
+  "runtimeMatch": "exact_match",
+  "verifiedAt": "2024-08-08T10:05:44Z",
+  "match": "exact_match",
+  "chainId": "1",
+  "address": "0x00000000219ab540356cBB839Cbe05303d7705Fa"
+}
+```
+
+As you can see we no longer use **perfect** and **partial** to refer to matches. Instead we use **exact_match** and **match** respectively. This is because the wording "partial" was causing confusion leading users to think their contract is not verified. This way we both convey that the contract is indeed verified but also by "exact_match" we express this is a superior match than just a "match". 
+
+Above is the minimal contract information. Besides, users can choose additional fields by passing the `fields` query parameter or omit fields with `omit`.
+
+For example, if you just need the ABI: https://sourcify.dev/server/v2/contract/1/0x00000000219ab540356cBB839Cbe05303d7705Fa?fields=abi
+
+```json
+{
+  "abi": [
+    { "type": "constructor", "inputs": [], "stateMutability": "nonpayable" },
+		...
+    {
+      "name": "supportsInterface",
+      "type": "function",
+      "inputs": [{ "name": "interfaceId", "type": "bytes4", "internalType": "bytes4" }],
+      "outputs": [{ "name": "", "type": "bool", "internalType": "bool" }],
+      "stateMutability": "pure"
+    }
+  ],
+  "matchId": "2115",
+  "creationMatch": "exact_match",
+  "runtimeMatch": "exact_match",
+  "verifiedAt": "2024-08-08T10:05:44Z",
+  "match": "exact_match",
+  "chainId": "1",
+  "address": "0x00000000219ab540356cBB839Cbe05303d7705Fa"
+}
+```
+
+Or you can ask for every single field by passing `*`: [https://sourcify.dev/server/v2/contract/1/0x00000000219ab540356cBB839Cbe05303d7705Fa?fields=*](https://sourcify.dev/server/v2/contract/1/0x00000000219ab540356cBB839Cbe05303d7705Fa?fields=*)
+
+Let's have a look at each field:
+
+```js
+{
+  // This is the minimal verification information
+  "match": "match",
+  "creationMatch": "match",
+  "runtimeMatch": "match",
+  "chainId": "11155111",
+  "address": "0xDFEBAd708F803af22e81044aD228Ff77C83C935c",
+  "verifiedAt": "2024-07-24T12:00:00Z",
+  "matchId": "3266227",
+  // All information related to the creation bytecode of the contract is under this field.
+  "creationBytecode": {
+    "onchainBytecode": "0x608060405234801561001057600080fd5b5060043610610036570565b6000819050919050565b600080fd5b61010c816100f4565b811461011757600080fd5b5056fea264697066735821220404e37f487a89a932dca5e77faaf6ca2de3b991f93d230604b1b8daaef64766264736f6c63430008070033",
+    "recompiledBytecode": "0x608060405234801561001057600080fd5b5060043610610036570565b6000819050919050565b600080fd5b61010c816100f4565b811461011757600080fd5b5056fea264697066735821220404e37f487a89a932dca5e77faaf6ca2de3b991f93d230604b1b8daaef64766264736f6c63430008070033",
+    "sourceMap": "73951:11562:0:-:0;;;;;;;;;;;;-1:-1:-1;63357:7:0;:15;;-1:-1:-1;;63357:15:0;;;73951:11562;;;;;;",
+    // Positions of the linked library addresses of the given libraries in the bytecode. "evm.bytecode.linkReferences" output of the compiler
+    "linkReferences": {
+      "contracts/AmplificationUtils.sol": {
+        "AmplificationUtils": [
+          {
+            "start": 3078,
+            "length": 20
+          }
+        ]
+      },
+      "contracts/SwapUtils.sol": {
+        "SwapUtils": [
+          {
+            "start": 2931,
+            "length": 20
+          }
+        ]
+      }
+    },
+    // The position and the value of the CBOR auxdata (or metadata) section in the bytecode. See playground.sourcify.dev and https://docs.sourcify.dev/blog/finding-auxdatas-in-bytecode/ for details
+    "cborAuxdata": {
+      "1": {
+        "value": "0xa2646970667358221220d6808f0352d5e503f1f878b19b1bf46c893bac1e20b3c51884efb58a87435b5564736f6c634300080a0033",
+        "offset": 18685
+      },
+      "2": {
+        "value": "0xa264697066735822122017bf4253b73b339897d7c117916781f30b434e6caa783b20eb15065469814dcf64736f6c634300080a0033",
+        "offset": 18465
+      }
+    },
+    // Transformations are the operations done on the compiled bytecode to reach the matching onchain bytecode.
+    // This is based on the Verified Alliance schema: https://github.com/verifier-alliance/database-specs/tree/master/json-schemas
+    // Also read for more info: https://docs.sourcify.dev/blog/technical-verification-walkthrough/#matching-and-transformations
+    // Creation bytecode can have "library", "cborAuxdata", and "constructorArguments" type transformations
+    "transformations": [
+      {
+        "id": "1",
+        "type": "replace",
+        "offset": 18040,
+        "reason": "cborAuxdata"
+      },
+      {
+        "type": "insert",
+        "offset": 6183,
+        "reason": "constructorArguments"
+      },
+      {
+        "id": "sources/lib/MyLib.sol:MyLib",
+        "type": "replace",
+        "offset": 582,
+        "reason": "library"
+      }
+    ],
+    // Corresponding values for each transformation
+    "transformationValues": {
+      "libraries": {
+        "sources/lib/MyLib.sol:MyLib": "0x40b70a4904fad0ff86f8c901b231eac759a0ebb0"
+      },
+      "constructorArguments": "0x00000000000000000000000085fe79b998509b77bf10a8bd4001d58475d29386",
+      "cborAuxdata": {
+        "0": "0xa26469706673582212201c37bb166aa1bc4777a7471cda1bbba7ef75600cd859180fa30d503673b99f0264736f6c63430008190033"
+      }
+    }
+  },
+  // All information related to the runtime bytecode
+  "runtimeBytecode": {
+    "onchainBytecode": "0x608060405234801561001057600080fd5b5060043610610036570565b6000819050919050565b600080fd5b61010c816100f4565b811461011757600080fd5b5056fea264697066735821220404e37f487a89a932dca5e77faaf6ca2de3b991f93d230604b1b8daaef64766264736f6c63430008070033",
+    "recompiledBytecode": "0x608060405234801561001057600080fd5b5060043610610036570565b6000819050919050565b600080fd5b61010c816100f4565b811461011757600080fd5b5056fea264697066735821220404e37f487a89a932dca5e77faaf6ca2de3b991f93d230604b1b8daaef64766264736f6c63430008070033",
+    "sourceMap": "73951:11562:0:-:0;;;;;;;;;;;;-1:-1:-1;63357:7:0;:15;;-1:-1:-1;;63357:15:0;;;73951:11562;;;;;;",
+    // Same as in creation bytecode, but for runtime bytecode
+    "linkReferences": {
+      "contracts/AmplificationUtils.sol": {
+        "AmplificationUtils": [
+          {
+            "start": 3078,
+            "length": 20
+          }
+        ]
+      },
+      "contracts/SwapUtils.sol": {
+        "SwapUtils": [
+          {
+            "start": 2931,
+            "length": 20
+          }
+        ]
+      }
+    },
+    // Same as creation bytecode for runtime bytecode.
+    "cborAuxdata": {
+      "1": {
+        "value": "0xa2646970667358221220d6808f0352d5e503f1f878b19b1bf46c893bac1e20b3c51884efb58a87435b5564736f6c634300080a0033",
+        "offset": 18685
+      },
+      "2": {
+        "value": "0xa264697066735822122017bf4253b73b339897d7c117916781f30b434e6caa783b20eb15065469814dcf64736f6c634300080a0033",
+        "offset": 18465
+      }
+    },
+    // "evm.deployedBytecode.immutableReferences" output of the compiler
+    "immutableReferences": {
+      "1050": [
+        {
+          "start": 312,
+          "length": 32
+        },
+        {
+          "start": 2631,
+          "length": 32
+        }
+      ]
+    },
+    // Same as the creation bytecode
+    // The runtime bytecode can take the following transformation types: "library", "cborAuxdata", "immutable", "callProtection"
+    "transformations": [
+      {
+        "id": "CriminalDogs.sol:SafeMath",
+        "type": "replace",
+        "offset": 1863,
+        "reason": "library"
+      },
+      {
+        "id": "1",
+        "type": "replace",
+        "offset": 2747,
+        "reason": "cborAuxdata"
+      },
+      {
+        "id": "1466",
+        "type": "replace",
+        "offset": 18703,
+        "reason": "immutable"
+      },
+      {
+        "id": "1466",
+        "type": "replace",
+        "offset": 18939,
+        "reason": "immutable"
+      },
+      {
+        "type": "replace",
+        "offset": 1,
+        "reason": "callProtection"
+      }
+    ],
+		// Corresponding values for the transformations
+    "transformationValues": {
+      "libraries": {
+        "contracts/order/OrderUtils.sol:OrderUtilsLib": "0x40b70a4904fad0ff86f8c901b231eac759a0ebb0"
+      },
+      "immutables": {
+        "1466": "0x000000000000000000000000000000007f56768de3133034fa730a909003a165"
+      },
+      "cborAuxdata": {
+        "1": "0xa26469706673582212201c37bb166aa1bc4777a7471cda1bbba7ef75600cd859180fa30d503673b99f0264736f6c63430008190033"
+      },
+      "callProtection": "0x9deba23b95205127e906108f191a26f5d520896a"
+    }
+  },
+  // Information related to the onchain deployment of this contract
+  "deployment": {
+    "transactionHash": "0xb6ee9d528b336942dd70d3b41e2811be10a473776352009fd73f85604f5ed206",
+    "blockNumber": "21721660",
+    "transactionIndex": "0",
+    "deployer": "0xDFEBAd708F803af22e81044aD228Ff77C83C935c"
+  },
+  // The source files of this contract.
+  "sources": {
+    "contracts/Storage.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract Storage {\n    uint256 number;\n\n    function setNumber(uint256 newNumber) public {\n        number = newNumber;\n    }\n\n    function getNumber() public view returns (uint256) {\n        return number;\n    }\n}\n"
+    },
+    "contracts/Owner.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract Owner {\n    address public owner;\n\n    constructor() {\n        owner = msg.sender;\n    }\n}\n"
+    }
+  },
+  // Compilation related information
+  "compilation": {
+    "language": "Solidity",
+    "compiler": "solc",
+    "compilerVersion": "v0.8.12+commit.f00d7308",
+    "compilerSettings": {},
+    "name": "MyContract",
+    "fullyQualifiedName": "contracts/MyContract.sol:MyContract"
+  },
+  "abi": [
+    {}
+  ],
+  "userdoc": {},
+  "devdoc": {},
+  "storageLayout": {},
+  // metadata.json output of the Solidity compiler. For Vyper contracts, Sourcify generates and writes a metadata file on its own for compatibility reasons.
+  "metadata": {},
+  // This essentially contains duplicate information as above.
+  // The purpose of this field is to easily integrate into tooling that uses the standard JSON syntax.
+  "stdJsonInput": {
+    "language": "Solidity",
+    "sources": {
+      "contracts/Storage.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract Storage {\n    uint256 number;\n\n    function setNumber(uint256 newNumber) public {\n        number = newNumber;\n    }\n\n    function getNumber() public view returns (uint256) {\n        return number;\n    }\n}\n"
+      },
+      "contracts/Owner.sol": {
+        "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract Owner {\n    address public owner;\n\n    constructor() {\n        owner = msg.sender;\n    }\n}\n"
+      }
+    },
+    // compilation.compilerSettings above
+    "settings": {}
+  },
+  // Similarly here for easy tooling integration as the stdJsonInput.
+  // Only contains the target contract under "contracts".
+  "stdJsonOutput": {
+    "sources": {},
+    "contracts": {}
+  },
+  // Proxy information. The proxy resolution is done on the fly on every call.
+  "proxyResolution": {
+    "isProxy": false,
+    "proxyType": null,
+    "implementations": []
+  }
+}
+```
+
+You can be really specific about the fields you need:
+
+https://sourcify.dev/server/v2/contract/1/0x00000000219ab540356cBB839Cbe05303d7705Fa?fields=runtimeBytecode.onchainBytecode,compilation.language,deployment.transactionHash
+
+or just omit the fields you don't need
+
+https://sourcify.dev/server/v2/contract/1/0x00000000219ab540356cBB839Cbe05303d7705Fa?omit=compilation,runtimeBytecode,creationBytecode
+
+### Proxy Resolution
+
+The API uses the [WhatsABI](https://github.com/shazow/whatsabi) library to resolve proxies from the runtime bytecode of a contract. 
+
+These are the supported proxy types as of now:
+
+```ts
+export type ProxyType =
+  | "EIP1167Proxy"
+  | "FixedProxy"
+  | "EIP1967Proxy"
+  | "GnosisSafeProxy"
+  | "DiamondProxy"
+  | "PROXIABLEProxy"
+  | "ZeppelinOSProxy"
+  | "SequenceWalletProxy";
+```
+
+See [proxy-utils.ts](https://github.com/ethereum/sourcify/blob/staging/services/server/src/server/services/utils/proxy-contract-util.ts) to see how resolution is done.
+
+## Next Steps
+
+As said, this is just the lookup endpoints of the APIv2. In the upcoming weeks we will be developing the verificaiton and verificationJob endpoints that will support ticketing and polling, instead of hanging requests.
+
+You can follow along the development in our tracker issue: https://github.com/ethereum/sourcify/issues/1367
+
+Beyond that, you can see our roadmap in our [Milestones View](https://github.com/orgs/ethereum/projects/46/views/3) for the next quarters and what we are currently working in our [Sprint Board](https://github.com/orgs/ethereum/projects/46/views/2). We welcome feedback and discussions!
