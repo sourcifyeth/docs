@@ -56,7 +56,7 @@
   "overrides": {
     "swagger-ui-react": {
       "react": "$react",
-      "react": "$react-dom",
+      "react-dom": "$react-dom",
       "react-redux": "^8"
     }
   }
