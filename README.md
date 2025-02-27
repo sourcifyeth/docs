@@ -40,7 +40,7 @@ If you are using GitHub pages for hosting, this command is a convenient way to b
 
 ### Docker
 
-The website can be served inside a minimal nginx container. [Dockerfile](/Dockerfile) will install and build the website, and serve the built files in container's port 80. The container can be run manually or via the [docker-compose.yaml](/docker-compose.yaml) which will run on port 2345 of the host.
+The website can be served inside a minimal nginx container. [Dockerfile](/Dockerfile) will install and build the website, and serve the built files in container's port 80. The container can be run manually or via the [docker-compose.yaml](https://github.com/sourcifyeth/parquet-export/blob/main/docker-compose.yml) which will run on port 2345 of the host.
 
 Simply run
 
