@@ -25,31 +25,3 @@ $ npm build
 ```
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-## Deployment
-
-### Github Pages
-
-The repo can be hosted at Github Pages easily
-
-```
-$ DEPLOYMENT_BRANCH=main GIT_USER=<Your GitHub username> USE_SSH=true npm run deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
-
-### Docker
-
-The website can be served inside a minimal nginx container. [Dockerfile](/Dockerfile) will install and build the website, and serve the built files in container's port 80. The container can be run manually or via the [docker-compose.yaml](/docker-compose.yaml) which will run on port 2345 of the host.
-
-Simply run
-
-```
-docker-compose up -d
-```
-
-# Publish changes
-
-```
-npm run publish
-```
