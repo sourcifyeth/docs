@@ -43,7 +43,8 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: "https://raw.githubusercontent.com/sourcifyeth/assets/master/logo-assets-png/sourcify_blue_rounded.png",
+      image:
+        "https://raw.githubusercontent.com/sourcifyeth/assets/master/logo-assets-png/sourcify_blue_rounded.png",
       metadata: [
         {
           property: "og:title",
@@ -127,10 +128,6 @@ const config = {
               {
                 label: "Twitter",
                 href: "https://twitter.com/sourcifyeth",
-              },
-              {
-                label: "Gitter",
-                href: "https://gitter.im/ethereum/source-verify",
               },
               {
                 label: "Matrix Chat",
