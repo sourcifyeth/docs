@@ -133,6 +133,10 @@ const config = {
                 label: "Matrix Chat",
                 href: "https://matrix.to/#/#ethereum_source-verify:gitter.im",
               },
+              {
+                label: "Discord",
+                href: "https://discord.com/invite/6aqd9cfZ9s",
+              },
             ],
           },
         ],
