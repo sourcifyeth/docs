@@ -1,0 +1,27 @@
+/* .responsive-container::after {
+  content: "";
+  clear: both;
+  display: table;
+} */
+
+.image-container {
+  display: block;
+  margin: 0 auto 10px auto;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .image-container.float-left {
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+  .image-container.float-right {
+    float: right;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    text-align: right;
+  }
+}
