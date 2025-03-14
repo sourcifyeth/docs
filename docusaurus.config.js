@@ -27,12 +27,13 @@ const config = {
           // Please change this to your repo.
           editUrl: "https://github.com/sourcifyeth/docs",
         },
-        // blog: {
-        //   showReadingTime: true,
-        //   // Please change this to your repo.
-        //   editUrl:
-        //     "https://github.com/facebook/docusaurus/edit/main/website/blog/",
-        // },
+        blog: {
+          //   showReadingTime: true,
+          //   // Please change this to your repo.
+          blogSidebarTitle: "Blog posts",
+          blogSidebarCount: "ALL",
+          editUrl: "https://github.com/sourcifyeth/docs/tree/main",
+        },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
