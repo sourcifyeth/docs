@@ -12,7 +12,7 @@ import blindSign from "./blind-sign-meme.jpg"
 import oldHero from "./old-hero.png"
 import dog from "./dog.png"
 
-In the earlier days of Sourcify, there were other things we were focusing besides source-code verification. Sourcify was there to foster the adoption of the Solidity metadata and to make transactions **human-readable**. 
+In the earlier days of Sourcify, there were other things we were focusing on besides source-code verification. Sourcify was there to foster the adoption of the Solidity metadata and to make transactions **human-readable**. 
 
 Since September 2021, I've been the only one working on the project until Marco joined on July 2022. You will see in our earlier talks we start with the problem statement of ["YOLO signing"](https://youtu.be/D7gZtHel8Lg) and explain how Sourcify, Solidity metadata.json, and NatSpec can solve this. That talk is actually my first ever conference talk (can be seen from how nervous I am), and I was naive. The idea was that if you document your Solidity methods with NatSpec, this userdoc/devdoc will be in the metadata.json and you can use these human-readable messages to tell the user what is going to happen before calling this contract method (more below). 
 
@@ -39,11 +39,11 @@ Getting more familiar with the problem, soon I realized this huge problem can't 
   
   <div>
     <p>The problem of blind-signing turned out to be a bigger dragon that we can slay.</p>
-    <p>Still we learned a lot and I got to see what people have been proposing to solve this. Following the <a href="https://x.com/kaanuzdogan/status/1894870106288857229" target="_blank" rel="noopener">ByBit hack</a> that was essentially caused by blind-signing, I'll take this chance to gather everything we've learned here and hare with everyone. There has been countless cases of people losing significant amounts of money because of blind signing. But the ByBit hack, the biggest hack ever in the crypto history, with 1.4 billion USD stolen, has brought the attention back to this issue</p>
+    <p>Still we learned a lot and I got to see what people have been proposing to solve this. Following the <a href="https://x.com/kaanuzdogan/status/1894870106288857229" target="_blank" rel="noopener">ByBit hack</a> that was essentially caused by blind-signing, I'll take this chance to gather everything we've learned here and share with everyone. There has been countless cases of people losing significant amounts of money because of blind signing. But the ByBit hack, the biggest hack ever in the crypto history, with 1.4 billion USD stolen, has brought the attention back to this issue</p>
   </div>
 </div>
 
-I started this article with blind-signing but the problem is actually even larger: it's transaction safety. It means nothing if you can read a transaction but it does not to what you read or if you're talking to the wrong contract. It's layers and layers and layers of security. Which also means layers and layers and layers of coordination effort. That's why it's so difficult.
+I started this article with blind-signing but the problem is actually even larger: it's transaction safety. It means nothing if you can read a transaction but it does not do what you read or if you're talking to the wrong contract. It's layers and layers and layers of security. Which also means layers and layers and layers of coordination effort. That's why it's so difficult.
 
 
 :::note
@@ -82,15 +82,15 @@ Here the project I want to highlight is the [Open Labels Initiative](https://ope
 
 ## 3. Audits
 
-This is part of labeling but it deserves it's own mentioning. We need open, public audit lists of contracts. Wallets need to show if the contract you are about to interact with is audited and if not warn you against this.
+This is part of labeling but it deserves its own mentioning. We need open, public audit lists of contracts. Wallets need to show if the contract you are about to interact with is audited and if not warn you against this.
 
 The second step could be to create a ranking/reputation system of auditors, as you all know, not all auditors are created equal. And again, all these lists MUST be open and public. Note that I don't mean "decentralized" necessarily. A good enough centralized solution is better than nothing as long as the data is fully open, not monetized, and incentives are aligned to keep it that way. This can be an alliance of multiple parties, or a project sustained by grants. As you can see, this by itself is already a big enough problem to solve. 
 
-This is also not a part of the ecosystem I'm not too knowledable in so please share what you know.
+This is also not a part of the ecosystem I'm not too knowledgeable in so please share what you know.
 
 ## 4. Human-Understandability of Transactions
 
-I named this "understandability" instead of "readability" because readability is just a necessary but non-sufficient part of our main goal ie. being able to undertand what you are doing. Reading `swapTokensForExactTokens` is quite a meaningless word for a normal person, even though readable. If you have no idea, what you're doing, you're basically giving out your money.
+I named this "understandability" instead of "readability" because readability is just a necessary but non-sufficient part of our main goal ie. being able to understand what you are doing. Reading `swapTokensForExactTokens` is quite a meaningless word for a normal person, even though readable. If you have no idea what you're doing, you're basically giving out your money.
 
 <div style={{display: 'flex', flexDirection: "column", alignItems: 'center'}}>
   <img src={dog} alt="POV signing transactions" width="350" />
@@ -196,14 +196,14 @@ At least now we know what the parameters mean but still we would have to look at
 
 This was an [old EIP](https://eips.ethereum.org/EIPS/eip-4430) from [@ricmoo](https://github.com/ricmoo) and [@arachnid](https://github.com/arachnid) to place the human-readable descriptions of functions in the contract itself.
 
-The high-level idea is to have a “describer” function that can be called by wallets etc. to show the user before sending a tx. 
+The high-level idea is to have a "describer" function that can be called by wallets etc. to show the user before sending a tx. 
 
 As in the spec:
 > In many cases, the information that would be necessary for a meaningful description is not present in the final encoded transaction data or message data.
 >
 > For example, the commit(bytes32) method of ENS places a commitment hash on-chain. The hash contains the blinded name and address; since the name is blinded, the encoded data (i.e. the hash) no longer contains the original values and is insufficient to access the necessary values to be included in a description.
 >
-> By instead describing the commitment indirectly (with the original information intact: NAME, ADDRESS and SECRET) a meaningful description can be computed (e.g. “commit to NAME for ADDRESS (with SECRET)”) and the matching data can be computed (i.e. commit(hash(name, owner, secret))).
+> By instead describing the commitment indirectly (with the original information intact: NAME, ADDRESS and SECRET) a meaningful description can be computed (e.g. "commit to NAME for ADDRESS (with SECRET)") and the matching data can be computed (i.e. commit(hash(name, owner, secret))).
 
 The spec proposes an additional contract method such as:
 ```js
@@ -240,7 +240,7 @@ I guess a lot of the explorers, portfolio managing apps, wallets do this for pop
 
 ## Transaction Simulation
 
-This is one field IMO that good progress was made. A lot of services provide tools or APIs to simulate the steps and outcomes of a transcation and it's somewhat well integrated into wallets.
+This is one field IMO that good progress was made. A lot of services provide tools or APIs to simulate the steps and outcomes of a transaction and it's somewhat well integrated into wallets.
 
 ## Signatures
 
