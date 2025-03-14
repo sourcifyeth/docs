@@ -14,7 +14,7 @@ import dog from "./dog.png"
 
 In the earlier days of Sourcify, there were other things we were focusing besides source-code verification. Sourcify was there to foster the adoption of the Solidity metadata and to make transactions **human-readable**. 
 
-Since September 2021, I've been the only one working on the project until Marco joined on XXX. You will see in our earlier talks we start with the problem statement of ["YOLO signing"](https://youtu.be/D7gZtHel8Lg) and explain how Sourcify, Solidity metadata.json, and NatSpec can solve this. That talk is actually my first ever conference talk (can be seen from how nervous I am), and I was naive. The idea was that if you document your Solidity methods with NatSpec, this userdoc/devdoc will be in the metadata.json and you can use these human-readable messages to tell the user what is going to happen before calling this contract method (more below). 
+Since September 2021, I've been the only one working on the project until Marco joined on July 2022. You will see in our earlier talks we start with the problem statement of ["YOLO signing"](https://youtu.be/D7gZtHel8Lg) and explain how Sourcify, Solidity metadata.json, and NatSpec can solve this. That talk is actually my first ever conference talk (can be seen from how nervous I am), and I was naive. The idea was that if you document your Solidity methods with NatSpec, this userdoc/devdoc will be in the metadata.json and you can use these human-readable messages to tell the user what is going to happen before calling this contract method (more below). 
 
 <div className="image-container">
   <img 
@@ -234,7 +234,7 @@ borrowAsset(uint256 _borrowAmount,uint256 _collateralAmount,address _receiver)
 BorrowAsset (index_topic_1 address _borrower, index_topic_2 address _receiver, uint256 _borrowAmount, uint256 _sharesAdded)
 ```
 
-can become "Borrowed {tokenAmount} {tokenName} on {dAppName}".
+can become "Borrowed \{tokenAmount\} \{tokenName\} on \{dAppName\}".
 
 I guess a lot of the explorers, portfolio managing apps, wallets do this for popular contracts and functions. The problem again here is **everyone's trying to solve it for themselves**. There's not coordinated effort that I'm aware of that is open and solves this once and for all! Except maybe [rotki](https://github.com/rotki/rotki) because it's purely open-source but I don't know their registry or DB for this.
 
@@ -250,11 +250,11 @@ Not only transactions but message signatures need to be understandable and safe.
 
 [EIP-712](https://eips.ethereum.org/EIPS/eip-712) has been around for more than 7 years. I don't really know how effective it is and how widespread but putting it here for reference.
 
-## Browser Wallet <\> Hardware Wallet Integrity
+## Browser Wallet to Hardware Wallet Integrity
 
 Even if we did everything above perfectly, we wouldn't be able to prevent the ByBit attack because what the signers were seeing on their machines were benign but they were actually signing a malicious transaction. Of course they should've checked what they were signing on their hardware wallets but this is obviously not working. A lot of the users slack, don't want to read hexadecimals (understandably) and just accept what's provided. 
 
-I think there's a lot of room for improvement in the SW \<\> HW wallet integrity field and a lot of low-hanging fruits.
+I think there's a lot of room for improvement in the SW to HW wallet integrity field and a lot of low-hanging fruits.
 
 One example I thought about [in this tweet](https://x.com/kaanuzdogan/status/1900587980445585544) is using emojis to do integrity checks instead of hexadecimals.
 
