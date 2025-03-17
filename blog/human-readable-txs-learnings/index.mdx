@@ -11,6 +11,8 @@ import "./style.css"
 import blindSign from "./blind-sign-meme.jpg"
 import oldHero from "./old-hero.png"
 import dog from "./dog.png"
+import rabby from "./rabby.png"
+import cowswap from "./cowswap.png"
 
 In the earlier days of Sourcify, there were other things we were focusing on besides source-code verification. Sourcify was there to foster the adoption of the Solidity metadata and to make transactions **human-readable**. 
 
@@ -39,11 +41,11 @@ Getting more familiar with the problem, soon I realized this huge problem can't 
   
   <div>
     <p>The problem of blind-signing turned out to be a bigger dragon than we can slay.</p>
-    <p>Still we learned a lot and I got to see what people have been proposing to solve this. Following the <a href="https://x.com/kaanuzdogan/status/1894870106288857229" target="_blank" rel="noopener">ByBit hack</a> that was essentially caused by blind-signing, I'll take this chance to gather everything we've learned here and share with everyone. There have been countless cases of people losing significant amounts of money because of blind signing. But the ByBit hack, the biggest hack ever in crypto history, with 1.4 billion USD stolen, has brought the attention back to this issue</p>
+    <p>Still we learned a lot and I got to see what people have been proposing to solve this. Following the <a href="https://x.com/kaanuzdogan/status/1894870106288857229" target="_blank" rel="noopener">ByBit hack</a> that was essentially caused by blind-signing, I'll take this chance to gather everything we've learned here and share with everyone. There have been countless cases of people losing significant amounts of money because of blind signing. But the ByBit hack, the biggest hack ever in crypto history, with 1.4 billion USD stolen, has brought the attention back to this issue.AbortSignal={}</p>
   </div>
 </div>
 
-I started this article with blind-signing but the problem is actually even larger: it's transaction safety. It means nothing if you can read a transaction but it does not do what you read or if you're talking to the wrong contract. It's layers and layers and layers of security. Which also means layers and layers and layers of coordination effort. That's why it's so difficult.
+I started this article with blind-signing in mind but the problem is actually even larger: it's transaction safety. It means nothing if you can read a transaction but it does not do what you read or if you're talking to the wrong contract. It's layers and layers and layers of security. Which also means layers and layers and layers of coordination effort. That's why it's so difficult.
 
 
 :::note
@@ -58,13 +60,13 @@ This is a MUST. Period. Without verification there's no way to tell what a contr
 
 DO NOT INTERACT WITH CONTRACTS THAT ARE UNVERIFIED
 
-The contract should be verified by a verifier, but ideally it is verified at multiple places. Even better if the verification is a ["perfect/exact match"](/docs/full-vs-partial-match/), this gives you a cryptographic guarantee that what you see is exactly what the contract author deployed, byte-by-byte.
+The contract should be verified by a verifier, but ideally it is verified at multiple places. Even better if the verification is a ["perfect/exact match"](/docs/full-vs-partial-match/), this gives you a cryptographic guarantee that what you see is exactly what the contract author deployed, even the comments, whitespaces etc.
 
 Players here: [Blockscout](https://www.blockscout.com), [Etherscan](https://etherscan.io/), [Routescan](https://routescan.io/), [Tenderly](https://tenderly.co/), Sourcify, and the [Verified Alliance](https://verifieralliance.org/) initiative.
 
 Wallets MUST warn users about unverified contracts and use multiple sources to check verification. Unfortunately, even in 2025, not many do even this simple requirement. 
 
-The tricky thing here is to not lead the user to believe verified == safe. A verified contract can still be malicious and verification does not check what the contract does.
+The tricky thing here is to not lead the user to believe verified == safe. A verified contract can still be malicious and verification does not check what the contract does. I actually wish we had a better name like "open-sourced contracts" instead of verification, but it is what it is.
 
 ## 2. Labeling
 
@@ -100,7 +102,7 @@ Dog-readable transactions, anyone?
 </div>
 
 
-## ABI-Decoding
+## 4.1 ABI-Decoding
 
 It's year 2025 and I can't believe I have to mention this.
 
@@ -124,7 +126,7 @@ This is incredibly straightforward, just pull the ABI from a verifier, and decod
 
 ABI-decoding is not always this helpful though. Usually the called methods have a lot more complex arguments and not as simple as the one above.
 
-## Function Metadata
+## 4.2 Function Metadata
 
 This category refers to leveraging function metadata, apart from the function itself (e.g. ABI) to provide more information about it.
 
@@ -190,13 +192,13 @@ As said, NatSpec also falls short in many cases. First of all, it's not backward
 function execute(bytes calldata commands, bytes[] calldata inputs, uint256 deadline) external payable;
 ```
 
-At least now we know what the parameters mean but still we would have to look at the `Commands` implementation in the contract to make sense of it.
+At least now we know what the parameters mean but still we would have to look at the `Commands` implementation in the contract to make sense of it. NatSpec gets us so far.
 
 ### ERC-4430: Described Transactions
 
 This was an [old EIP](https://eips.ethereum.org/EIPS/eip-4430) from [@ricmoo](https://github.com/ricmoo) and [@arachnid](https://github.com/arachnid) to place the human-readable descriptions of functions in the contract itself.
 
-The high-level idea is to have a "describer" function that can be called by wallets etc. to show the user before sending a tx. 
+The high-level idea is to have a "describer" function within the contract itself. Wallets etc. would call that describer to show the user a message before sending a tx.
 
 As in the spec:
 > In many cases, the information that would be necessary for a meaningful description is not present in the final encoded transaction data or message data.
@@ -224,9 +226,11 @@ My understanding of this proposal is that the first point of contact of the wall
 
 This would be backwards compatible for existing contracts.
 
+I like this proposal's approach to provide this information to the user in the first point of contact ever with the dApp. The website would be responsible for passing this information and in a kind of secure way if provided with HTTPS.
+
 ### Function/Event Templating
 
-Similar to above proposal, we can generate a "function templates registry" that will map a chainId+address+function to a string template that can be dynamically filled and human-readable.
+Similar to above proposal, we can generate a "function templates registry" that will map a chainId+address+function to a string template that can be dynamically filled and human-readable. While the above, from my understanding is more decentralized, that every dApp provides its own messages, here it's a centralized registry possibly with a template language.
 
 E.g. the function or event on [a specific contract](https://eth.blockscout.com/address/0x3835a58CA93Cdb5f912519ad366826aC9a752510)
 ```js
@@ -238,11 +242,31 @@ can become "Borrowed \{tokenAmount\} \{tokenName\} on \{dAppName\}".
 
 I guess a lot of the explorers, portfolio managing apps, wallets do this for popular contracts and functions. The problem again here is **everyone's trying to solve it for themselves**. There's no coordinated effort that I'm aware of that is open and solves this once and for all! Except maybe [rotki](https://github.com/rotki/rotki) because it's purely open-source but I don't know their registry or DB for this.
 
-## Transaction Simulation
+IMO it's fine that this is centralized initially and held in a place even like Github to begin with. Eventually there will be the problem of "who" provides these messages and if they are trusted parties. E.g. what if an attacker is able to inject a misleading message? Or is it going to be permissionless that attackers can also provide human-readable messages for their own malicious contracts. One can start small here with a trusted set of participants and expand slowly.
 
-This is one field IMO that good progress was made. A lot of services provide tools or APIs to simulate the steps and outcomes of a transaction and it's somewhat well integrated into wallets.
+## 4.3 Transaction Simulation
 
-## Signatures
+This is one field that good progress was made. A lot of services provide tools or APIs to simulate the steps and outcomes of a transaction and it's somewhat well integrated into wallets.
+
+A lot of services provide Transaction Simulation through their APIs and it should be easy to hook. Here are some I'm aware of:
+- [Tenderly](https://tenderly.co/transaction-simulator)
+- [Alchemy](https://www.alchemy.com/transaction-simulation)
+
+
+[Rabby Wallet](https://rabby.io/) does a great job here to show the simulation results to the user:
+
+<div style={{width: "300px", margin: "0 auto"}}>
+  <img src={rabby} alt="Rabby Uniswap swap simulation" width="100%" />
+</div>
+
+But also as a reminder this is not a silver bullet again. For example it isn't able to find out what I'll receive from the [CoWSwap](https://swap.cow.fi/) swap, likely because how CoWSwap works with [solving auctions](https://docs.cow.fi/cow-protocol/tutorials/solvers) etc:
+
+<div style={{width: "300px", margin: "0 auto"}}>
+  <img src={cowswap} alt="Rabby Cowswap swap simulation" width="100%" />
+</div>
+
+
+{/* ## Signatures
 
 Not only transactions but message signatures need to be understandable and safe. A good number of hacks happen by non-tx signatures that allow the attacker to take over the asset  e.g. through [free OpenSea sales](https://x.com/divergencearran/status/1618359162551009281).
 
@@ -250,7 +274,8 @@ Not only transactions but message signatures need to be understandable and safe.
 
 [EIP-712](https://eips.ethereum.org/EIPS/eip-712) has been around for more than 7 years. I don't really know how effective it is and how widespread but putting it here for reference.
 
-## Browser Wallet to Hardware Wallet Integrity
+ */}
+## 5. Browser Wallet to Hardware Wallet Integrity
 
 Even if we did everything above perfectly, we wouldn't be able to prevent the ByBit attack because what the signers were seeing on their machines were benign but they were actually signing a malicious transaction. Of course they should've checked what they were signing on their hardware wallets but this is obviously not working. A lot of the users slack, don't want to read hexadecimals (understandably) and just accept what's provided. 
 
