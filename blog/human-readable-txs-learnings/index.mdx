@@ -13,6 +13,7 @@ import oldHero from "./old-hero.png"
 import dog from "./dog.png"
 import rabby from "./rabby.png"
 import cowswap from "./cowswap.png"
+import clearSign from "./clear-sign-diagram.png"
 
 In the earlier days of Sourcify, there were other things we were focusing on besides source-code verification. Sourcify was there to foster the adoption of the Solidity metadata and to make transactions **human-readable**. 
 
@@ -228,7 +229,7 @@ This would be backwards compatible for existing contracts.
 
 I like this proposal's approach to provide this information to the user in the first point of contact ever with the dApp. The website would be responsible for passing this information and in a kind of secure way if provided with HTTPS.
 
-### Function/Event Templating
+### Function/Event Templating and ERC-7730
 
 Similar to above proposal, we can generate a "function templates registry" that will map a chainId+address+function to a string template that can be dynamically filled and human-readable. While the above, from my understanding is more decentralized, that every dApp provides its own messages, here it's a centralized registry possibly with a template language.
 
@@ -240,9 +241,54 @@ BorrowAsset (index_topic_1 address _borrower, index_topic_2 address _receiver, u
 
 can become "Borrowed \{tokenAmount\} \{tokenName\} on \{dAppName\}".
 
-I guess a lot of the explorers, portfolio managing apps, wallets do this for popular contracts and functions. The problem again here is **everyone's trying to solve it for themselves**. There's no coordinated effort that I'm aware of that is open and solves this once and for all! Except maybe [rotki](https://github.com/rotki/rotki) because it's purely open-source but I don't know their registry or DB for this.
+I guess a lot of the explorers, portfolio managing apps, wallets do this for popular contracts and functions. The problem again here is **everyone's trying to solve it for themselves**. ~~There's no coordinated effort that I'm aware of that is open and solves this once and for all!~~ (Edit: See below) Except maybe [rotki](https://github.com/rotki/rotki) because it's purely open-source but I don't know their registry or DB for this.
 
 IMO it's fine that this is centralized initially and held in a place even like Github to begin with. Eventually there will be the problem of "who" provides these messages and if they are trusted parties. E.g. what if an attacker is able to inject a misleading message? Or is it going to be permissionless that attackers can also provide human-readable messages for their own malicious contracts. One can start small here with a trusted set of participants and expand slowly.
+
+**ERC-7730 (by Ledger)**
+
+Turns out ERC-7730 is exactly what I describe above ([see full EIP](https://eips.ethereum.org/EIPS/eip-7730)). The spec proposes a JSON schema to provide human readable messages and annotate function parameters to format them nicely. 
+
+Example from a [Lido contract](https://github.com/LedgerHQ/clear-signing-erc7730-registry/blob/master/registry/lido/calldata-wstETH.json):
+
+```js
+  "display": {
+    "formats": {
+      "wrap(uint256)": {
+        "intent": "Exchange stETH to wstETH",
+        "fields": [
+          {
+            "path": "_stETHAmount",
+            "label": "Amount to exchange",
+            "format": "tokenAmount",
+            "params": { "token": "$.metadata.constants.stETHaddress" }
+          }
+        ]
+      },
+```
+
+When the user calls `wrap(10000000000000000000)` they will be shown:
+```
+Review transaction to: Exchange stETH to wstETH 
+
+Amount to exchange: 1 stETH 
+```
+
+From what I understand this also supports nested calls or multicalls if this is specified properly.
+
+The whole submission to wallet workflow is depicted nicely in this diagram from the spec:
+
+
+<div>
+  <img src={clearSign} alt="Clear sign workflow" />
+</div>
+
+
+The biggest con I see with this initiative is it's _branded_ everywhere as "by Ledger". Kudos to Ledger for coming up with this as an open spec but as long as this remains under Ledger's ownership in their repos, there's no incentive for other wallets to adopt this standard. Such an initiative should be led by a neutral entity or a consortium, and really not be marketed with the wallet's name everywhere. This is already mentioned in the original EIP:
+> - Foundation operated repository, like ethereum chainID list: good alternative between decentralization and discoverability.
+> - Ledger repository: as a short term solution, Ledger is providing a central repository (See Ledger GitHub repository)
+
+To me this is the biggest drawback of this intiative and Ledger should stop marketing this through themselves if they really want this to succeed.
 
 ## 4.3 Transaction Simulation
 
@@ -298,3 +344,11 @@ One example I thought about [in this tweet](https://x.com/kaanuzdogan/status/190
 ### HW Wallet limitations
 
 One thing to keep in mind is that a large portion on the hardware wallets are limited in their resources as well as their displays. There is so much information we can put in it. Newer wallets have larger and more information rich displays but they are also expensive. An ideal solution should cover cheaper alternatives too even if not fully backwards compatible to the exiting lower-grade hardware wallets.
+
+## Conclusion
+
+The journey to solve blind signing has taught us some valuable lessons about the complexity of the problem and I wanted to share what we have found here. As you can see "transaction safety" is not just clear-signing and it's layers and layers of security and coordination. The clear-signing part also has had multiple attempts to solve and none is perfect. Still the main issue is none of the proposals is on production (except simulation) and they all remained as wishful specs. Having something is better than having nothing.
+
+While we started with the goal of making transactions more human-readable, we discovered that this challenge requires a coordinated effort across the entire ecosystem. I am hoping the ByBit hack serves as a wake-up call to the entire ecosystem and we start working on this intentionally. As Sourcify we have more bandwidth compared to back than and will be willing to support the coordination efforts.
+
+If you liked this, please share and spread the word and we can start some open discussion. If you have feedback or other ideas, also let me know on X! [@kaanuzdogan](https://x.com/kaanuzdogan)
