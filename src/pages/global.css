@@ -1,0 +1,13 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.markdown h1 {
+  font-size: 2.5rem;
+  margin-top: 2rem;
+}
+
+.markdown h2 {
+  margin-top: 0.5rem;
+}
