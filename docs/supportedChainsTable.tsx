@@ -193,13 +193,6 @@ const Table = () => {
       </div>
     );
   }
-  if (!stats) {
-    return (
-      <div style={{ margin: "8rem" }}>
-        <LoadingOverlay message="Loading Sourcify stats" />
-      </div>
-    );
-  }
 
   const testRunCircleURL =
     testReportObject &&
@@ -251,8 +244,16 @@ const Table = () => {
       )}
       <ReactTooltip effect="solid" />
       <div>
-        <h2>Chains by Verified Contracts</h2>
-        <Chart stats={stats} sourcifyChainMap={sourcifyChainMap} sourcifyChains={sourcifyChains} />
+        {stats ? (
+          <>
+            <h2>Chains by Verified Contracts</h2>
+            <Chart stats={stats} sourcifyChainMap={sourcifyChainMap} sourcifyChains={sourcifyChains} />
+          </>
+        ) : (
+          <div style={{ margin: "8rem" }}>
+            <LoadingOverlay message="Loading Sourcify stats" />
+          </div>
+        )}
       </div>
       <div>
         <h2>Chains by Type of Support</h2>
