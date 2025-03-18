@@ -110,7 +110,7 @@ const Table = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://repo.sourcify.dev/stats.json`)
+    fetch(`https://sourcify.dev/static/stats.json`)
       .then((res) => res.json())
       .then((json) => setStats(json))
       .catch(() => {});
