@@ -18,7 +18,13 @@ You can access the live schema of the database [here](https://dbdiagram.io/d/Sou
 In short:
 - Every verified contract is a coupling between a deployed contract (`contract_deployments`) and a compilation (`compiled_contracts`)
 - "Transformations" are applied to reach the final matching onchain bytecode from a bytecode from a compilation. 
-- Contract bytecodes are "normalized" for deduplication. A bytecode of a popular contract like `ERC20.sol` will only be stored once.
+- Bytecodes and sources are dedeplicated. The bytecode and the sources of a popular contract like `ERC20.sol` will only be stored once in `sources` and `code` respectively.
+
+:::warning
+If the contract has ["unlinked libraries"](https://docs.soliditylang.org/en/v0.8.30/using-the-compiler.html#library-linking), the placeholder strings like `__$53ae...a537$__` in bytecodes will be normalized to `0000...0000`s. This is required since the `code` column is a `bytea` type in the DB. 
+
+Therefore, the bytecode string from the DB **will not be identical** to the output of the compilation. You can "de-normalize" these fields by looking at the library transformations and filling the placeholders with the library identifier.
+:::
 
 For more information about the schemas of the json fields below check the [Verifier Alliance repo](https://github.com/verifier-alliance/database-specs/tree/master/json-schemas).
 
