@@ -22,7 +22,7 @@ The runtime bytecode of contracts by default also contain a special field at the
 
 For a visual explanation of everything above, check out [playground.sourcify.dev](https://playground.sourcify.dev/)
 
-Because of its sensitivity, some verifiers leave this field out in verification. In Sourcify’s case, if the recompiled bytecode and the onchain bytecodes match each other exactly (including the auxdata), it’s great. This will give us a [“full match”](https://docs.sourcify.dev/docs/full-vs-partial-match/). If not, we need to find the auxdatas and leave them out when comparing to be able to get at least a "partial match". 
+Because of its sensitivity, some verifiers leave this field out in verification. In Sourcify’s case, if the recompiled bytecode and the onchain bytecodes match each other exactly (including the auxdata), it’s great. This will give us a [“full match”](https://docs.sourcify.dev/docs/exact-match-vs-match/). If not, we need to find the auxdatas and leave them out when comparing to be able to get at least a "partial match". 
 
 However this is not always trivial especially in these cases:
 

@@ -56,12 +56,24 @@ const config = {
         },
       };
     },
+    [
+      "@docusaurus/plugin-client-redirects",
+      {
+        redirects: [
+          {
+            to: "/docs/exact-match-vs-match",
+            from: "/docs/full-vs-partial-match",
+          }
+        ],
+      },
+    ],
   ],
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: "https://raw.githubusercontent.com/sourcifyeth/assets/master/logo-assets-png/sourcify_blue_rounded.png",
+      image:
+        "https://raw.githubusercontent.com/sourcifyeth/assets/master/logo-assets-png/sourcify_blue_rounded.png",
       metadata: [
         {
           property: "og:title",

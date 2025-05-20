@@ -13,7 +13,7 @@ date: 2023-08-13
 
 ## Introduction
 
-Solidity compiler has a feature, not known by everyone, that appends the IPFS hash of the [contract metadata](/docs/metadata/) to the contract bytecode. This hash effectively acts as a _fingerprint_ of the compilation, and when deployed, goes onchain. With that, we can verify the contracts ["perfectly"](/docs/full-vs-partial-match/) and fetch the contract source code from IPFS. One of our
+Solidity compiler has a feature, not known by everyone, that appends the IPFS hash of the [contract metadata](/docs/metadata/) to the contract bytecode. This hash effectively acts as a _fingerprint_ of the compilation, and when deployed, goes onchain. With that, we can verify the contracts ["perfectly"](/docs/exact-match-vs-match/) and fetch the contract source code from IPFS. One of our
 missions at Sourcify is to make this feature more known and used, but [not everyone is a fan of it](https://github.com/ethereum/solidity/issues/1571).
 
 (If you don't fully understand the metadata hash check out [our playground](https://playground.sourcify.dev/) to see it in action.)
@@ -82,7 +82,7 @@ This is because this constructor code part will not be included in the runtime b
 
 ### Verifying with the Runtime Bytecode + Metadata Hash
 
-There's a way around this problem. If you verify a contract with its [metadata hash appended](https://docs.soliditylang.org/en/latest/metadata.html#encoding-of-the-metadata-hash-in-the-bytecode) to the runtime bytecode, you'll get a [full match](http://localhost:3000/docs/full-vs-partial-match/). This means the source code you are looking at is exactly the same as the one that was originally compiled, because if you change anything about the contract (even a whitespace), the metadata hash will change and you will not get a "full match" but a "partial match".
+There's a way around this problem. If you verify a contract with its [metadata hash appended](https://docs.soliditylang.org/en/latest/metadata.html#encoding-of-the-metadata-hash-in-the-bytecode) to the runtime bytecode, you'll get a [full match](http://localhost:3000/docs/exact-match-vs-match/). This means the source code you are looking at is exactly the same as the one that was originally compiled, because if you change anything about the contract (even a whitespace), the metadata hash will change and you will not get a "full match" but a "partial match".
 
 This, I'd argue, is the only foolproof way to verify a contract's source code. This method covers all the cases above and the ones I haven't mentioned or we don't know about yet. By being based on the runtime code, this also removes the need to trust a third party to index the creation bytecode, and instead you can get the bytecode from your own execution client's JSON RPC interface.
 
