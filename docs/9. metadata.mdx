@@ -12,7 +12,7 @@ import AvailableOnlyForSolidityAdmonition from "./AvailableOnlyForSolidityAdmoni
 
 ## Metadata
 
-Since [v0.4.7](https://github.com/ethereum/solidity/releases/tag/v0.4.7) (2016-12-15) Solidity compiler generates an output file called metadata that contains information about the contract and the compilation ([see Solidity docs](https://docs.soliditylang.org/en/latest/metadata.html)). This includes the compiler settings, [contract ABI](https://docs.soliditylang.org/en/latest/abi-spec.html), [NatSpec contract documentation](https://docs.soliditylang.org/en/latest/natspec-format.html), and used source files and their hashes. Sourcify takes full advantage of this information to [fully verify](/docs/exact-match-vs-match) a deployed contract i.e. a byte-by-byte match of the contract. **Metadata file is required for the Sourcify verification** alongside the Solidity source files.
+Since [v0.4.7](https://github.com/ethereum/solidity/releases/tag/v0.4.7) (2016-12-15) Solidity compiler generates an output file called metadata that contains information about the contract and the compilation ([see Solidity docs](https://docs.soliditylang.org/en/latest/metadata.html)). This includes the compiler settings, [contract ABI](https://docs.soliditylang.org/en/latest/abi-spec.html), [NatSpec contract documentation](https://docs.soliditylang.org/en/latest/natspec-format.html), and used source files and their hashes. Sourcify takes full advantage of this information to [exactly verify](/docs/exact-match-vs-match) a deployed contract i.e. a byte-by-byte match of the contract. **Metadata file is required for the Sourcify verification** alongside the Solidity source files.
 
 To see metadata in action check out the [Metadata Playground](https://playground.sourcify.dev).
 
@@ -97,7 +97,7 @@ module.exports = {
 };
 ```
 
-In theory, if you haven't changed any of the compilation settings, it should result in the same metadata file and you should get a full match. Otherwise you will be able to get a partial match only.
+In theory, if you haven't changed any of the compilation settings, it should result in the same metadata file and you should get an exact match. Otherwise you will be able to get a match only.
 
 ### Truffle
 

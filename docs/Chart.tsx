@@ -168,13 +168,13 @@ const Chart = ({
             />
             <Legend verticalAlign="top" align="center" height={36} />
             <Bar
-              name="Full Matches"
+              name="Exact Matches"
               dataKey="fullMatch"
               fill="#2B50AA"
               stackId="a"
             />
             <Bar
-              name="Partial Matches"
+              name="Matches"
               dataKey="partialMatch"
               fill="#7693DA"
               stackId="a"
