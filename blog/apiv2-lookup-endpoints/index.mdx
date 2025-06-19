@@ -12,7 +12,7 @@ We have been working on the new APIv2 for Sourcify and just shipped the first se
 
 In this post we will walkthrough the new functionality brought by these endpoints and see how to use them.
 
-If you want to just look at the full up-to-age spec, you can go to: https://sourcify.stoplight.io/docs/sourcify-apiv2/branches/main
+(Edit: The full API spec is live [in our docs](https://docs.sourcify.dev/docs/api/))
 
 ## Background 
 
@@ -26,7 +26,7 @@ The main problems we wanted to solve with and the main features we wanted from t
 
 You can read more in [this issue](https://github.com/ethereum/sourcify/issues/1470).
 
-In the end we settled for the following API design (as of 11 Feb 2025) https://sourcify.stoplight.io/docs/sourcify-apiv2/branches/main/8ujkqluwvkwbl-sourcify-v2-draft. 
+(Edit: The design is live [in our docs](https://docs.sourcify.dev/docs/api/))
 
 The design specifies endpoints to "Verify Contracts", check for "Verification Jobs", and to do "Contract Lookup". Here we'll talk about the "Contract Lookup" that we shipped. The others are still being developed.
 
@@ -396,7 +396,7 @@ See [proxy-utils.ts](https://github.com/ethereum/sourcify/blob/staging/services/
 
 As said, this is just the lookup endpoints of the APIv2. In the upcoming weeks we will be developing the verificaiton and verificationJob endpoints that will support ticketing and polling, instead of hanging requests.
 
-Once again, you can see the full up-to-date API spec at https://sourcify.stoplight.io/docs/sourcify-apiv2/branches/main
+Once again, you can see the full up-to-date API spec at https://docs.sourcify.dev/docs/api/
 
 You can follow along the development in our tracker issue: https://github.com/ethereum/sourcify/issues/1367
 
