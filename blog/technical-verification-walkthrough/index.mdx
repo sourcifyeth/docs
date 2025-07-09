@@ -387,7 +387,7 @@ You'll see both the runtime and creation bytecodes match between the onchain and
 
 But most of the times this is not as straightforward. 
 
-A lot of the times, parts of the bytecode are modified when the contract is being deployed. This is what we refer to as "transformations" within Sourcify and the [Verifier Alliance](https://verifieralliance.org). There are certain patterns in Solidity and Vyper contracts that can change between the recompiled vs. onchain bytecodes but even with different values, the contract *behaves* the same. You can guess that these transformations are "data" or "metadata" of the contract embedded in its bytecode, and not the functional bytecodes i.e. opcodes.
+A lot of the times, parts of the bytecode are modified when the contract is being deployed. This is what we refer to as "transformations" (https://verifieralliance.org/docs/transformations) within Sourcify and the [Verifier Alliance](https://verifieralliance.org). There are certain patterns in Solidity and Vyper contracts that can change between the recompiled vs. onchain bytecodes but even with different values, the contract *behaves* the same. You can guess that these transformations are "data" or "metadata" of the contract embedded in its bytecode, and not the functional bytecodes i.e. opcodes.
 
 In the Verifier Alliance's [json-schemas](https://github.com/verifier-alliance/database-specs/tree/master/json-schemas) we define the possible transformations for the creation bytecode and the runtime bytecode as such:
 

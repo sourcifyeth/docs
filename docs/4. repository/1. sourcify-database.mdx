@@ -4,7 +4,7 @@ Sourcify Database is the main storage backend for Sourcify. It is a PostgreSQL d
 
 On a high level, these modifications are: 
 - Sourcify DB does accept contracts without the deployment details such as `block_number`, `transaction_hash` as well as without an onchain creation bytecode (`contracts.creation_code_hash`). 
-- Stores the Solidity metadata separately in the `sourcify_matches` table.
+- Stores the [Solidity metadata](/docs/metadata) separately in the `sourcify_matches` table.
 - Introduces tables for other purposes.
 
 You can follow the [`services/database/migrations`](https://github.com/ethereum/sourcify/tree/staging/services/database/migrations) folder for the initial schema and the changes made to it. These are not necessarily the differences between Sourcify DB and the Verified Alliance Schema, but any changes made to the schema over time.
@@ -17,7 +17,7 @@ You can access the live schema of the database [here](https://dbdiagram.io/d/Sou
 
 In short:
 - Every verified contract is a coupling between a deployed contract (`contract_deployments`) and a compilation (`compiled_contracts`)
-- "Transformations" are applied to reach the final matching onchain bytecode from a bytecode from a compilation. 
+- ["Transformations"](https://verifieralliance.org/docs/transformations) are applied to reach the final matching onchain bytecode from a bytecode from a compilation. 
 - Bytecodes and sources are dedeplicated. The bytecode and the sources of a popular contract like `ERC20.sol` will only be stored once in `sources` and `code` respectively.
 
 :::warning
@@ -34,7 +34,7 @@ JSON fields of `verified_contracts` table:
 - `runtime_values`
 - `runtime_transformations`
 
-The transformations and values are the operations done on a bytecode from a compilation to reach the final matching onchain bytecode.
+The [transformations](https://verifieralliance.org/docs/transformations) and values are the operations done on a bytecode from a compilation to reach the final matching onchain bytecode.
 
 JSON fields of `compiled_contracts` table:
 - `sources`: Source code files of a contract
