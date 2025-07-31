@@ -15,11 +15,11 @@ Sourcify is a project that has been around for technically more than 5 years. No
 
 ## Problem Statement
 
-Ethereum has an established open-source culture and is built on open-source tooling. Ethereum community also demands the smart-contracts to be open-sourced (ie. source-code verified). After all, Ethereum's core principles such as trustlessness, transparency, verifiablity etc. do rely on the contract code being verified and open-sourced. 
+Ethereum has an established open-source culture and is built on open-source tooling. The Ethereum community also demands the smart-contracts to be open-sourced (ie. source-code verified). After all, Ethereum's core principles such as trustlessness, transparency, verifiablity etc. do rely on the contract code being verified and open-sourced. 
 
 However we believe the source-code verification ecosytem **plateaued** at a suboptimal point:
 
-    - **Lack of open-source**: The most used verification services themselves are **not** open source and the whole verification process is a black-box
+    - **Lack of open-source**: The most used verification service itself is **not** open source and the whole verification process is a black-box
 
     - **Centralization**: There is centralization on who verifies contracts. Contracts should be verified in multiple places and when needed cross-checked across verifiers. Because all verifiers will make mistakes and [have bugs](https://x.com/kaanuzdogan/status/1945169254908645670)
 
@@ -66,7 +66,7 @@ First, for Sourcify to be relevant we need to intercept ourselves in the beginni
 - Funnel: When anyone is verifying a contract anywhere, make sure it goes to Sourcify and also to all verifiers, not just to one place.
   - Convince frameworks to verify everywhere by default. Integrate into frameworks (Remix, Foundry, etc.) to work seamlessly
   - Become a one-stop-shop for contract verification: Lead by example and submit all received contracts to all other verifiers if they support a given chain
-- User-demand: Developers, auditors, users should demand and expect a contract to verified on Sourcify.
+- User-demand: Developers, auditors, users should demand and expect a contract to be verified on Sourcify.
   - Better verification UX:
     - Provide as much context and information to the user if a verification fails. Give detailed error messages, show differences between onchain vs recompiled bytecodes. Visualize this data on the UI.
     - Make it very easy for users to report issues if they really think a verification unexpectedly fails. Close the loop between the user and the verifier.
@@ -74,13 +74,13 @@ First, for Sourcify to be relevant we need to intercept ourselves in the beginni
       - Provide raw bytecodes, abi, storageLayout, sourcemaps, transformations, cborAuxdata. Anything that can be useful for tooling.
       - Build a 4-bytes DB based on the verified contracts 
 - Publish our DB and pursue feedback
-- Maintain and promote the Verifier Alliance
-- Be the benovelent force pushing the ecosystem towards a more resilient, open-source forward, and decentralized future.
+- Maintain and promote the [Verifier Alliance](https://verifieralliance.org/)
+- Be the benevolent force pushing the ecosystem towards a more resilient, open-source forward, and decentralized future.
 - Be the voice of the values and demonstrate the flaws in the current outlook.
 
 ## Achievements
 
-What we did so far since about 12 months:
+What we did so far since about 12 months ago:
 - **Shipped APIv2:** Our previous API was inherited from the project's early days and had major issues including no ticketing system causing timeouts, bloated endpoints for different match types, lack of std-json support, and poor error messaging. The new API also uses the new DB which allows us to return rich information about the verification process.
   - API Design: https://github.com/ethereum/sourcify/issues/1470
   - Lookup endpoints: https://github.com/ethereum/sourcify/issues/1367
