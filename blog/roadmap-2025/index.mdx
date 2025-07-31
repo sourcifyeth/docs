@@ -23,13 +23,13 @@ However we believe the source-code verification ecosytem **plateaued** at a subo
 
     - **Centralization**: There is centralization on who verifies contracts. Contracts should be verified in multiple places and when needed cross-checked across verifiers. Because all verifiers will make mistakes and [have bugs](https://x.com/kaanuzdogan/status/1945169254908645670)
 
-    - **Closed datasets**: Right now smart contract data is siloed in proprietary services. Yes, one can "see and read" individual contracts but the dataset is closed and almost impossible to assemble through APIs, or scraping (usually against the terms of the services). The absence of accessible and open datasets is holding the progress of the ecosystem on many fronts:
+    - **Closed datasets**: Right now smart contract data is siloed in proprietary services. Yes, one can "see and read" individual contracts but the dataset is closed and almost impossible to assemble through APIs, or scraping (usually against the terms of the service). The absence of accessible and open datasets is holding the progress of the ecosystem on many fronts:
         - Bulk testing EVM tooling with smart contracts
         - Finding vulnerability patterns
         - Training AI models
         - Any kind of data analysis over source code
 
-    - **Tooling stagnation**: The APIs and tooling around verification is old and not improving. For example, there are so many verification artifacts that can be useful for tooling (storageLayout, sourceMaps, [cborAuxdata](https://docs.sourcify.dev/blog/finding-auxdatas-in-bytecode/), [transformations](https://verifieralliance.org/docs/transformations)) but they are not available in current APIs.
+    - **Tooling stagnation**: The APIs and tooling around verification are old and not improving. For example, there are so many verification artifacts that can be useful for tooling (storageLayout, sourceMaps, [cborAuxdata](https://docs.sourcify.dev/blog/finding-auxdatas-in-bytecode/), [transformations](https://verifieralliance.org/docs/transformations)) but they are not available in current APIs.
 
     - **No integrity hash support**: Existing verifiers don't leverage "exact matches" ie. the integrity hashes provided by the [Solidity](https://docs.soliditylang.org/en/v0.8.30/metadata.html#encoding-of-the-metadata-hash-in-the-bytecode) and [Vyper](https://docs.vyperlang.org/en/v0.4.3/compiling-a-contract.html#integrity-hash) compilers. This gives a cryptographic guarantee that the whole compilation, including the source code, is exactly the same as the original (even whitespaces etc.)
 
@@ -69,7 +69,7 @@ First, for Sourcify to be relevant we need to intercept ourselves in the beginni
 - User-demand: Developers, auditors, users should demand and expect a contract to verified on Sourcify.
   - Better verification UX:
     - Provide as much context and information to the user if a verification fails. Give detailed error messages, show differences between onchain vs recompiled bytecodes. Visualize this data on the UI.
-    - Make it very easy for users to report issues if the really think a verification unexpectedly fails. Close the between the user and the verifier.
+    - Make it very easy for users to report issues if they really think a verification unexpectedly fails. Close the loop between the user and the verifier.
     - Post-verification: 
       - Provide raw bytecodes, abi, storageLayout, sourcemaps, transformations, cborAuxdata. Anything that can be useful for tooling.
       - Build a 4-bytes DB based on the verified contracts 
