@@ -63,7 +63,7 @@ const config = {
           {
             to: "/docs/exact-match-vs-match",
             from: "/docs/full-vs-partial-match",
-          }
+          },
         ],
       },
     ],
@@ -72,8 +72,7 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image:
-        "https://raw.githubusercontent.com/sourcifyeth/assets/master/logo-assets-png/sourcify_blue_rounded.png",
+      image: "https://raw.githubusercontent.com/sourcifyeth/assets/master/logo-assets-png/sourcify_blue_rounded.png",
       metadata: [
         {
           property: "og:title",
@@ -174,6 +173,7 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+        additionalLanguages: ["solidity", "bash"],
       },
       algolia: {
         // The application ID provided by Algolia

@@ -4,32 +4,98 @@ title: How to Verify Contracts
 slug: /how-to-verify
 ---
 
-import AvailableOnlyForSolidityAdmonition from "../AvailableOnlyForSolidityAdmonition";
+import chainAddress from "./chain-address.png"
+import verificationMethods from "./methods.png"
+import importSources from "./import-sources.png"
+import jobError from "./job-error.png"
+import bytecodeDiff from "./bytecode-diff.png"
 
 # How to Verify Contracts
 
-<AvailableOnlyForSolidityAdmonition description="Vyper contracts are verifiable only using the dedicated /verify/vyper API enpoint. UI, frameworks and tools don't support Vyper verification via Sourcify yet."/>
+There are multiple ways to verify a contract on Sourcify. Depending on your use case, you can choose the best way.
 
-## Using the UI (legacy)
+Some of these methods are using the legacy Sourcify API. This will be deprecated in the near future. Use Sourcify APIv2 instead (see [APIv2 docs](/docs/api)).
 
-1. Drag and drop the folder containing your source files and metadata, or add them seperately.
-2. Input the contract address you want to verify.
-3. Select the chain the contract is deployed to.
-4. Click "Verify".
+With APIv2 when you submit a verification, this will create a verification job. You can then check the status of the job and get the verification result. See one example in the UI [here](https://verify.sourcify.dev/jobs/f4ed8a9b-c852-4ac6-ac99-bd71ffb01305).
 
-<div>
-  <video width="100%" height="100%" playsinline autoplay muted controls>
-    <source src="/videos/simple-verify.mp4" type="video/mp4" />
-  </video>
+## UI 
+
+You can verify using our new verification UI at https://verify.sourcify.dev. See the Github repo [here](https://github.com/sourcifyeth/verify.sourcify.dev).
+
+First choose the chain you want to verify the contract on and provide the contract address.
+<div style={{display: "flex", flexDirection: "row", gap: "10px", justifyContent: "center"}}>
+  <img src={chainAddress} alt="Chain and address" style={{width: "100%", maxWidth: "600px"}} />
 </div>
 
-## Foundry
+This will automatically check if the contract is verified on Sourcify on the same chain and all other supported chains.
 
-Foundry natively supports Sourcify verification. You can verify contracts with the additional verify flags in Forge:
+### Importing a contract
 
-Deploy and verify a contract:
+You can import a verified contract from different sources:
 
+- **Etherscan**: Enter the chain and contract address to import the contract. You need an Etherscan API key to use this feature. Open the "Settings" on top right to add your API key. API keys are used locally in the browser and are not sent to Sourcify servers.
+<div style={{display: "flex", flexDirection: "row", gap: "10px", justifyContent: "center"}}>
+  <img src={importSources} alt="Import sources" style={{width: "100%", maxWidth: "600px"}} />
+</div>
+
+### Verification Methods
+
+For both Solidity and Vyper contracts you can choose between the following verification methods:
+
+- **Single file**: Provide single .sol or .vy file, alongside compiler settings.
+- **Multiple files**: Provide multiple .sol or .vy files, alongside compiler settings.
+-  (preferred) **Standard JSON**: Provide a [standard JSON input file](https://docs.soliditylang.org/en/v0.8.30/using-the-compiler.html#input-description). 
+
+Prefer using the standard JSON or framework commands directly (see below) to maintain the full compilation and avoid any changes. Different compiler settings can break the verification. Flattening the sources also breaks the metadata hashes and you won't be able to get an ["Exact Match"](/docs/exact-match-vs-match). 
+
+Additionally the following option is available for Solidity contracts:
+- **Metadata.json**: Provide a [metadata.json file](/docs/metadata) to verify the contract in the first file input field. Provide all the source files in the second file input field. This option checks the source hashes in the metadata.json provided and compares them with the hashes of the source files provided before submitting the verification.
+
+<div style={{display: "flex", flexDirection: "column", gap: "10px", alignItems: "center"}}>
+<img src={verificationMethods} alt="Verification methods" style={{width: "100%", maxWidth: "600px"}} />
+<div style={{fontSize: "12px", color: "gray", fontStyle: "italic"}}>Available verification methods</div>
+</div>
+
+### Contract Identifier
+
+From the files and contracts provided, we will ask you to select the contract you want to verify. Ie. if you've written a contract called `MyContract.sol` using other contracts `Ownable.sol` and `ERC20.sol`, you will be asked to select `MyContract.sol` as the contract to verify. 
+
+The format of the contract identifier is path:contractName e.g.
 ```
+path/to/contractName.sol:contractName
+```
+
+The verification UI will parse the files and give you a list of contracts to choose from. You can always input the contract identifier manually.
+
+### (Optional) Creation Transaction Hash 
+
+Sourcify needs to find the transaction the contract was deployed in to get the creation bytecode. We get this information from different sources like block explorers (see [here](https://github.com/ethereum/sourcify/blob/staging/services/server/src/sourcify-chains-default.json)). You can still provide a creation transaction hash manually if you want to, or if Sourcify fails to verify via creation bytecode.
+
+## Verification Job
+
+Once you've provided all the information, you can submit the verification. This will create a verification job. You can see the job in the UI and get the verification result. 
+
+If the verification fails you can see the error message and why it failed. 
+
+<div style={{display: "flex", flexDirection: "column", gap: "10px", alignItems: "center"}}>
+  <img src={jobError} alt="Job error" style={{width: "100%", maxWidth: "600px"}} />
+  <div style={{fontSize: "12px", color: "gray", fontStyle: "italic"}}>Example of a verification job that failed</div>
+</div>
+
+You can see the diffs of the bytecodes if the compilation succeeds but the bytecodes did not match.
+
+<div style={{display: "flex", flexDirection: "column", gap: "10px", alignItems: "center"}}>
+  <img src={bytecodeDiff} alt="Bytecode diff" style={{width: "100%", maxWidth: "600px"}} />
+  <div style={{fontSize: "12px", color: "gray", fontStyle: "italic"}}>Bytecode diffs</div>
+</div>
+
+## Foundry (legacy API)
+
+Foundry natively supports Sourcify verification. You can verify contracts with the additional verify flags in Forge.
+
+(This is still using the legacy Sourcify API)
+
+```bash title="Deploy and verify a contract"
 forge create --rpc-url <your_rpc_url> \
   --constructor-args "ForgeUSD" "FUSD" 18 1000000000000000000000 \
   --private-key <your_private_key> \
@@ -39,9 +105,7 @@ forge create --rpc-url <your_rpc_url> \
   --verifier-url https://localhost:5555 # optional, defaults to https://sourcify.dev/server/
 ```
 
-Verify an already deployed (and compiled) contract
-
-```
+```bash title="Verify an already deployed (and compiled) contract"
 forge verify-contract 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
   src/MyToken.sol:MyToken \
   --chain-id 11155111 \
@@ -49,23 +113,23 @@ forge verify-contract 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
   --verifier-url https://localhost:5555 # optional, defaults to https://sourcify.dev/server/
 ```
 
-Check if a contract is verified
-
-```
+```bash title="Check if a contract is verified"
 forge verify-check 0x55f7d4279CE387067f12561e7E0c194f5186cFba \
   --chain-id 11155111 \
   --verifier sourcify
 ```
 
-## Hardhat
+## Hardhat (legacy API)
 
 ### hardhat-verify plugin
 
-The Hardhat plugin [@nomicfoundation/hardhat-verify](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-verify#verifying-on-sourcify) has official Sourcify support.
+The Hardhat plugin [@nomicfoundation/hardhat-verify](https://hardhat.org/hardhat-runner/plugins/nomicfoundation-hardhat-verify#verifying-on-sourcify) has official Sourcify support. 
+
+(This is still using the legacy Sourcify API)
 
 In order to enable Sourcify support, add this to `hardhat.config.js`:
 
-```
+```js title="hardhat.config.js"
 sourcify: {
   enabled: true,
   // Optional: specify a different Sourcify server
@@ -77,80 +141,30 @@ sourcify: {
 
 After deploying your contracts you can verify on Sourcify with:
 
-```
+```bash title="Verify a contract"
 npx hardhat verify --network mainnet DEPLOYED_CONTRACT_ADDRESS
 ```
 
-### With Hardhat output
+## Remix
 
-Sourcify can parse the Hardhat `.json` output file under `artifacts/build-info` to verify contracts.
+You can use the "unified verification plugin" written by the Sourcify team to verify on multiple verifiers on Remix.
 
-:::info
-Only after Hardhat version v2.6.8 the metadata files were output by default. If you are using an earlier version, you need to add the metadata to compilation outputs manually as [described here](/docs/metadata/#hardhat---earlier-than-v268)
-:::
-
-1. Drag and drop the `.json` file at [sourcify.dev](https://sourcify.dev).
-2. Select the main contract deployed at the address you want to verify.
-3. Input the address and chain and click "Verify".
-
-<div>
-  <video width="100%" height="100%" playsinline autoplay muted controls>
-    <source src="/videos/hardhat-sourcify.mp4" type="video/mp4" />
-  </video>
-</div>
-
-## Truffle
-
-If you were using Truffle to compile contracts, you can use the output file at `build/contracts/<contract-name>.json` for the metadata file. Then add the source files as usual.
-
-### truffle-verify-plugin
-
-If you've deployed your contracts with Truffle, you can use the [truffle-plugin-verify](https://github.com/rkalis/truffle-plugin-verify) to verify contracts on Sourcify. The plugin verifies on Sourcify by default.
-
-```bash
-$ truffle run verify MyFirstContract MySecondContract --network goerli
-```
-
-## Remix Plugin
-
-Remix has a plugin to aid with contract verification and lookup.
-Please click this link to activate the plugin in Remix: [https://remix.ethereum.org/?#activate=contract-verification](https://remix.ethereum.org/?#activate=contract-verification)
-
-### Verifying
-
-To verify:
-
-1. Select the contract you want to verify in the file explorer
-2. Compile the contract
-3. Click on the Contract Verification icon on the left sidebar
-4. Enter the chain and the address of the contract you want to verify
-5. Select the contract you just compiled
-6. Make sure Sourcify is selected
-7. Click on Verify
+1. Click on the "Plugins" tab in bottom of the sidebar and search for "Contract Verification"
+2. Enable the plugin "Contract Verification"
+3. Click on the "Contract Verification" tab in the sidebar
+5. Enter the contract address and select a chain
+6. Select the contract to verify (you need to have compiled a contract on Remix first)
+7. By default all verifiers are enabled. For Etherscan you need to add your API key in the "Settings" tab
+8. You can see the verification result in the "Receipts" tab
 
 <div>
   <video width="100%" height="100%" playsinline autoplay muted controls>
-    <source src="/videos/remix-verify.mp4" type="video/mp4" />
+    <source src="/videos/remix.mp4" type="video/mp4" />
   </video>
 </div>
+## API
 
-### Fetching
-
-You can also check if contracts are verified on Sourcify and download their source code into your Remix IDE.
-To fetch:
-
-1. Click on the Contract Verification icon on the left sidebar
-2. Select "Lookup" on the top of the plugin view
-3. Enter the chain and the address of the contract you want to fetch
-4. Click on "Open in Remix" below the Sourcify status
-
-The contract files will be saved in the file explorer.
-
-<div>
-  <video width="100%" height="100%" playsinline autoplay muted controls>
-    <source src="/videos/remix-lookup.mp4" type="video/mp4" />
-  </video>
-</div>
+See the [API docs](/docs/api) for more information.
 
 ## Other Sourcify wrappers and tools
 
