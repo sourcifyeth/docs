@@ -14,11 +14,11 @@ Sourcify is a project that has been around for technically more than 5 years. No
 
 ## Problem Statement
 
-Ethereum has an established open-source culture and is built on open-source tooling. The Ethereum community also demands the smart-contracts to be open-sourced (ie. source-code verified). After all, Ethereum's core principles such as trustlessness, transparency, verifiablity etc. do rely on the contract code being verified and open-sourced. 
+Ethereum has an established open-source culture and is built on open-source tooling. The Ethereum community also demands the smart contracts to be open-sourced (i.e. source-code verified). After all, Ethereum's core principles such as trustlessness, transparency, verifiability etc. do rely on the contract code being verified and open-sourced. 
 
-However we believe the source-code verification ecosytem **plateaued** at a suboptimal point:
+However, we believe the source-code verification ecosystem **plateaued** at a suboptimal point:
 
-    - **Lack of open-source**: The most used verification service itself is **not open source** and the whole verification process is a black-box, even though many people actually think it is open-source.
+    - **Lack of open-source**: The most used verification service itself is **not open source** and the whole verification process is a black-box, while the majority of people (wrongfully) assume that it is open-source.
 
     - **Centralization**: There is centralization on who verifies contracts. Contracts should be verified in multiple places and when needed cross-checked across verifiers. Because all verifiers will make mistakes and [have bugs](https://x.com/kaanuzdogan/status/1945169254908645670)
 
@@ -44,7 +44,7 @@ Our mission at Sourcify is to create an open, decentralized, and dynamic smart c
 
 How do we plan to achieve these?
 
-To create decentralization in the space, it's important to tackle the issue (ie. contracts only verified at one place) at the beginning (funnel) of the verification pipeline. The contracts should be verified everywhere and it shouldn't be a burden for the user. For this an important goal is to:
+To create decentralization in the space, it's important to tackle the issue (i.e. contracts only verified at one place) at the beginning (funnel) of the verification pipeline. The contracts should be verified everywhere and it shouldn't be a burden for the user. For this an important goal is to:
   - Convince frameworks to verify everywhere in parallel by default. We already shipped [the Remix plugin](https://docs.sourcify.dev/docs/how-to-verify/#remix) that does this. Next step is to do the same in Foundry and Hardhat. 
   - Secondly, maintain and promote the [Verifier Alliance](https://verifieralliance.org/) as a shared database of verified contracts.
 
@@ -66,7 +66,7 @@ What we did so far since about 12 months ago:
   - Verify endpoints: https://github.com/ethereum/sourcify/issues/2033
 
 - **Added Vyper support** https://github.com/ethereum/sourcify/issues/1364
-- **Refactored the lib-sourcify** package, which contains the main verification logic, into a more modularized version that reflects the practical verification flow and the mental model. The new package lets to "bring your own compiler". Following that the cloud instance counts reduced by >50%. The process got a lot more efficient and easier to debug.
+- **Refactored the lib-sourcify** package, which contains the main verification logic, into a more modularized version that reflects the practical verification flow and the mental model. The new package lets you "bring your own compiler". Following that the cloud instance counts reduced by >50%. The process got a lot more efficient and easier to debug.
     - https://github.com/ethereum/sourcify/issues/1665    
 - **Lib-sourcify on browser**: Refactored lib-sourcify to work on browser
     - https://github.com/ethereum/sourcify/issues/1365
@@ -92,7 +92,7 @@ We work in 2-week sprints ([sprint board](https://github.com/orgs/ethereum/proje
 
 <p style={{fontWeight: "bold", marginBottom: "0.1rem"}}>2025 Q3:</p>
 - **4bytes DB**: Recently we observed the need for a comprehensive 4byte signature DB and a well designed API. We will be building this from our dataset of verified contracts and release for the community use. https://github.com/ethereum/sourcify/issues/2213
-- **Public Queriable DB instance**: We will be shipping a public queriable DB instance. Anyone can query our DB quickly to find contracts, patterns, etc. https://github.com/ethereum/sourcify/issues/2214
+- **Public Queryable DB instance**: We will be shipping a public queryable DB instance. Anyone can query our DB quickly to find contracts, patterns, etc. https://github.com/ethereum/sourcify/issues/2214
 - **Verified Contract Coverage**: Reaching out to chains and potential data sources to increase the verified contract coverage.
 - **Bug fixes and misc**: Smaller tasks we commit to complete https://github.com/ethereum/sourcify/issues/2215
 
@@ -111,7 +111,7 @@ We are running on a fully scalable containerized GCP setup. Currently it costs u
 - 10% Logging 
 - 15% Networking, SQL, Monitoring, Misc
  
-Still, financial sustainability is one big question we need to solve long term. Sourcify has been an EF funded project and now as part of the Argot Collective, we are still funded to a foreseeable future. 
+Still, financial sustainability is one big question we need to solve long term. Sourcify has been an EF funded project and now as part of the Argot Collective, we are still funded for the foreseeable future. 
 
 Being non-profit and funded gives us more credibility and a neutral position, and allows us to act more as a coordinator between the ecosystem players. For the project to be sustainable and to succeed long term, we need to find a way to make it self-sustaining, while avoiding capture.
 
@@ -141,6 +141,6 @@ Looking back, we've made some good and bad decisions:
 
 - We decided to accept all EVM chains for verification and not only those "close" to Ethereum e.g. L2s. This exposed us to a long tail of EVM developers and they all learned about Sourcify. Thanks to that also, we have a good number of self-hosted instances running.
 
-- It's very difficult to run such a project as a one-man show. Minimum two brains and two pair of eyes are required to make technical progress and three to thrive.
+- It's very difficult to run such a project as a one-man show. Minimum two brains and two pairs of eyes are required to make technical progress and three to thrive.
 
 - It's all about attention. Technical problems are easier to solve but the difficult part is to change the user behavior. As long as people don't have Sourcify in mind when verifying their contract, having the most elegant technical solution is useless.
