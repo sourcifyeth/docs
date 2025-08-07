@@ -32,11 +32,11 @@ However, we believe the source-code verification ecosystem **plateaued** at a su
 
     - **Tooling stagnation**: The APIs and tooling around verification are old and not improving. For example, there are so many verification artifacts that can be useful for tooling (storageLayout, sourceMaps, [cborAuxdata](https://docs.sourcify.dev/blog/finding-auxdatas-in-bytecode/), [transformations](https://verifieralliance.org/docs/transformations)) but they are not available in current APIs.
 
-    - **No integrity hash support**: Existing verifiers don't leverage "exact matches" ie. the integrity hashes provided by the [Solidity](https://docs.soliditylang.org/en/v0.8.30/metadata.html#encoding-of-the-metadata-hash-in-the-bytecode) and [Vyper](https://docs.vyperlang.org/en/v0.4.3/compiling-a-contract.html#integrity-hash) compilers. This gives a cryptographic guarantee that the whole compilation, including the source code, is exactly the same as the original (even whitespaces etc.)
+    - **No integrity hash support**: Existing verifiers don't leverage "exact matches" i.e. the integrity hashes provided by the [Solidity](https://docs.soliditylang.org/en/v0.8.30/metadata.html#encoding-of-the-metadata-hash-in-the-bytecode) and [Vyper](https://docs.vyperlang.org/en/v0.4.3/compiling-a-contract.html#integrity-hash) compilers. This gives a cryptographic guarantee that the whole compilation, including the source code, is exactly the same as the original (even whitespaces etc.)
 
     - **Lack of standards and public knowledge**: There are no standards around source-code verification and no knowledge exchange across verifiers. But also no public resources to learn about the verification process.
 
-*By observing current direction and the incentives of ecosystem players we believe the ecosystem will not be able to break out of this "plateau", unless there is intentional intervention to drive it forward.*
+*By observing the current direction and the incentives of ecosystem players we believe the ecosystem will not be able to break out of this "plateau", unless there is intentional intervention to drive it forward.*
 
 Our mission at Sourcify is to create an open, decentralized, and dynamic smart contract verification ecosystem, powered by open-source tools, accessible datasets, and shared standards, to empower the EVM tooling and uphold Ethereum’s core values.
 
@@ -44,7 +44,7 @@ Our mission at Sourcify is to create an open, decentralized, and dynamic smart c
 
 How do we plan to achieve these?
 
-To create decentralization in the space, it's important to tackle the issue (i.e. contracts only verified at one place) at the beginning (funnel) of the verification pipeline. The contracts should be verified everywhere and it shouldn't be a burden for the user. For this an important goal is to:
+To create decentralization in the space, it's important to tackle the issue (i.e. contracts only verified at one place) at the beginning (funnel) of the verification pipeline. The contracts should be verified everywhere and it shouldn't be a burden for the user. For this, an important goal is to:
   - Convince frameworks to verify everywhere in parallel by default. We already shipped [the Remix plugin](https://docs.sourcify.dev/docs/how-to-verify/#remix) that does this. Next step is to do the same in Foundry and Hardhat. 
   - Secondly, maintain and promote the [Verifier Alliance](https://verifieralliance.org/) as a shared database of verified contracts.
 
@@ -91,7 +91,7 @@ What we did so far since about 12 months ago:
 We work in 2-week sprints ([sprint board](https://github.com/orgs/ethereum/projects/46/views/2)) and every quarter we have a retrospective and a planning session ([quarterly board](https://github.com/orgs/ethereum/projects/46/views/7)). Our concrete quarterly goals as of today:
 
 <p style={{fontWeight: "bold", marginBottom: "0.1rem"}}>2025 Q3:</p>
-- **4bytes DB**: Recently we observed the need for a comprehensive 4byte signature DB and a well designed API. We will be building this from our dataset of verified contracts and release for the community use. https://github.com/ethereum/sourcify/issues/2213
+- **4bytes DB**: Recently we observed the need for a comprehensive 4byte signature DB and a well-designed API. We will be building this from our dataset of verified contracts and release it for community use. https://github.com/ethereum/sourcify/issues/2213
 - **Public Queryable DB instance**: We will be shipping a public queryable DB instance. Anyone can query our DB quickly to find contracts, patterns, etc. https://github.com/ethereum/sourcify/issues/2214
 - **Verified Contract Coverage**: Reaching out to chains and potential data sources to increase the verified contract coverage.
 - **Bug fixes and misc**: Smaller tasks we commit to complete https://github.com/ethereum/sourcify/issues/2215
@@ -101,7 +101,7 @@ We work in 2-week sprints ([sprint board](https://github.com/orgs/ethereum/proje
 
 <p style={{fontWeight: "bold", marginBottom: "0.1rem"}}>Non-milestone goals:</p>
 - Now that the product is technically sound and ready to scale, boost visibility.
-- Get back to giving talks in conferences. Talk about problems, Sourcify's role, and the Verifier Alliance
+- Get back to giving talks at conferences. Talk about problems, Sourcify's role, and the Verifier Alliance
 
 ## Costs
 
@@ -125,9 +125,9 @@ Sourcify started within the Ethereum Foundation as a Solidity side project aroun
   <p style={{fontSize: "0.85rem", color: "gray"}}><em>Sourcify's UI in 2021</em></p>
 </div>
 
-Around the time the project's main focus was fostering the use of the [Solidity metadata](https://docs.soliditylang.org/en/v0.8.30/metadata.html) and the IPFS/Swarm hashes that act as an integrity hash [here](https://docs.sourcify.dev/docs/exact-match-vs-match/) for the compilation and verification, and also allows the decentralized storage of these files. The whole repository at the time was a file system and pinned on IPFS (nodes that we run ourselves, not fun). In fact the whole setup was being run in an old bare-metal server in the EF Berlin office and manually managed. That didn't last long as it was very cumbersome and time consuming and we moved to a VPS. Both running a bare-metal and a VPS are almost part-time jobs. Now we are on a fully scalable containerized GCP setup.
+At the time, the project's main focus was fostering the use of the [Solidity metadata](https://docs.soliditylang.org/en/v0.8.30/metadata.html) and the IPFS/Swarm hashes that act as an integrity hash [here](https://docs.sourcify.dev/docs/exact-match-vs-match/) for the compilation and verification, and also allowed the decentralized storage of these files. The whole repository at the time was a file system and pinned on IPFS (nodes that we run ourselves, not fun). In fact the whole setup was being run in an old bare-metal server in the EF Berlin office and manually managed. That didn't last long as it was very cumbersome and time consuming and we moved to a VPS. Both running a bare-metal and a VPS are almost part-time jobs. Now we are on a fully scalable containerized GCP setup.
 
-Another focus we had was to promote the [NatSpec comments](https://docs.soliditylang.org/en/latest/natspec-format.html) which are found in the metadata.json file and use them to enable human-readable transactions. We hacked some helper libraries, talked about it in the conferences, and created a working group but after a while we realized this is not something we can tackle with 2 people and we have to prioritize source-code verification and having a well-functioning platform. This was around mid-2023 and Marco has joined around 6 months ago. Finally Manuel joined the team mid-2024 making us a team of 3.
+Another focus we had was to promote the [NatSpec comments](https://docs.soliditylang.org/en/latest/natspec-format.html) which are found in the metadata.json file and use them to enable human-readable transactions. We hacked some helper libraries, talked about it in the conferences, and created a working group but after a while we realized this is not something we can tackle with 2 people and we have to prioritize source-code verification and having a well-functioning platform. This was around mid-2023 and Marco joined around 6 months ago. Finally, Manuel joined the team mid-2024 making us a team of 3.
 
 Looking back, we've made some good and bad decisions:
 
@@ -139,7 +139,7 @@ Looking back, we've made some good and bad decisions:
 
 - We attended a lot of conferences and it helped a lot with the visibility and meeting people who both help us and care about our mission.
 
-- We decided to accept all EVM chains for verification and not only those "close" to Ethereum e.g. L2s. This exposed us to a long tail of EVM developers and they all learned about Sourcify. Thanks to that also, we have a good number of self-hosted instances running.
+- We decided to accept all EVM chains for verification and not only those "close" to Ethereum e.g. L2s. This exposed us to a long tail of EVM developers and they all learned about Sourcify. Thanks to that, we also have a good number of self-hosted instances running.
 
 - It's very difficult to run such a project as a one-man show. Minimum two brains and two pairs of eyes are required to make technical progress and three to thrive.
 
