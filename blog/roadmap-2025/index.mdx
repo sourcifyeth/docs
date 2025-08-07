@@ -34,11 +34,11 @@ However, we believe the source-code verification ecosystem **plateaued** at a su
 
     - **No integrity hash support**: Existing verifiers don't leverage "exact matches" i.e. the integrity hashes provided by the [Solidity](https://docs.soliditylang.org/en/v0.8.30/metadata.html#encoding-of-the-metadata-hash-in-the-bytecode) and [Vyper](https://docs.vyperlang.org/en/v0.4.3/compiling-a-contract.html#integrity-hash) compilers. This gives a cryptographic guarantee that the whole compilation, including the source code, is exactly the same as the original (even whitespaces etc.)
 
-    - **Lack of standards and public knowledge**: There are no standards around source-code verification and no knowledge exchange across verifiers. But also no public resources to learn about the verification process.
+    - **Lack of standards and public knowledge**: There are no standards around source-code verification and no knowledge exchange across verifiers. But also no public resources to learn about the verification process. For instance, we weren't able to figure out how to verify contracts with multiple metadata hashes (e.g. nested contracts with factories) until we started discussing it with Blockscout. This led us to use another workaround as detailed [in this blog post](/blog/finding-auxdatas-in-bytecode/). Another example is that there is no place to look for the edge cases and tests for verification.
 
 *By observing the current direction and the incentives of ecosystem players we believe the ecosystem will not be able to break out of this "plateau", unless there is intentional intervention to drive it forward.*
 
-Our mission at Sourcify is to create an open, decentralized, and dynamic smart contract verification ecosystem, powered by open-source tools, accessible datasets, and shared standards, to empower the EVM tooling and uphold Ethereum’s core values.
+Our mission at Sourcify is to play the coordinator and the builder role to create an open, decentralized, and dynamic smart contract verification ecosystem, powered by open-source tools, accessible datasets, and shared standards, to empower the EVM tooling and uphold Ethereum’s core values.
 
 ## Goals
 
