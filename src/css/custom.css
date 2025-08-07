@@ -113,3 +113,8 @@ html[data-theme="dark"] .menu__link--active:not(.menu__link--sublist) {
 .loading-overlay {
   width: 3rem;
 }
+
+.markdown ul > li > p {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
