@@ -10,7 +10,7 @@ date: 2025-08-01
 
 import sourcify2021 from "./sourcify-2021.png"
 
-Sourcify is a project that has been around for technically more than 5 years. Now as part of the Argot Collective, we will be sharing our detailed roadmaps frequently. While we are on it, we thought it's a good chance to look back into why we exist, what problems we are trying to solve, what we've done so far and lay out our roadmap. 
+Sourcify is a project that has been around for technically more than 5 years. Now as part of the [Argot Collective](https://argot.org), we will be sharing our detailed roadmaps frequently. While we are on it, we thought it's a good chance to look back into why we exist, what problems we are trying to solve, what we've done so far and lay out our roadmap. 
 
 ## Problem Statement
 
@@ -18,11 +18,13 @@ Ethereum has an established open-source culture and is built on open-source tool
 
 However we believe the source-code verification ecosytem **plateaued** at a suboptimal point:
 
-    - **Lack of open-source**: The most used verification service itself is **not** open source and the whole verification process is a black-box
+    - **Lack of open-source**: The most used verification service itself is **not open source** and the whole verification process is a black-box, even though many people actually think it is open-source.
 
     - **Centralization**: There is centralization on who verifies contracts. Contracts should be verified in multiple places and when needed cross-checked across verifiers. Because all verifiers will make mistakes and [have bugs](https://x.com/kaanuzdogan/status/1945169254908645670)
 
-    - **Closed datasets**: Right now smart contract data is siloed in proprietary services. Yes, one can "see and read" individual contracts but the dataset is closed and almost impossible to assemble through APIs, or scraping (usually against the terms of the service). The absence of accessible and open datasets is holding the progress of the ecosystem on many fronts:
+    - **Closed datasets**: Right now smart contract data is siloed in proprietary services. Yes, one can "see and read" individual contracts but the dataset is closed and almost impossible to assemble through APIs, or scraping (usually against the terms of the service). The reliance on closed and proprietary datasets poses a long-term existential risk to Ethereum if those services were to vanish. In a way this already happened with [older testnets](http://goerli.etherscan.io/) and part of the Ethereum's history is lost alongside the verified contracts there. 
+    
+      The absence of accessible and open datasets is holding the innovation on many fronts:
         - Bulk testing EVM tooling with smart contracts
         - Finding vulnerability patterns
         - Training AI models
@@ -32,50 +34,28 @@ However we believe the source-code verification ecosytem **plateaued** at a subo
 
     - **No integrity hash support**: Existing verifiers don't leverage "exact matches" ie. the integrity hashes provided by the [Solidity](https://docs.soliditylang.org/en/v0.8.30/metadata.html#encoding-of-the-metadata-hash-in-the-bytecode) and [Vyper](https://docs.vyperlang.org/en/v0.4.3/compiling-a-contract.html#integrity-hash) compilers. This gives a cryptographic guarantee that the whole compilation, including the source code, is exactly the same as the original (even whitespaces etc.)
 
-    - **Lack of standards and public knowledge**: There are no standards around source-code verification and no knowledge exchange across verifiers.
+    - **Lack of standards and public knowledge**: There are no standards around source-code verification and no knowledge exchange across verifiers. But also no public resources to learn about the verification process.
 
 *By observing current direction and the incentives of ecosystem players we believe the ecosystem will not be able to break out of this "plateau", unless there is intentional intervention to drive it forward.*
 
-Our mission at Sourcify is to play the coordinator and the builder role to drive the source-code verification ecosystem forward.
-
-
-## Mission
-
-What do we want to achieve?
-
-In the big picture: Bring Ethereum ecosystem out of this plateau to a future that aligns its values.
-
-However to break it further down:
-
-- Bring decentralization to source-code verification: A contract should be verified in multiple places and not only at one place
-
-- Make verified smart contract datasets open and accessible.
-
-- Improve the verification developer experience (devX).
-
-- Provide as much data as possible post-verification for users, developers, and devtooling.
-
-- Verify all contracts whose source code is available out there.
+Our mission at Sourcify is to create an open, decentralized, and dynamic smart contract verification ecosystem, powered by open-source tools, accessible datasets, and shared standards, to empower the EVM tooling and uphold Ethereum’s core values.
 
 ## Goals
 
 How do we plan to achieve these?
 
-First, for Sourcify to be relevant we need to intercept ourselves in the beginning (funnel) and the end (user-demand) of the verification pipeline.
-- Funnel: When anyone is verifying a contract anywhere, make sure it goes to Sourcify and also to all verifiers, not just to one place.
-  - Convince frameworks to verify everywhere by default. Integrate into frameworks (Remix, Foundry, etc.) to work seamlessly
-  - Become a one-stop-shop for contract verification: Lead by example and submit all received contracts to all other verifiers if they support a given chain
-- User-demand: Developers, auditors, users should demand and expect a contract to be verified on Sourcify.
-  - Better verification UX:
-    - Provide as much context and information to the user if a verification fails. Give detailed error messages, show differences between onchain vs recompiled bytecodes. Visualize this data on the UI.
-    - Make it very easy for users to report issues if they really think a verification unexpectedly fails. Close the loop between the user and the verifier.
-    - Post-verification: 
-      - Provide raw bytecodes, abi, storageLayout, sourcemaps, transformations, cborAuxdata. Anything that can be useful for tooling.
-      - Build a 4-bytes DB based on the verified contracts 
-- Publish our DB and pursue feedback
-- Maintain and promote the [Verifier Alliance](https://verifieralliance.org/)
-- Be the benevolent force pushing the ecosystem towards a more resilient, open-source forward, and decentralized future.
-- Be the voice of the values and demonstrate the flaws in the current outlook.
+To create decentralization in the space, it's important to tackle the issue (ie. contracts only verified at one place) at the beginning (funnel) of the verification pipeline. The contracts should be verified everywhere and it shouldn't be a burden for the user. For this an important goal is to:
+  - Convince frameworks to verify everywhere in parallel by default. We already shipped [the Remix plugin](https://docs.sourcify.dev/docs/how-to-verify/#remix) that does this. Next step is to do the same in Foundry and Hardhat. 
+  - Secondly, maintain and promote the [Verifier Alliance](https://verifieralliance.org/) as a shared database of verified contracts.
+
+In addition, to empower the EVM tooling and developers we want to:
+  - Provide as much information from verified contracts as possible: raw bytecodes, abi, storageLayout, sourcemaps, transformations, cborAuxdata. Anything that can be useful for tooling.
+  - Build a 4-bytes DB based on the verified contracts 
+  - Export and publish the DB and make it publicly queryable.
+
+Finally, to improve the verification experience we want to:
+  - Provide as much context and information to the user if a verification fails. Give detailed error messages, show differences between onchain vs recompiled bytecodes. Visualize this data on the UI.
+  - Make it very easy for users to report issues if they really think a verification unexpectedly fails. Close the loop between the user and the verifier.
 
 ## Achievements
 
@@ -110,13 +90,13 @@ What we did so far since about 12 months ago:
 
 We work in 2-week sprints ([sprint board](https://github.com/orgs/ethereum/projects/46/views/2)) and every quarter we have a retrospective and a planning session ([quarterly board](https://github.com/orgs/ethereum/projects/46/views/7)). Our concrete quarterly goals as of today:
 
-<p style={{fontWeight: "bold", marginBottom: "0.1rem"}}>Q3:</p>
+<p style={{fontWeight: "bold", marginBottom: "0.1rem"}}>2025 Q3:</p>
 - **4bytes DB**: Recently we observed the need for a comprehensive 4byte signature DB and a well designed API. We will be building this from our dataset of verified contracts and release for the community use. https://github.com/ethereum/sourcify/issues/2213
 - **Public Queriable DB instance**: We will be shipping a public queriable DB instance. Anyone can query our DB quickly to find contracts, patterns, etc. https://github.com/ethereum/sourcify/issues/2214
 - **Verified Contract Coverage**: Reaching out to chains and potential data sources to increase the verified contract coverage.
 - **Bug fixes and misc**: Smaller tasks we commit to complete https://github.com/ethereum/sourcify/issues/2215
 
-<p style={{fontWeight: "bold", marginBottom: "0.1rem"}}>Q4:</p>
+<p style={{fontWeight: "bold", marginBottom: "0.1rem"}}>2025 Q4:</p>
 - **Bytecode Similarity search**: It should be possible to find similar contracts by bytecode even if they are not verified. https://github.com/ethereum/sourcify/issues/1642
 
 <p style={{fontWeight: "bold", marginBottom: "0.1rem"}}>Non-milestone goals:</p>
