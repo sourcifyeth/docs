@@ -43,6 +43,17 @@ JSON fields of `compiled_contracts` table:
 - `creation_code_artifacts`: Fields under `evm.bytecode` field. Fields: `sourceMap`, `linkReferences`, `cborAuxdata`
 - `runtime_code_artifacts`: Fields under `evm.deployedBytecode` field. Fields: `sourceMap`, `linkReferences`, `cborAuxdata`, `immutableReferences`
 
+### Notes on the data
+
+For the issues on the data we are aware of and plan to fix, see this issue: https://github.com/ethereum/sourcify/issues/2276 
+
+Other known inconsistencies in the data below (not planned to fix) are documented below:
+
+- **Compiler versions**: Keep in mind the vyper version build strings are not consistent (details [here](hhttps://github.com/ethereum/sourcify/issues/2247#issuecomment-3155878775)):
+  - version =< 0.3.0: The commit hash has 7 characters `0.3.0+commit.8a23feb`
+  - version 0.3.1: No commit hash: `0.3.1`
+  - version >= 0.3.2: The commit hash has 8 characters `0.3.2+commit.3b6a4117`
+
 ## Download
 
 We dump the whole database daily in [Parquet](https://en.wikipedia.org/wiki/Apache_Parquet) format and upload it to a Cloudflare R2 storage. You can access the manifest file at https://export.sourcify.dev ( `.dev` redirects to `.app` domain, which also belongs to Sourcify). The script that does the dump is at [sourcifyeth/parquet-export](https://github.com/sourcifyeth/parquet-export).
