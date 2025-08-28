@@ -59,7 +59,7 @@ User request to Sourcify:
 ```
 
 
-For now the metadata.json is the main way to submit contracts to Sourcify. All other methods such as "Import from Etherscan" all workaround to generate the metadata file in some way, and continue verification from there. This is will change with the [Vyper verification](https://github.com/ethereum/sourcify/pull/1784) and in our [APIv2](https://github.com/ethereum/sourcify/milestone/18?closed=1). In Vyper, users will give us a [standard JSON](https://docs.vyperlang.org/en/stable/compiling-a-contract.html#compiler-input-and-output-json-description) and we generate a "fake" metadata.json for backward compatability reasons. In our APIv2 we will no longer use the metadata file as the base of our verification, but the standard JSON as the base.
+For now the metadata.json is the main way to submit contracts to Sourcify. All other methods such as "Import from Etherscan" all workaround to generate the metadata file in some way, and continue verification from there. This is will change with the [Vyper verification](https://github.com/argotorg/sourcify/pull/1784) and in our [APIv2](https://github.com/argotorg/sourcify/milestone/18?closed=1). In Vyper, users will give us a [standard JSON](https://docs.vyperlang.org/en/stable/compiling-a-contract.html#compiler-input-and-output-json-description) and we generate a "fake" metadata.json for backward compatability reasons. In our APIv2 we will no longer use the metadata file as the base of our verification, but the standard JSON as the base.
 
 <details>
 <summary>Example metadata.json file</summary>

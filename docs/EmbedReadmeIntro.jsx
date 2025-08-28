@@ -1,5 +1,5 @@
 import EmbedReadme from "./EmbedReadme";
-const repo = "ethereum/sourcify";
+const repo = "argotorg/sourcify";
 const branch = "master";
 const readmePath = "/README.md";
 const rawBaseUrl = "https://raw.githubusercontent.com";

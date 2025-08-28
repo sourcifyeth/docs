@@ -61,24 +61,24 @@ Finally, to improve the verification experience we want to:
 
 What we did so far since about 12 months ago:
 - **Shipped APIv2:** Our previous API was inherited from the project's early days and had major issues including no ticketing system causing timeouts, bloated endpoints for different match types, lack of std-json support, and poor error messaging. The new API also uses the new DB which allows us to return rich information about the verification process.
-  - API Design: https://github.com/ethereum/sourcify/issues/1470
-  - Lookup endpoints: https://github.com/ethereum/sourcify/issues/1367
-  - Verify endpoints: https://github.com/ethereum/sourcify/issues/2033
+  - API Design: https://github.com/argotorg/sourcify/issues/1470
+  - Lookup endpoints: https://github.com/argotorg/sourcify/issues/1367
+  - Verify endpoints: https://github.com/argotorg/sourcify/issues/2033
 
-- **Added Vyper support** https://github.com/ethereum/sourcify/issues/1364
+- **Added Vyper support** https://github.com/argotorg/sourcify/issues/1364
 - **Refactored the lib-sourcify** package, which contains the main verification logic, into a more modularized version that reflects the practical verification flow and the mental model. The new package lets you "bring your own compiler". Following that the cloud instance counts reduced by >50%. The process got a lot more efficient and easier to debug.
-    - https://github.com/ethereum/sourcify/issues/1665    
+    - https://github.com/argotorg/sourcify/issues/1665    
 - **Lib-sourcify on browser**: Refactored lib-sourcify to work on browser
-    - https://github.com/ethereum/sourcify/issues/1365
+    - https://github.com/argotorg/sourcify/issues/1365
 - **Unified verification plugin for Remix**: Shipped the "unified verification plugin" for Remix ([tweet](https://x.com/SourcifyEth/status/1849450860600021229))
-    - https://github.com/ethereum/sourcify/issues/1331
+    - https://github.com/argotorg/sourcify/issues/1331
     - Here we lead the example of verifying everywhere and convince frameworks to implement this
 - **Verifier Alliance**: Kicked off and led the Verifier Alliance development: We teamed up with Blockscout and Routescan to create a shared database of verified contracts.
     - https://verifieralliance.org
 - **New verification UI**: Shipped the new verification UI https://verify.sourcify.dev
-    - https://github.com/ethereum/sourcify/issues/1814
+    - https://github.com/argotorg/sourcify/issues/1814
 - **New repo UI**: Shipped the new repo UI (verified contract view) https://repo.sourcify.dev
-    - https://github.com/ethereum/sourcify/issues/1813
+    - https://github.com/argotorg/sourcify/issues/1813
 - **Increased contract coverage**  ([stats here](https://github.com/sourcifyeth/sourcify-stats))
   - Aug 2025: 8.5M contracts (today)
   - Jan 2025: 5.8M contracts
@@ -91,13 +91,13 @@ What we did so far since about 12 months ago:
 We work in 2-week sprints ([sprint board](https://github.com/orgs/ethereum/projects/46/views/2)) and every quarter we have a retrospective and a planning session ([quarterly board](https://github.com/orgs/ethereum/projects/46/views/7)). Our concrete quarterly goals as of today:
 
 <p style={{fontWeight: "bold", marginBottom: "0.1rem"}}>2025 Q3:</p>
-- **4bytes DB**: Recently we observed the need for a comprehensive 4byte signature DB and a well-designed API. We will be building this from our dataset of verified contracts and release it for community use. https://github.com/ethereum/sourcify/issues/2213
-- **Public Queryable DB instance**: We will be shipping a public queryable DB instance. Anyone can query our DB quickly to find contracts, patterns, etc. https://github.com/ethereum/sourcify/issues/2214
+- **4bytes DB**: Recently we observed the need for a comprehensive 4byte signature DB and a well-designed API. We will be building this from our dataset of verified contracts and release it for community use. https://github.com/argotorg/sourcify/issues/2213
+- **Public Queryable DB instance**: We will be shipping a public queryable DB instance. Anyone can query our DB quickly to find contracts, patterns, etc. https://github.com/argotorg/sourcify/issues/2214
 - **Verified Contract Coverage**: Reaching out to chains and potential data sources to increase the verified contract coverage.
-- **Bug fixes and misc**: Smaller tasks we commit to complete https://github.com/ethereum/sourcify/issues/2215
+- **Bug fixes and misc**: Smaller tasks we commit to complete https://github.com/argotorg/sourcify/issues/2215
 
 <p style={{fontWeight: "bold", marginBottom: "0.1rem"}}>2025 Q4:</p>
-- **Bytecode Similarity search**: It should be possible to find similar contracts by bytecode even if they are not verified. https://github.com/ethereum/sourcify/issues/1642
+- **Bytecode Similarity search**: It should be possible to find similar contracts by bytecode even if they are not verified. https://github.com/argotorg/sourcify/issues/1642
 
 <p style={{fontWeight: "bold", marginBottom: "0.1rem"}}>Non-milestone goals:</p>
 - Now that the product is technically sound and ready to scale, boost visibility.

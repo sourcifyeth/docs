@@ -17,7 +17,7 @@ In this post we will walkthrough the new functionality brought by these endpoint
 
 ## Background 
 
-APIv2 has been the biggest priority of our project since Q4 2024 and we aim to ship it fully by Q1 2025. We've been discussing and having fruitful conversations around how to design the new API as can be seen in the [design issue](https://github.com/ethereum/sourcify/issues/1545). Thanks everyone who contributed to the conversation!
+APIv2 has been the biggest priority of our project since Q4 2024 and we aim to ship it fully by Q1 2025. We've been discussing and having fruitful conversations around how to design the new API as can be seen in the [design issue](https://github.com/argotorg/sourcify/issues/1545). Thanks everyone who contributed to the conversation!
 
 The main problems we wanted to solve with and the main features we wanted from the APIv2 were the following:
 - With the legacy API users had to wait for the response ie. wait for the compilation and the verification to finish. This can easily take couple minutes and the requests are left hanging. The new design should have ticketing/job-ids and users should poll with this id.
@@ -25,7 +25,7 @@ The main problems we wanted to solve with and the main features we wanted from t
 - The legacy API is fully based on the metadata.json. While we want to keep full support for metadata.json verification and "perfect" matching, we wanted to have standard JSON input as our main endpoint's base.
 - We were able to share a lot more data around the verification after moving from a filesystem based storage to [the database](https://docs.sourcify.dev/docs/repository/sourcify-database/) and legacy API didn't have this information.
 
-You can read more in [this issue](https://github.com/ethereum/sourcify/issues/1470).
+You can read more in [this issue](https://github.com/argotorg/sourcify/issues/1470).
 
 (Edit: The design is live [in our docs](https://docs.sourcify.dev/docs/api/))
 
@@ -33,7 +33,7 @@ The design specifies endpoints to "Verify Contracts", check for "Verification Jo
 
 ## New endpoints
 
-With [this release](https://github.com/ethereum/sourcify/releases/tag/sourcify-server%402.6.0) we have 2 new endpoints:
+With [this release](https://github.com/argotorg/sourcify/releases/tag/sourcify-server%402.6.0) we have 2 new endpoints:
 
 - GET `/v2/contracts/{chainId}`: retrieve the latest verified contracts for a chain
 - GET `/v2/contract/{chainId}/{address}`: retrieve a specific contract and related information
@@ -391,7 +391,7 @@ export type ProxyType =
   | "SequenceWalletProxy";
 ```
 
-See [proxy-utils.ts](https://github.com/ethereum/sourcify/blob/staging/services/server/src/server/services/utils/proxy-contract-util.ts) to see how resolution is done.
+See [proxy-utils.ts](https://github.com/argotorg/sourcify/blob/staging/services/server/src/server/services/utils/proxy-contract-util.ts) to see how resolution is done.
 
 ## Next Steps
 
@@ -399,6 +399,6 @@ As said, this is just the lookup endpoints of the APIv2. In the upcoming weeks w
 
 Once again, you can see the full up-to-date API spec at https://docs.sourcify.dev/docs/api/
 
-You can follow along the development in our tracker issue: https://github.com/ethereum/sourcify/issues/1367
+You can follow along the development in our tracker issue: https://github.com/argotorg/sourcify/issues/1367
 
 Beyond that, you can see our roadmap in our [Milestones View](https://github.com/orgs/ethereum/projects/46/views/3) for the next quarters and what we are currently working in our [Sprint Board](https://github.com/orgs/ethereum/projects/46/views/2). We welcome feedback and discussions!

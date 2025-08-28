@@ -7,7 +7,7 @@ On a high level, these modifications are:
 - Stores the [Solidity metadata](/docs/metadata) separately in the `sourcify_matches` table.
 - Introduces tables for other purposes.
 
-You can follow the [`services/database/migrations`](https://github.com/ethereum/sourcify/tree/staging/services/database/migrations) folder for the initial schema and the changes made to it. These are not necessarily the differences between Sourcify DB and the Verified Alliance Schema, but any changes made to the schema over time.
+You can follow the [`services/database/migrations`](https://github.com/argotorg/sourcify/tree/staging/services/database/migrations) folder for the initial schema and the changes made to it. These are not necessarily the differences between Sourcify DB and the Verified Alliance Schema, but any changes made to the schema over time.
 
 ## Schema
 
@@ -45,11 +45,11 @@ JSON fields of `compiled_contracts` table:
 
 ### Notes on the data
 
-For the issues on the data we are aware of and plan to fix, see this issue: https://github.com/ethereum/sourcify/issues/2276 
+For the issues on the data we are aware of and plan to fix, see this issue: https://github.com/argotorg/sourcify/issues/2276 
 
 Other known inconsistencies in the data below (not planned to fix) are documented below:
 
-- **Compiler versions**: Keep in mind the vyper version build strings are not consistent (details [here](hhttps://github.com/ethereum/sourcify/issues/2247#issuecomment-3155878775)):
+- **Compiler versions**: Keep in mind the vyper version build strings are not consistent (details [here](hhttps://github.com/argotorg/sourcify/issues/2247#issuecomment-3155878775)):
   - version =< 0.3.0: The commit hash has 7 characters `0.3.0+commit.8a23feb`
   - version 0.3.1: No commit hash: `0.3.1`
   - version >= 0.3.2: The commit hash has 8 characters `0.3.2+commit.3b6a4117`

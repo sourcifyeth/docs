@@ -86,7 +86,7 @@ const Table = () => {
       .then((res) => res.json())
       .then(async (chains) => {
         await addMonitoredSupportFrom(
-          "https://raw.githubusercontent.com/ethereum/sourcify/staging/services/monitor/monitorChains.json",
+          "https://raw.githubusercontent.com/argotorg/sourcify/staging/services/monitor/monitorChains.json",
           chains
         );
         sortChains(chains);
@@ -196,7 +196,7 @@ const Table = () => {
 
   const testRunCircleURL =
     testReportObject &&
-    `https://app.circleci.com/pipelines/github/ethereum/sourcify/${testReportObject.pipelineNumber}/workflows/${testReportObject.workflowId}/jobs/${testReportObject.jobNumber}`;
+    `https://app.circleci.com/pipelines/github/argotorg/sourcify/${testReportObject.pipelineNumber}/workflows/${testReportObject.workflowId}/jobs/${testReportObject.jobNumber}`;
   const testReportHtmlURL =
     testReportObject &&
     `https://dl.circleci.com/private/output/job/${testReportObject.jobId}/artifacts/0/chain-tests-report/report.html`;
