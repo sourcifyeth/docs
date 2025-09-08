@@ -20,7 +20,7 @@ const config = {
     {
       tagName: "script",
       attributes: {
-        defer: true,
+        defer: "defer",
         src: "https://cloud.umami.is/script.js",
         "data-website-id": "2dc16b59-e7f3-4637-b282-9505837db8d6",
       },
