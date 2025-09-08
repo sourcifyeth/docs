@@ -16,6 +16,17 @@ const config = {
   projectName: "sourcifyeth.github.io", // Usually your repo name.
   trailingSlash: true,
 
+  headTags: [
+    {
+      tagName: "script",
+      attributes: {
+        defer: true,
+        src: "https://cloud.umami.is/script.js",
+        "data-website-id": "2dc16b59-e7f3-4637-b282-9505837db8d6",
+      },
+    },
+  ],
+
   presets: [
     [
       "@docusaurus/preset-classic",
@@ -196,7 +207,6 @@ const config = {
         //... other Algolia params
       },
     }),
-  scripts: ["/matomo.js"],
 };
 
 // Reverse the sidebar items ordering (including nested category items)
