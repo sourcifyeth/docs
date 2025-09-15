@@ -2,8 +2,9 @@
 
 Sourcify Database is the main storage backend for Sourcify. It is a PostgreSQL database that follows the [Verified Alliance Schema](https://github.com/verifier-alliance/database-specs) as its base with few modifications.
 
-On a high level, these modifications are: 
-- Sourcify DB does accept contracts without the deployment details such as `block_number`, `transaction_hash` as well as without an onchain creation bytecode (`contracts.creation_code_hash`). 
+On a high level, these modifications are:
+
+- Sourcify DB does accept contracts without the deployment details such as `block_number`, `transaction_hash` as well as without an onchain creation bytecode (`contracts.creation_code_hash`).
 - Stores the [Solidity metadata](/docs/metadata) separately in the `sourcify_matches` table.
 - Introduces tables for other purposes.
 
@@ -13,15 +14,21 @@ You can follow the [`services/database/migrations`](https://github.com/argotorg/
 
 You can access the live schema of the database [here](https://dbdiagram.io/d/Sourcify-DB-67fcf5ee9cea640381a217d2) or in the embedded frame below.
 
-<iframe src='https://dbdiagram.io/e/67fcf5ee9cea640381a217d2/67fcf5fc9cea640381a21a00' style={{width: "100%", height: "500px"}}> </iframe>
+<iframe
+  src="https://dbdiagram.io/e/67fcf5ee9cea640381a217d2/67fcf5fc9cea640381a21a00"
+  style={{ width: "100%", height: "500px" }}
+>
+  {" "}
+</iframe>
 
 In short:
+
 - Every verified contract is a coupling between a deployed contract (`contract_deployments`) and a compilation (`compiled_contracts`)
-- ["Transformations"](https://verifieralliance.org/docs/transformations) are applied to reach the final matching onchain bytecode from a bytecode from a compilation. 
+- ["Transformations"](https://verifieralliance.org/docs/transformations) are applied to reach the final matching onchain bytecode from a bytecode from a compilation.
 - Bytecodes and sources are dedeplicated. The bytecode and the sources of a popular contract like `ERC20.sol` will only be stored once in `sources` and `code` respectively.
 
 :::warning
-If the contract has ["unlinked libraries"](https://docs.soliditylang.org/en/v0.8.30/using-the-compiler.html#library-linking), the placeholder strings like `__$53ae...a537$__` in bytecodes will be normalized to `0000...0000`s. This is required since the `code` column is a `bytea` type in the DB. 
+If the contract has ["unlinked libraries"](https://docs.soliditylang.org/en/v0.8.30/using-the-compiler.html#library-linking), the placeholder strings like `__$53ae...a537$__` in bytecodes will be normalized to `0000...0000`s. This is required since the `code` column is a `bytea` type in the DB.
 
 Therefore, the bytecode string from the DB **will not be identical** to the output of the compilation. You can "de-normalize" these fields by looking at the library transformations and filling the placeholders with the library identifier.
 :::
@@ -29,6 +36,7 @@ Therefore, the bytecode string from the DB **will not be identical** to the outp
 For more information about the schemas of the json fields below check the [Verifier Alliance repo](https://github.com/verifier-alliance/database-specs/tree/master/json-schemas).
 
 JSON fields of `verified_contracts` table:
+
 - `creation_values`
 - `creation_transformations`
 - `runtime_values`
@@ -37,6 +45,7 @@ JSON fields of `verified_contracts` table:
 The [transformations](https://verifieralliance.org/docs/transformations) and values are the operations done on a bytecode from a compilation to reach the final matching onchain bytecode.
 
 JSON fields of `compiled_contracts` table:
+
 - `sources`: Source code files of a contract
 - `compiler_settings`
 - `compilation_artifacts`: Fields from the compilation output JSON. Fields: `abi`, `userdoc`, `devdoc`, `sources` (AST identifiers), `storageLayout`
@@ -45,7 +54,7 @@ JSON fields of `compiled_contracts` table:
 
 ### Notes on the data
 
-For the issues on the data we are aware of and plan to fix, see this issue: https://github.com/argotorg/sourcify/issues/2276 
+For the issues on the data we are aware of and plan to fix, see this issue: https://github.com/argotorg/sourcify/issues/2276
 
 Other known inconsistencies in the data below (not planned to fix) are documented below:
 
@@ -57,7 +66,6 @@ Other known inconsistencies in the data below (not planned to fix) are documente
 ## Download
 
 We dump the whole database daily in [Parquet](https://en.wikipedia.org/wiki/Apache_Parquet) format and upload it to a Cloudflare R2 storage. You can access the manifest file at https://export.sourcify.dev ( `.dev` redirects to `.app` domain, which also belongs to Sourcify). The script that does the dump is at [sourcifyeth/parquet-export](https://github.com/sourcifyeth/parquet-export).
-
 
 [export.sourcify.dev](https://export.sourcify.dev) will redirect to a `manifest.json` file:
 
@@ -103,11 +111,13 @@ We dump the whole database daily in [Parquet](https://en.wikipedia.org/wiki/Apac
   }
 }
 ```
+
 </details>
 
 You can download all the files and use a parquet client to query, inspect, or process the data.
 
 1. Download the manifest file (`-L` to follow redirects):
+
    ```bash
    curl -L -O https://export.sourcify.dev/manifest.json
    ```
@@ -126,3 +136,10 @@ parquet meta compiled_contracts_0_5000.parquet
 ```
 
 alternatively use your favorite data processing tool or import this data into a database.
+
+## BigQuery Datasets
+
+We also provide public BigQuery datasets for convenient querying and exploration:
+
+- [Sourcify production dataset](https://console.cloud.google.com/bigquery?ws=!1m4!1m3!3m2!1ssourcify-project!2ssourcify)
+- [Sourcify staging dataset](https://console.cloud.google.com/bigquery?ws=!1m4!1m3!3m2!1ssourcify-project!2ssourcify_staging)
