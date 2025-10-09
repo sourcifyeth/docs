@@ -65,6 +65,10 @@ Other known inconsistencies in the data below (not planned to fix) are documente
 
 ## Download
 
+:::warning Deprecation Notice
+The current parquet download format will be deprecated. A new `/v2` endpoint will be introduced with an updated format. Documentation for the new format will be added once it is live. Feel free to use the export in its current form, but be aware that it will be replaced.
+:::
+
 We dump the whole database daily in [Parquet](https://en.wikipedia.org/wiki/Apache_Parquet) format and upload it to a Cloudflare R2 storage. You can access the manifest file at https://export.sourcify.dev ( `.dev` redirects to `.app` domain, which also belongs to Sourcify). The script that does the dump is at [sourcifyeth/parquet-export](https://github.com/sourcifyeth/parquet-export).
 
 [export.sourcify.dev](https://export.sourcify.dev) will redirect to a `manifest.json` file:
