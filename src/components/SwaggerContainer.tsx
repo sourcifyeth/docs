@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./SwaggerContainer.module.css";
 
-const SwaggerContainer = () => {
+const SwaggerContainer = ({ url }: { url: string }) => {
   const [isClient, setIsClient] = React.useState(false);
 
   React.useEffect(() => {
@@ -20,7 +20,7 @@ const SwaggerContainer = () => {
   const SwaggerUI = require("swagger-ui-react").default;
   require("swagger-ui-react/swagger-ui.css");
 
-  return <SwaggerUI url="https://sourcify.dev/server/api-docs/swagger.json" docExpansion="list" deepLinking={true} />;
+  return <SwaggerUI url={url} docExpansion="list" deepLinking={true} />;
 };
 
 export default SwaggerContainer;
