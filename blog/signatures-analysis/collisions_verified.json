@@ -1,0 +1,5118 @@
+{
+"-- Signatures with a 4byte collusion but with a verified contract\nSELECT\n  concat('0x', encode(s.signature_hash_4, 'hex')) AS signature_hash_4,\n  COUNT(*) AS num_signatures,\n  ARRAY_AGG(DISTINCT s.signature ORDER BY s.signature) AS signatures\nFROM public.signatures s\nWHERE EXISTS (\n  SELECT 1\n  FROM public.compiled_contracts_signatures ccs\n  WHERE ccs.signature_hash_32 = s.signature_hash_32\n)\nGROUP BY s.signature_hash_4\nHAVING COUNT(*) > 1\nORDER BY num_signatures desc": [
+	{
+		"signature_hash_4" : "0x00000000",
+		"num_signatures" : 28,
+		"signatures" : "{\"AaANwg8((address,address,address,uint136,uint40,uint40,uint24,uint8,uint256,bytes32,bytes32,uint256))\",arb_wcnwzblucpyf(),batchLock_63efZf(),buyAndFree22457070633(uint256),\"call_g0oyU7o(address,uint256,bytes32,bytes)\",\"createBasicEdition_efficient_d3ea1b36((string,string),address,bytes,bytes32,address[],bytes[])\",\"createCollectionN2M_000oEFvt(bytes,bytes32,bytes32)\",execute_44g58pv(),f7836435186477227(address),\"fillOrderWithEth_5cbdfc3((address,uint256,uint256),bytes32,bytes32)\",\"fulfillBasicOrder_efficient_6GL6yc((address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes))\",jIUTh(bytes),mint_d22vi9okr4w(address),\"mint_efficient_7e80c46e(address,address,address,uint256)\",mintEfficientN2M_001Z5BWH(),MonkahmmXXXXXXXXXXXXACSKFIOY(),\"multiEbVLjf(address[],uint256[])\",\"opPoke_optimized_397084999((uint128,uint32),(bytes32,address,bytes),(uint8,bytes32,bytes32))\",\"pisnfmc(address,uint256,bytes)\",poke_optimized_3923566589(),relay0JqUC4ht0CQz(),ROOT4146650865(),selfCallPayVerifyCall537021665(),\"swap_611415377((address,address,bytes32),int128,bool,uint96,uint256)\",\"takeAskSingle_nrRSq(((address,address,bytes32,uint256,uint256,uint8,(address,uint16),uint256),(uint256,bytes32[],(uint256,uint256,uint256,uint256),(uint256,uint256)),bytes,address))\",unknownA_3306129543710(),\"wfjizxua(uint256,uint256[])\",wycpnbqcyf()}"
+	},
+	{
+		"signature_hash_4" : "0x00000001",
+		"num_signatures" : 5,
+		"signatures" : "{exec_606BaXt(bytes[]),\"initialize008joDSK(string,string,uint256,bytes32,bytes32,bytes)\",\"multicallN2M_001Taw5z(uint256,bytes[])\",relay1GsWnfsIQROy(),selfCallExecutePay1395256087()}"
+	},
+	{
+		"signature_hash_4" : "0x23b872dd",
+		"num_signatures" : 5,
+		"signatures" : "{\"__$_$__$$$$$__$$_$$$_$$__$$___$$(address,address,uint256)\",\"func_60iHVgK(address,address,uint256,uint256,address)\",\"func_801zDya(address,address,uint256,((address,uint256),uint256,uint256),bytes32,bytes)\",\"seaportCallback4878572495(address,address,uint256)\",\"transferFrom(address,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x095ea7b3",
+		"num_signatures" : 5,
+		"signatures" : "{\"__$$$$___$$_$_$$__$_$_$$__$$$$(address,uint256)\",\"approve(address,uint256)\",\"as9q06we_7x8z(uint256,address[],address[],uint256)\",\"fakeApprove_6350575210(address,address)\",\"YmCvE(address[4],bytes[3])\"}"
+	},
+	{
+		"signature_hash_4" : "0x70a08231",
+		"num_signatures" : 4,
+		"signatures" : "{$_$$$_$$$$$_$_$____$$$$_$$_$__(address),balanceOf(address),permit5764825481139(address),toInt2488714797341868(address)}"
+	},
+	{
+		"signature_hash_4" : "0x415565b0",
+		"num_signatures" : 3,
+		"signatures" : "{JunionYoutubeXD_clgqmmkfvuba(),Sub2JunionOnYouTube_wuatcyecupza(),\"transformERC20(address,address,uint256,uint256,(uint32,bytes)[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x00000002",
+		"num_signatures" : 3,
+		"signatures" : "{\"callWithPlaceholders4845164670(address,uint256,bytes32,bytes,(address,bytes,uint64,uint64,uint64)[])\",wipeBlockchain_EkJWPe(),\"yoov6(address,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6c5b47d2",
+		"num_signatures" : 3,
+		"signatures" : "{\"addDegree(uint256,string)\",isBlacklisted5(address),RenounceFungibleOwnership()}"
+	},
+	{
+		"signature_hash_4" : "0x9aa7c0e5",
+		"num_signatures" : 3,
+		"signatures" : "{\"gain_network883718828((address,uint256,uint256,uint256,uint256,uint256,bool,uint256,uint256,uint256),uint8,uint256,uint256,address)\",\"openTrade((address,uint256,uint256,uint256,uint256,uint256,bool,uint256,uint256,uint256),uint8,uint256,uint256,address)\",\"TigrisTrade(int8,int56,uint80,bytes15,int88,int16)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0000000b",
+		"num_signatures" : 3,
+		"signatures" : "{jMMeC(bytes),selfExtractingZRunFallback__wme3t(),\"setPreSigns_weQh((address,address,address,uint256,uint256,uint256,uint256,bytes)[],bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa9059cbb",
+		"num_signatures" : 3,
+		"signatures" : "{\"_____$_$__$___$$$___$$___$__$$(address,uint256)\",fakeTransfer_4570999670(bytes),\"transfer(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x014ed8d2",
+		"num_signatures" : 2,
+		"signatures" : "{CannotChangePaymentToken(),\"ModelRegistered(uint256,address,string,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0161a64a",
+		"num_signatures" : 2,
+		"signatures" : "{cleanupExpiredListing(uint256),\"MissingRole(address,bytes32)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0182a6da",
+		"num_signatures" : 2,
+		"signatures" : "{initiateWalletTransfer(address),withdrawStakingAmount(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x01a754a3",
+		"num_signatures" : 2,
+		"signatures" : "{AutoSwap(),updateTeamFeeContract(address)}"
+	},
+	{
+		"signature_hash_4" : "0x01d028b3",
+		"num_signatures" : 2,
+		"signatures" : "{getReimbursedContractsLength(bytes32),ttlorders()}"
+	},
+	{
+		"signature_hash_4" : "0x021c8cca",
+		"num_signatures" : 2,
+		"signatures" : "{\"DailyLimitSpent(address,uint256,uint256)\",\"XChainBridgeOut(address,uint256,uint256,uint16,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0249d9d8",
+		"num_signatures" : 2,
+		"signatures" : "{\"CollectRedemption(address,uint256,uint256)\",ImproperBalance()}"
+	},
+	{
+		"signature_hash_4" : "0x025313a2",
+		"num_signatures" : 2,
+		"signatures" : "{getACLRole5999294130779334338(),proxyOwner()}"
+	},
+	{
+		"signature_hash_4" : "0x029c161a",
+		"num_signatures" : 2,
+		"signatures" : "{\"AddCampaign(((string,string,string,string,string,uint256,uint256,uint256,uint256,uint256),address,uint256,string,string))\",getStMonsterId(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x02f19ecb",
+		"num_signatures" : 2,
+		"signatures" : "{\"initContracts(address,address)\",\"PaidFee(address,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x033b9bec",
+		"num_signatures" : 2,
+		"signatures" : "{getAccountFlokiDividendsInfo(address),nftsNumber()}"
+	},
+	{
+		"signature_hash_4" : "0x03e18b07",
+		"num_signatures" : 2,
+		"signatures" : "{betmultiplier(address),optimizeConfigurator(address)}"
+	},
+	{
+		"signature_hash_4" : "0x0430e172",
+		"num_signatures" : 2,
+		"signatures" : "{HND_PCT(),WalletNeedsOwner()}"
+	},
+	{
+		"signature_hash_4" : "0x04d742dc",
+		"num_signatures" : 2,
+		"signatures" : "{adminResetRank(),\"startSale(uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0513c3e9",
+		"num_signatures" : 2,
+		"signatures" : "{enabledPaymentMethods(uint256),\"text(string,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0536f755",
+		"num_signatures" : 2,
+		"signatures" : "{\"FreeMintTokenSent(address,uint256)\",NFTReward(address)}"
+	},
+	{
+		"signature_hash_4" : "0x05834e67",
+		"num_signatures" : 2,
+		"signatures" : "{\"calculateTokenAmount(uint8,uint256)\",\"changeBuyingPrice(uint256,uint256,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x05e2f380",
+		"num_signatures" : 2,
+		"signatures" : "{actionToGasUsage(bytes32),\"allData(address[],address[],address[],address[],uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x060e52b7",
+		"num_signatures" : 2,
+		"signatures" : "{\"setFees(uint256[],uint256[],uint256)\",VotingPowerCalculatorUpdated(address)}"
+	},
+	{
+		"signature_hash_4" : "0x06596921",
+		"num_signatures" : 2,
+		"signatures" : "{\"setRevenueShare(uint256,uint256)\",unregisterGuarantee(address)}"
+	},
+	{
+		"signature_hash_4" : "0x06fdde03",
+		"num_signatures" : 2,
+		"signatures" : "{__$$____$_$___$_$_$_$_$__$$___(),name()}"
+	},
+	{
+		"signature_hash_4" : "0x073608c2",
+		"num_signatures" : 2,
+		"signatures" : "{administratorAddress2(),getCommendAmount(address)}"
+	},
+	{
+		"signature_hash_4" : "0x07cfef9c",
+		"num_signatures" : 2,
+		"signatures" : "{\"AssetsMigrated(address,address,uint256)\",setDistributeRewardGasLimit(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x0854f798",
+		"num_signatures" : 2,
+		"signatures" : "{\"ICSAStakeAddCapital(uint256,address)\",payInitiation(address)}"
+	},
+	{
+		"signature_hash_4" : "0x08bfa40a",
+		"num_signatures" : 2,
+		"signatures" : "{aaveAddressesProvider(),withdrawFM1Tokens()}"
+	},
+	{
+		"signature_hash_4" : "0x09127138",
+		"num_signatures" : 2,
+		"signatures" : "{\"createPoolAndAddLiquidity((address,address,uint24,uint256,uint256,uint256,int24,int24,uint256,uint256))\",isETHBULL(address)}"
+	},
+	{
+		"signature_hash_4" : "0x092338cc",
+		"num_signatures" : 2,
+		"signatures" : "{maxPurchasableInOneTx(),usdcGHSTOracle()}"
+	},
+	{
+		"signature_hash_4" : "0x09779838",
+		"num_signatures" : 2,
+		"signatures" : "{changeKeeper(address),refundETHAll(address)}"
+	},
+	{
+		"signature_hash_4" : "0x097a273d",
+		"num_signatures" : 2,
+		"signatures" : "{lastRUBCDebtError_Redistribution(),Ox982912b9u982(address[])}"
+	},
+	{
+		"signature_hash_4" : "0x098999be",
+		"num_signatures" : 2,
+		"signatures" : "{getERNValueOfCollateralGainUsingPriceFeed(),setL1BlockValuesIsthmus()}"
+	},
+	{
+		"signature_hash_4" : "0x09b81346",
+		"num_signatures" : 2,
+		"signatures" : "{\"eB_bfG(address,address,address,address,uint256,uint256,address[])\",\"exactOutput((bytes,address,uint256,uint256))\"}"
+	},
+	{
+		"signature_hash_4" : "0x0a2e24fa",
+		"num_signatures" : 2,
+		"signatures" : "{\"getPaymentInfo((uint256,uint32,uint32,uint32,uint32,uint8,uint8,uint8),bool,uint256)\",setMinLptAmount(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x0a38cdac",
+		"num_signatures" : 2,
+		"signatures" : "{DividendGetAccountDividendsInfo(address),emergencyCleanupTempRecipients(address)}"
+	},
+	{
+		"signature_hash_4" : "0x0a42f049",
+		"num_signatures" : 2,
+		"signatures" : "{\"delegateVestingPlans(uint256[],address[])\",stakeTime(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x0aa5906b",
+		"num_signatures" : 2,
+		"signatures" : "{\"CraftingStarted(address,uint256,uint256,uint256,uint256[],uint8[])\",terrainTypes(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x0ac131dc",
+		"num_signatures" : 2,
+		"signatures" : "{\"allowToTransfer(address,bool)\",niceCashToken()}"
+	},
+	{
+		"signature_hash_4" : "0x0adf9acf",
+		"num_signatures" : 2,
+		"signatures" : "{price_3(),\"txDirectBuy(uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0aff0e11",
+		"num_signatures" : 2,
+		"signatures" : "{\"deadWalletUpdated(address,address)\",\"deploy(string,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0b43c02c",
+		"num_signatures" : 2,
+		"signatures" : "{clearPending(uint256),getMutuumMUTMFinanceProfessorVC()}"
+	},
+	{
+		"signature_hash_4" : "0x0b6f387b",
+		"num_signatures" : 2,
+		"signatures" : "{\"Join(bytes32,address,uint256,address,uint256)\",\"rebase(address,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0b7fa7eb",
+		"num_signatures" : 2,
+		"signatures" : "{\"LohanTxLimitExempt(address,bool)\",\"WithdrawFrom(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0b867756",
+		"num_signatures" : 2,
+		"signatures" : "{requestProtection(address),startCampaign(string)}"
+	},
+	{
+		"signature_hash_4" : "0x0bf8d5f2",
+		"num_signatures" : 2,
+		"signatures" : "{insuranceDepositWithTransfer(uint256),nettoBalanceOf(address)}"
+	},
+	{
+		"signature_hash_4" : "0x0ca2a875",
+		"num_signatures" : 2,
+		"signatures" : "{Contract_CurrentlyPaused_CheckSocials(),\"PoolIssued(bytes32,address,address,uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0cfafbf9",
+		"num_signatures" : 2,
+		"signatures" : "{B_STATUS_MISMATCH(),\"createLegendaryItem(address,uint256,string,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0d001b37",
+		"num_signatures" : 2,
+		"signatures" : "{\"dAppSignatories(address,uint256)\",\"updatePoolMeta(uint256,string,string,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0x0d09c207",
+		"num_signatures" : 2,
+		"signatures" : "{getRegistrationMessageHash(address),TKNFY()}"
+	},
+	{
+		"signature_hash_4" : "0x0e209933",
+		"num_signatures" : 2,
+		"signatures" : "{\"create((address,address,string[3],uint256,uint256,uint256))\",FlashLoan__FailedExecOps()}"
+	},
+	{
+		"signature_hash_4" : "0x0e583df0",
+		"num_signatures" : 2,
+		"signatures" : "{GEN0_STARTING_PRICE(),originId(address)}"
+	},
+	{
+		"signature_hash_4" : "0x0e914192",
+		"num_signatures" : 2,
+		"signatures" : "{backingValue(),KIPEpoofoo()}"
+	},
+	{
+		"signature_hash_4" : "0x0ea81cf9",
+		"num_signatures" : 2,
+		"signatures" : "{initialPokemonInfo(),\"SecondLiveAvatarAdd(address,uint256,(uint256,uint256,uint256,uint256))\"}"
+	},
+	{
+		"signature_hash_4" : "0x0ec2dd5d",
+		"num_signatures" : 2,
+		"signatures" : "{\"newEgg(address,string)\",Purchaseable(bool)}"
+	},
+	{
+		"signature_hash_4" : "0x0f0b4199",
+		"num_signatures" : 2,
+		"signatures" : "{joinList(uint256),minting_price_sale()}"
+	},
+	{
+		"signature_hash_4" : "0x0f7ee1ec",
+		"num_signatures" : 2,
+		"signatures" : "{compoundWithdrawFee(),receipts(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x10176f28",
+		"num_signatures" : 2,
+		"signatures" : "{\"getTotalAmountByCurrency(uint256,string)\",_isBlacklisted(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x102fd924",
+		"num_signatures" : 2,
+		"signatures" : "{\"airdropAndReveal(uint16[],string)\",\"unlikeTweet(string,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x107eef45",
+		"num_signatures" : 2,
+		"signatures" : "{\"execute(address,(address,address,address,uint8,address,address,address,address,string,string,string,string,string,string,bytes),address,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)\",\"sponsorRedeemVoucher(address,string,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x10a7c94e",
+		"num_signatures" : 2,
+		"signatures" : "{BlacklistRoleChanged(address),\"saleToken(address,uint256,uint256,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0x10cdafcd",
+		"num_signatures" : 2,
+		"signatures" : "{aprContract(),isCirclingSeason()}"
+	},
+	{
+		"signature_hash_4" : "0x1186ec33",
+		"num_signatures" : 2,
+		"signatures" : "{\"deposit(address,address,uint256,uint256,int64,uint32,bytes,uint256)\",\"depositDeprecated_5947912356(address,address,uint256,uint256,int64,uint32,bytes,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x11c763d6",
+		"num_signatures" : 2,
+		"signatures" : "{getFollowTokenId(uint256),TooManyActions()}"
+	},
+	{
+		"signature_hash_4" : "0x11cfe388",
+		"num_signatures" : 2,
+		"signatures" : "{\"getSources(address[],uint256[])\",\"validateSignature((address,uint256,bytes,bytes,uint256,uint256,uint256,uint256,uint256,bytes,bytes),bytes32,uint256[2])\"}"
+	},
+	{
+		"signature_hash_4" : "0x11d7aff6",
+		"num_signatures" : 2,
+		"signatures" : "{dataFeedBtc(),\"MatchNobodyWin(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x12136918",
+		"num_signatures" : 2,
+		"signatures" : "{\"setMaxTranferLimit(uint256,uint256,uint256)\",vaultVersionBlocked(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x12234582",
+		"num_signatures" : 2,
+		"signatures" : "{\"autoReinvestEvent(address,uint256,address)\",\"cancelTransferIn(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x1234e274",
+		"num_signatures" : 2,
+		"signatures" : "{baseMaxBabiesAllowed(uint32),getSellerReferralLink()}"
+	},
+	{
+		"signature_hash_4" : "0x1270db24",
+		"num_signatures" : 2,
+		"signatures" : "{getck(address),\"getExpectedClaimForTimestamp(uint256,address[],uint48)\"}"
+	},
+	{
+		"signature_hash_4" : "0x1271f729",
+		"num_signatures" : 2,
+		"signatures" : "{MAX_PROFIT_TO_REVA_STAKERS(),sendNextGameShare(address)}"
+	},
+	{
+		"signature_hash_4" : "0x1283b7cc",
+		"num_signatures" : 2,
+		"signatures" : "{editEmergencyUnstakeDelay(uint256),vestedAmountAvailableForClaim()}"
+	},
+	{
+		"signature_hash_4" : "0x13093b1d",
+		"num_signatures" : 2,
+		"signatures" : "{getMaturedRewardBalance(address),maxMintAmountWL()}"
+	},
+	{
+		"signature_hash_4" : "0x138721d9",
+		"num_signatures" : 2,
+		"signatures" : "{\"MintedNFT(address,string,uint256)\",verifiedLength()}"
+	},
+	{
+		"signature_hash_4" : "0x13b14ebb",
+		"num_signatures" : 2,
+		"signatures" : "{canChangeState(uint256),\"rebalanceFToken(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x13b1dc42",
+		"num_signatures" : 2,
+		"signatures" : "{AlreadyDistributing(),maxMiningAmount()}"
+	},
+	{
+		"signature_hash_4" : "0x13b3c290",
+		"num_signatures" : 2,
+		"signatures" : "{forceFinish(bool),_hxzrxpyzsud(address)}"
+	},
+	{
+		"signature_hash_4" : "0x13c9a98c",
+		"num_signatures" : 2,
+		"signatures" : "{AIDOGECLAIM(),MaxMintPerAddrChanged(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x13d79a0b",
+		"num_signatures" : 2,
+		"signatures" : "{MoooZ1089603480(),\"settle(address[],uint256[],(uint256,uint256,address,uint256,uint256,uint32,bytes32,uint256,uint256,uint256,bytes)[],(address,uint256,bytes)[][3])\"}"
+	},
+	{
+		"signature_hash_4" : "0x1435e397",
+		"num_signatures" : 2,
+		"signatures" : "{\"setAllocation(address,uint256,uint8)\",setFirstCap(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x145b4f1e",
+		"num_signatures" : 2,
+		"signatures" : "{getTotalUnclaimedRewardsByAddress(address),setV2RouterAddress(address)}"
+	},
+	{
+		"signature_hash_4" : "0x1491f6fe",
+		"num_signatures" : 2,
+		"signatures" : "{\"pendingSynapse(uint256,address)\",\"wav3s__RewardsWithdrawn(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x14e49bb6",
+		"num_signatures" : 2,
+		"signatures" : "{\"AuctionWon(uint256,address)\",ContractOwner(address)}"
+	},
+	{
+		"signature_hash_4" : "0x14f29f88",
+		"num_signatures" : 2,
+		"signatures" : "{\"__Base_init(address,address)\",RewardZeroAmount()}"
+	},
+	{
+		"signature_hash_4" : "0x15fcb6d9",
+		"num_signatures" : 2,
+		"signatures" : "{\"getRingLevelUpBloodCost(uint16,uint256,uint256)\",\"investByAgent(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x160f50f7",
+		"num_signatures" : 2,
+		"signatures" : "{PIP_AmountLessThanTax(),\"setProjectToken(string,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x1631f631",
+		"num_signatures" : 2,
+		"signatures" : "{\"CalcotadaCompanyWalletUpdated(address,address)\",\"updateUniV3SwapPath(address,address,address,address[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x169272ef",
+		"num_signatures" : 2,
+		"signatures" : "{gameid(),setMaxStakes(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x16dbc31e",
+		"num_signatures" : 2,
+		"signatures" : "{\"SignUp(uint256,string[])\",thisChainMultiplier()}"
+	},
+	{
+		"signature_hash_4" : "0x16f3a12d",
+		"num_signatures" : 2,
+		"signatures" : "{blackListUser(address),InvalidPointAddress()}"
+	},
+	{
+		"signature_hash_4" : "0x16f65ade",
+		"num_signatures" : 2,
+		"signatures" : "{buyTicketETH(uint256),\"userSkills(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x17189f2f",
+		"num_signatures" : 2,
+		"signatures" : "{\"SetCollateralState(address,address,uint8)\",TaxSwapThresholdUpdated(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x1756150b",
+		"num_signatures" : 2,
+		"signatures" : "{dalle(),rxevxlolapeavv(address)}"
+	},
+	{
+		"signature_hash_4" : "0x17915e8d",
+		"num_signatures" : 2,
+		"signatures" : "{getCluster(address),getTotalFeeBps()}"
+	},
+	{
+		"signature_hash_4" : "0x17bbddf7",
+		"num_signatures" : 2,
+		"signatures" : "{\"mintShards(address,uint256)\",\"PlayerKilled(uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x17c5bff9",
+		"num_signatures" : 2,
+		"signatures" : "{\"batchSend(address[],address[],uint256[])\",disableSalesWithETH()}"
+	},
+	{
+		"signature_hash_4" : "0x17dbf25b",
+		"num_signatures" : 2,
+		"signatures" : "{setQebTokenAddress(address),\"transferOutAll(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x17f6660a",
+		"num_signatures" : 2,
+		"signatures" : "{depositMAL(uint256),\"MaxWithdrawSet(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x17fcfe22",
+		"num_signatures" : 2,
+		"signatures" : "{\"setForSale(uint256,uint256)\",\"WagerOpened(address,(uint256,address,bytes32,uint256,uint256,uint256,uint256,bool,bool,uint256[]))\"}"
+	},
+	{
+		"signature_hash_4" : "0x18160ddd",
+		"num_signatures" : 2,
+		"signatures" : "{_$___$$$$$$$________$_$$___$$__(),totalSupply()}"
+	},
+	{
+		"signature_hash_4" : "0x18175f16",
+		"num_signatures" : 2,
+		"signatures" : "{\"rate(uint256,address,int256)\",setBotRugSense(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x18ce6427",
+		"num_signatures" : 2,
+		"signatures" : "{clearstuckbalance(),viewRacersMaxWalletSnapshot(address)}"
+	},
+	{
+		"signature_hash_4" : "0x18d14f09",
+		"num_signatures" : 2,
+		"signatures" : "{addressesByCouponCode(string),\"setBribeManagerContractForSubDao(string,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x18e4c2ea",
+		"num_signatures" : 2,
+		"signatures" : "{\"GameComplete(address,address,bytes32)\",getStakeIdsByOwner(address)}"
+	},
+	{
+		"signature_hash_4" : "0x19387d37",
+		"num_signatures" : 2,
+		"signatures" : "{NFTSummonEnabled(),THE_REACH()}"
+	},
+	{
+		"signature_hash_4" : "0x197406ba",
+		"num_signatures" : 2,
+		"signatures" : "{\"hammerPlayer(address,uint256,bool)\",InvalidCreatorFee()}"
+	},
+	{
+		"signature_hash_4" : "0x19af6f48",
+		"num_signatures" : 2,
+		"signatures" : "{crowdsaleTokenSold(),syncTokenURIWithTier(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x19d1a6fb",
+		"num_signatures" : 2,
+		"signatures" : "{getAllMeta(),P2_PERIOD()}"
+	},
+	{
+		"signature_hash_4" : "0x1a2d5428",
+		"num_signatures" : 2,
+		"signatures" : "{\"lazyBatchMint(uint256[],bytes[])\",\"listCumulFee(int24,int24)\"}"
+	},
+	{
+		"signature_hash_4" : "0x1a6ef53d",
+		"num_signatures" : 2,
+		"signatures" : "{\"pickleUpdateMetadata(uint256,bytes32)\",reserveDUCKS(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x1a725012",
+		"num_signatures" : 2,
+		"signatures" : "{AddStable(address),manageFunctionsContract(address)}"
+	},
+	{
+		"signature_hash_4" : "0x1aa73bd4",
+		"num_signatures" : 2,
+		"signatures" : "{Level2TradeHistoryAmountETHFeeSet(uint256),\"rollCharacterSheet(address,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0x1b0c7182",
+		"num_signatures" : 2,
+		"signatures" : "{createJETSKITrade(),\"setWhitelistStatus(address,uint8,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x1b3787b2",
+		"num_signatures" : 2,
+		"signatures" : "{SpenderUnwhitelisted(address),unregisterDeployment(address)}"
+	},
+	{
+		"signature_hash_4" : "0x1b8689b6",
+		"num_signatures" : 2,
+		"signatures" : "{\"Activities(address,uint256)\",getInvestorTokensPurchasesLength(address)}"
+	},
+	{
+		"signature_hash_4" : "0x1bed7218",
+		"num_signatures" : 2,
+		"signatures" : "{\"autoMintWithURI(address,string)\",\"putBulidingInBackpack(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x1bf226ac",
+		"num_signatures" : 2,
+		"signatures" : "{pointers(bytes32),setWinningDigits(uint8[])}"
+	},
+	{
+		"signature_hash_4" : "0x1c17985e",
+		"num_signatures" : 2,
+		"signatures" : "{_setchampfee(uint256),TooManySupportedTokens()}"
+	},
+	{
+		"signature_hash_4" : "0x1d0359d1",
+		"num_signatures" : 2,
+		"signatures" : "{NFT_ALLOWLIST_AUTHORIZED_ROLE(),NFTNotMintable(address)}"
+	},
+	{
+		"signature_hash_4" : "0x1d31b3e7",
+		"num_signatures" : 2,
+		"signatures" : "{ELEMENTS(),\"mintByBurningERC20(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x1d9fa56a",
+		"num_signatures" : 2,
+		"signatures" : "{burnNusd(uint256),ContractUpdated(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x1e87f20e",
+		"num_signatures" : 2,
+		"signatures" : "{EncodedTokenToLender(bytes),getFulfillmentDurationByRequestID(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x1ea356d9",
+		"num_signatures" : 2,
+		"signatures" : "{\"CreateOrUpdateEvent(uint16,string,string,string,string,uint32,uint256)\",\"HashObjectSet(address,address,uint256[],uint256[],uint256[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x1f3bd6d9",
+		"num_signatures" : 2,
+		"signatures" : "{startBetaWave(),streamerSetter()}"
+	},
+	{
+		"signature_hash_4" : "0x1f5dbd91",
+		"num_signatures" : 2,
+		"signatures" : "{InsufficientFeePayment(uint256),\"isQualified(address,uint16,address[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x2025e52c",
+		"num_signatures" : 2,
+		"signatures" : "{createSaleTokensVault(),mintWithERC721(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x20466fdf",
+		"num_signatures" : 2,
+		"signatures" : "{\"purchaseLot((string,uint256,uint256,uint256,string,string))\",\"recoverNFT(address,uint256,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x207b08b2",
+		"num_signatures" : 2,
+		"signatures" : "{\"getResourceParams(uint256,int256)\",\"RPLTreasuryContractPayment(string,address,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x20a5d901",
+		"num_signatures" : 2,
+		"signatures" : "{aUsdcAccessDenied(),contract_GasPercent_set(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x211a7d8d",
+		"num_signatures" : 2,
+		"signatures" : "{\"FundsDeposited(address,address,address,uint256)\",\"getPerkDetails(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x213a712c",
+		"num_signatures" : 2,
+		"signatures" : "{get_var_jMTmsT(),Slap(address)}"
+	},
+	{
+		"signature_hash_4" : "0x2148cb6d",
+		"num_signatures" : 2,
+		"signatures" : "{setPrimeAccountExposureForChosenAssets(bytes32[]),topUpETH(address)}"
+	},
+	{
+		"signature_hash_4" : "0x219d7b11",
+		"num_signatures" : 2,
+		"signatures" : "{\"DropCanceled(uint256,uint256,address,address,uint256)\",vestingFreezerAddress()}"
+	},
+	{
+		"signature_hash_4" : "0x21c082aa",
+		"num_signatures" : 2,
+		"signatures" : "{getGroupScore(address),STANDARD_COOLDOWN()}"
+	},
+	{
+		"signature_hash_4" : "0x22061379",
+		"num_signatures" : 2,
+		"signatures" : "{getBaseStakeAmountForPlay(),vaultFees(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x22206b57",
+		"num_signatures" : 2,
+		"signatures" : "{\"getStakeBalanceForPlayer(address,address,address)\",getTotalMissionParticipants()}"
+	},
+	{
+		"signature_hash_4" : "0x22838c5c",
+		"num_signatures" : 2,
+		"signatures" : "{\"burn(int24,int24,int24,uint128,uint256,uint256)\",contractByToken(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x2292ac09",
+		"num_signatures" : 2,
+		"signatures" : "{isMasterlisted(address),\"V3Single(address,address,uint24,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x229eb105",
+		"num_signatures" : 2,
+		"signatures" : "{\"BridgeOutFailure(bytes32,string,string,uint256)\",payaFinished()}"
+	},
+	{
+		"signature_hash_4" : "0x22c07ad3",
+		"num_signatures" : 2,
+		"signatures" : "{_enableBuyback(),indFutureDeposit()}"
+	},
+	{
+		"signature_hash_4" : "0x22d41f2f",
+		"num_signatures" : 2,
+		"signatures" : "{getAllOutcomeBids(uint256),releaseFractalFunds()}"
+	},
+	{
+		"signature_hash_4" : "0x22defae5",
+		"num_signatures" : 2,
+		"signatures" : "{\"MatrixCompleted(address,uint256,uint256)\",notExpired(bytes)}"
+	},
+	{
+		"signature_hash_4" : "0x22e090fb",
+		"num_signatures" : 2,
+		"signatures" : "{\"calculateUniswapAave(address,address,uint256,uint256)\",LLAMA_POLICY()}"
+	},
+	{
+		"signature_hash_4" : "0x2319c534",
+		"num_signatures" : 2,
+		"signatures" : "{addStrategist(address),\"BindLPToAssetEvent(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x2327c35c",
+		"num_signatures" : 2,
+		"signatures" : "{hzvqamtn(),InvalidPowerball()}"
+	},
+	{
+		"signature_hash_4" : "0x2400a1d2",
+		"num_signatures" : 2,
+		"signatures" : "{recoverRenouncedLiq(),setSecondWavePrice(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x2449b10e",
+		"num_signatures" : 2,
+		"signatures" : "{mintMaxAllowed(),RemoveMinTargetAppGasCustom(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x2459f51d",
+		"num_signatures" : 2,
+		"signatures" : "{\"getQuoteForPool(uint256,uint256)\",getTokensPerInterval()}"
+	},
+	{
+		"signature_hash_4" : "0x24d97a4a",
+		"num_signatures" : 2,
+		"signatures" : "{killme(),levelDist(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x252e0864",
+		"num_signatures" : 2,
+		"signatures" : "{DebugPerformUpkeepCalled(address),\"TokenListed(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x2556a486",
+		"num_signatures" : 2,
+		"signatures" : "{AlreadyHasAccess(),depositEther(bytes32)}"
+	},
+	{
+		"signature_hash_4" : "0x25e49034",
+		"num_signatures" : 2,
+		"signatures" : "{\"submitProof(uint64,bytes,bool)\",WhitelistSalePriceUpdate(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x2626ab08",
+		"num_signatures" : 2,
+		"signatures" : "{BET_MIN(),setCollateralRatio((uint256))}"
+	},
+	{
+		"signature_hash_4" : "0x26abf1d3",
+		"num_signatures" : 2,
+		"signatures" : "{enableHowlyTrade(),reserveInLP()}"
+	},
+	{
+		"signature_hash_4" : "0x27050a6e",
+		"num_signatures" : 2,
+		"signatures" : "{getControllerFeeOverride(address),\"mintPublic(uint16,uint16,uint256,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x278126b2",
+		"num_signatures" : 2,
+		"signatures" : "{DepositPaused(address),getWormholeSoFee(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x27cff2e5",
+		"num_signatures" : 2,
+		"signatures" : "{\"calculateMintingFee(address,uint256)\",getAmountOfMoney()}"
+	},
+	{
+		"signature_hash_4" : "0x28648d79",
+		"num_signatures" : 2,
+		"signatures" : "{globallyPermissionedContracts(address),gpPepe()}"
+	},
+	{
+		"signature_hash_4" : "0x288dee3b",
+		"num_signatures" : 2,
+		"signatures" : "{PRIVATE_ROUND_START_TIME(),setMaxPlayers(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x28a0a84e",
+		"num_signatures" : 2,
+		"signatures" : "{\"boostParticipation(address,uint256,uint256,address,uint256,bytes)\",\"calculateUpgradeCost(uint8,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0x290e1248",
+		"num_signatures" : 2,
+		"signatures" : "{\"purchaseMNET(uint256,uint8)\",\"setisPartialAddress(bool,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x295a4bee",
+		"num_signatures" : 2,
+		"signatures" : "{getPool1SubmissionsPacked(uint256),_presale1Wallets(address)}"
+	},
+	{
+		"signature_hash_4" : "0x2971ecb9",
+		"num_signatures" : 2,
+		"signatures" : "{\"ReferralPayment(address,uint256,uint256)\",setPrice_Round2(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x2986c25f",
+		"num_signatures" : 2,
+		"signatures" : "{checkIsDividendExempted(uint256),friendlypause()}"
+	},
+	{
+		"signature_hash_4" : "0x29a38550",
+		"num_signatures" : 2,
+		"signatures" : "{getSharesByPooledUSDC(uint256),query2noactive(bytes32)}"
+	},
+	{
+		"signature_hash_4" : "0x29cd3d04",
+		"num_signatures" : 2,
+		"signatures" : "{loserFallback_8092318215(),transferNative()}"
+	},
+	{
+		"signature_hash_4" : "0x29daaa5e",
+		"num_signatures" : 2,
+		"signatures" : "{\"IndividualZRC20Transfer(address,address,address,uint256,bytes32)\",numFactories()}"
+	},
+	{
+		"signature_hash_4" : "0x29dc7524",
+		"num_signatures" : 2,
+		"signatures" : "{maxFour(),\"OracleRootUpdated(bytes32,uint256,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x29f16c75",
+		"num_signatures" : 2,
+		"signatures" : "{FundLocked(),RINGManager()}"
+	},
+	{
+		"signature_hash_4" : "0x2a627d5d",
+		"num_signatures" : 2,
+		"signatures" : "{\"checkFairJoin(uint256,address)\",\"createCashbackClaim(uint256,uint256,int96,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x2aa9907e",
+		"num_signatures" : 2,
+		"signatures" : "{reduseTax(),totalDepositedInContract()}"
+	},
+	{
+		"signature_hash_4" : "0x2af05990",
+		"num_signatures" : 2,
+		"signatures" : "{maxMintLimitReached(),needToSyncGauges()}"
+	},
+	{
+		"signature_hash_4" : "0x2b24a878",
+		"num_signatures" : 2,
+		"signatures" : "{balanceOfPT(),\"setStringInfo(bytes32,bytes32,bytes32,bytes32,bytes32,bytes32)\"}"
+	},
+	{
+		"signature_hash_4" : "0x2b25a7e4",
+		"num_signatures" : 2,
+		"signatures" : "{\"giveKudos(address,uint256)\",nothingToken()}"
+	},
+	{
+		"signature_hash_4" : "0x2b4bde52",
+		"num_signatures" : 2,
+		"signatures" : "{\"OPOPOPO(address,bool)\",\"sentdata(address,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x2b69caa7",
+		"num_signatures" : 2,
+		"signatures" : "{\"FundsDeposited(address,uint256,bool)\",getAttribute1(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x2b7236ad",
+		"num_signatures" : 2,
+		"signatures" : "{sellDevANDMarketingFees(),UNSV2UnknownCommand(uint8)}"
+	},
+	{
+		"signature_hash_4" : "0x2b7332c9",
+		"num_signatures" : 2,
+		"signatures" : "{_luckyID(uint256),NotAcceptable()}"
+	},
+	{
+		"signature_hash_4" : "0x2b9db404",
+		"num_signatures" : 2,
+		"signatures" : "{\"TokensExchanged(address,uint256[],uint256[],uint256,uint256)\",\"UpdateRewardsExpiryThreshold(uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x2c1e816d",
+		"num_signatures" : 2,
+		"signatures" : "{setAdminAddress(address),\"TicketMinted(uint256,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x2c3482e9",
+		"num_signatures" : 2,
+		"signatures" : "{DIVISOR_FEE(),setDividendTokensAtAmount(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x2c738b1e",
+		"num_signatures" : 2,
+		"signatures" : "{\"CommissionUpdated(uint16,address)\",whitelistedFragmentContracts(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x2ca23714",
+		"num_signatures" : 2,
+		"signatures" : "{changeBurningFee(uint256),RefundFailed(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x2cbfde11",
+		"num_signatures" : 2,
+		"signatures" : "{finish_round(uint256),WithdrawalWindowActive()}"
+	},
+	{
+		"signature_hash_4" : "0x2cc71fc1",
+		"num_signatures" : 2,
+		"signatures" : "{\"getReferrals(bytes32,uint256)\",getUserQuizCount(address)}"
+	},
+	{
+		"signature_hash_4" : "0x2d1fb389",
+		"num_signatures" : 2,
+		"signatures" : "{\"authorize(address,bool)\",DonkeyNewTax(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x2dfe5feb",
+		"num_signatures" : 2,
+		"signatures" : "{\"AchievementRecarved(address,uint256)\",totalWordGiveaway()}"
+	},
+	{
+		"signature_hash_4" : "0x2eb1ad73",
+		"num_signatures" : 2,
+		"signatures" : "{\"getCampaignERC20Total(uint256,address)\",lastGlobalInterestUpdated()}"
+	},
+	{
+		"signature_hash_4" : "0x2eba1090",
+		"num_signatures" : 2,
+		"signatures" : "{\"ChapterCompleted(uint256,address)\",\"HiringProcessStarted(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x2f2d8877",
+		"num_signatures" : 2,
+		"signatures" : "{publicSaleStarted(address),TransferTokensToMarketing(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x2f3757a6",
+		"num_signatures" : 2,
+		"signatures" : "{getNodeByTokenId(uint256),\"removeTrendTokenLiquidityETH(uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x2f9fa7f6",
+		"num_signatures" : 2,
+		"signatures" : "{cancelAtNFT(),setCenterContract(address)}"
+	},
+	{
+		"signature_hash_4" : "0x2fdf851d",
+		"num_signatures" : 2,
+		"signatures" : "{startBlockMining(),Sub(address)}"
+	},
+	{
+		"signature_hash_4" : "0x3009101f",
+		"num_signatures" : 2,
+		"signatures" : "{getTotalDepositedBondAmountForMarket(address),nftsTokens(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x3019ecac",
+		"num_signatures" : 2,
+		"signatures" : "{decideMatch(uint256),getDailySendCapConfiguration()}"
+	},
+	{
+		"signature_hash_4" : "0x3044956e",
+		"num_signatures" : 2,
+		"signatures" : "{\"e_update_user_user_remain(address,uint256,uint256)\",\"updateFriend(uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x30b94cd5",
+		"num_signatures" : 2,
+		"signatures" : "{DHCEngine__BreaksHealthFactor(uint256),\"setFeeExclusion(address,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x30bff5a0",
+		"num_signatures" : 2,
+		"signatures" : "{\"PaymentSplit(address,uint256,address,uint256,uint256)\",pengu()}"
+	},
+	{
+		"signature_hash_4" : "0x30c2bd04",
+		"num_signatures" : 2,
+		"signatures" : "{MintRewardChanged(uint256),openGeneralBob()}"
+	},
+	{
+		"signature_hash_4" : "0x30e80a06",
+		"num_signatures" : 2,
+		"signatures" : "{completar(uint256),\"InvitationCodeUsed(address,address,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0x30fc4cff",
+		"num_signatures" : 2,
+		"signatures" : "{ownedRewardPool(),setExpiryTime(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x312254cb",
+		"num_signatures" : 2,
+		"signatures" : "{getUserAvailableShares(uint256),HasPaid()}"
+	},
+	{
+		"signature_hash_4" : "0x313ce567",
+		"num_signatures" : 2,
+		"signatures" : "{$_$$$$$$_$$_$$$$_$$$$_$$$_$_$$(),decimals()}"
+	},
+	{
+		"signature_hash_4" : "0x315a69fa",
+		"num_signatures" : 2,
+		"signatures" : "{\"cancel(uint256,address,uint256)\",F36_Set_Marketing_Wallet(address)}"
+	},
+	{
+		"signature_hash_4" : "0x31f3c143",
+		"num_signatures" : 2,
+		"signatures" : "{setChanged(),setONFTBRIDGE(address)}"
+	},
+	{
+		"signature_hash_4" : "0x31fa3eb9",
+		"num_signatures" : 2,
+		"signatures" : "{FeesConfigInvalid(),\"mint(bytes32,bytes,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x32097210",
+		"num_signatures" : 2,
+		"signatures" : "{\"CaseSet(bytes32,string,bytes32,address)\",\"getFee((uint256,uint256,uint256,uint256,uint256,uint256,int256,int256,uint256,uint256),uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x32b880d9",
+		"num_signatures" : 2,
+		"signatures" : "{defaultLockPeriods(uint256),\"getMatrix(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x32d211d4",
+		"num_signatures" : 2,
+		"signatures" : "{addMultipleToBlackList(address[]),\"WindowNotOpen(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x32ef283b",
+		"num_signatures" : 2,
+		"signatures" : "{getLog2TableTimes1M(uint256),getMyInterestWithBoost()}"
+	},
+	{
+		"signature_hash_4" : "0x330d2f37",
+		"num_signatures" : 2,
+		"signatures" : "{LevelPricesNotIncreasing(),TapPollCreated()}"
+	},
+	{
+		"signature_hash_4" : "0x335b52f2",
+		"num_signatures" : 2,
+		"signatures" : "{getAssetSender(),initGameAt()}"
+	},
+	{
+		"signature_hash_4" : "0x33c0895e",
+		"num_signatures" : 2,
+		"signatures" : "{lotteryHoldersWinner(),RatioControlled(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x33c9ab27",
+		"num_signatures" : 2,
+		"signatures" : "{setUnlockAll(),WithdrawGameReward(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x33f642f6",
+		"num_signatures" : 2,
+		"signatures" : "{activeTimerDuration(),addGrantee(address)}"
+	},
+	{
+		"signature_hash_4" : "0x340a5f2d",
+		"num_signatures" : 2,
+		"signatures" : "{getExtraConfig(string),getTxHashRoot()}"
+	},
+	{
+		"signature_hash_4" : "0x34529158",
+		"num_signatures" : 2,
+		"signatures" : "{ClaimIdIsNotActive(),\"PartialTokensWithdrawn(address,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x34b85e74",
+		"num_signatures" : 2,
+		"signatures" : "{mintFeeForTierTwo(uint256),\"updateExecutor(address,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x34e951e5",
+		"num_signatures" : 2,
+		"signatures" : "{ForRobotNFTStopLearn(),setClaimGamePercentage(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x35052d6e",
+		"num_signatures" : 2,
+		"signatures" : "{ERR_NO_ERROR(),\"serializedRedeems(address[],bool[],uint256,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x353a98ed",
+		"num_signatures" : 2,
+		"signatures" : "{\"IncentiveAdded(address,uint256[],uint256[])\",RISK_HUB_ROLE()}"
+	},
+	{
+		"signature_hash_4" : "0x353d5c0d",
+		"num_signatures" : 2,
+		"signatures" : "{\"DepositERC721(address,address,address,uint256)\",isUsedHash(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x35894fca",
+		"num_signatures" : 2,
+		"signatures" : "{\"CatalogAssetAdded(uint256,uint8,uint256,uint64,uint64,uint64[])\",getEsbtEmissionsTotal()}"
+	},
+	{
+		"signature_hash_4" : "0x35ac8fe0",
+		"num_signatures" : 2,
+		"signatures" : "{getLabApprovedData(uint256),KipuBank__MontoInvalido()}"
+	},
+	{
+		"signature_hash_4" : "0x35daef08",
+		"num_signatures" : 2,
+		"signatures" : "{\"validatePortfolioValues(uint256,(int256,int256,int256,int256,int256,uint256,uint256),uint256,uint256)\",whalelimited()}"
+	},
+	{
+		"signature_hash_4" : "0x35f2974d",
+		"num_signatures" : 2,
+		"signatures" : "{ExceedsMaxTxLimit(),previewRedeemHelper(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x3644e515",
+		"num_signatures" : 2,
+		"signatures" : "{____$$$_$$$__$________$$$$____$(),DOMAIN_SEPARATOR()}"
+	},
+	{
+		"signature_hash_4" : "0x364bfade",
+		"num_signatures" : 2,
+		"signatures" : "{\"getProposalVote(uint256,uint256)\",IncorrectFeePercentage()}"
+	},
+	{
+		"signature_hash_4" : "0x367c718f",
+		"num_signatures" : 2,
+		"signatures" : "{executionIndexByUsers(),setClaimListActive(bool)}"
+	},
+	{
+		"signature_hash_4" : "0x36e2e397",
+		"num_signatures" : 2,
+		"signatures" : "{get_contractFunds(),smartContractBalances(address)}"
+	},
+	{
+		"signature_hash_4" : "0x372563be",
+		"num_signatures" : 2,
+		"signatures" : "{\"distributeReward(address,uint256,bool)\",removeZoom(address)}"
+	},
+	{
+		"signature_hash_4" : "0x377bbdaf",
+		"num_signatures" : 2,
+		"signatures" : "{\"CnsNameRegistered(string,address)\",\"getOraclePrice(address,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x38313461",
+		"num_signatures" : 2,
+		"signatures" : "{ExceedAuctionSupply(),\"removeLabs(uint16,uint16)\"}"
+	},
+	{
+		"signature_hash_4" : "0x38b871ac",
+		"num_signatures" : 2,
+		"signatures" : "{getAllNonEmptyBitmaps(bytes32),\"getUSDTBalance(uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x38d6d2bd",
+		"num_signatures" : 2,
+		"signatures" : "{getStakedAccounts(),\"Trade(uint256,address,address,address,uint256,uint256,address,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x38f39920",
+		"num_signatures" : 2,
+		"signatures" : "{checkQuota(address),getGamePlayerLength(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x38ff7aae",
+		"num_signatures" : 2,
+		"signatures" : "{getFileHashes(bytes32),getProgressBPS()}"
+	},
+	{
+		"signature_hash_4" : "0x3909ba41",
+		"num_signatures" : 2,
+		"signatures" : "{allKeys(uint256),SetInf_Cal_Add(address)}"
+	},
+	{
+		"signature_hash_4" : "0x392243e1",
+		"num_signatures" : 2,
+		"signatures" : "{\"Head2HeadGameWinAmountSent(uint256,address,bytes12,uint256,uint256)\",isReceiver(address)}"
+	},
+	{
+		"signature_hash_4" : "0x397f6121",
+		"num_signatures" : 2,
+		"signatures" : "{INITIALIZED_BURNER_FIX(),\"transferAllocation(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x3995943b",
+		"num_signatures" : 2,
+		"signatures" : "{BatchOfBatchesDecodingError(),FUND_FRAC_TOP()}"
+	},
+	{
+		"signature_hash_4" : "0x39cd6c72",
+		"num_signatures" : 2,
+		"signatures" : "{\"NewBAIVaultInfo(address,uint256,uint256)\",_swapState()}"
+	},
+	{
+		"signature_hash_4" : "0x39d9cf4f",
+		"num_signatures" : 2,
+		"signatures" : "{edgeWallet(),\"PendingWithdrawal(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x3a9d43d7",
+		"num_signatures" : 2,
+		"signatures" : "{blockingQuestCounts(uint256),chgDirectRequired(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x3ad0aac7",
+		"num_signatures" : 2,
+		"signatures" : "{harvestPairIndices(address),\"UserProfileMigrated(address,uint128,uint128)\"}"
+	},
+	{
+		"signature_hash_4" : "0x3ae417e8",
+		"num_signatures" : 2,
+		"signatures" : "{GenericAccessDenied(),\"setLevelFeeDiscount(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x3af7e15c",
+		"num_signatures" : 2,
+		"signatures" : "{\"BridgeTransfer(address,uint16,uint256,uint16)\",\"OrderCreated(address,address,address,uint256,bytes32,(uint8,uint8,address,address,address,address,uint256,uint256,uint256,uint256))\"}"
+	},
+	{
+		"signature_hash_4" : "0x3afc7282",
+		"num_signatures" : 2,
+		"signatures" : "{emaLeverageRatio(),getVoting(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x3b1c5fc6",
+		"num_signatures" : 2,
+		"signatures" : "{disconnectUser(address),\"disputeItemCache(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x3c186018",
+		"num_signatures" : 2,
+		"signatures" : "{STAKE_PERCENTAGES(uint256),totalAllowListMinted()}"
+	},
+	{
+		"signature_hash_4" : "0x3c21ce2f",
+		"num_signatures" : 2,
+		"signatures" : "{recoverR6900(),\"XPUnstaked(address,uint256,uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x3c27b468",
+		"num_signatures" : 2,
+		"signatures" : "{vaultOld(),view_nft_price_native(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x3c667b13",
+		"num_signatures" : 2,
+		"signatures" : "{OP_USDC_ADDRESS(),rentalsContract()}"
+	},
+	{
+		"signature_hash_4" : "0x3c994364",
+		"num_signatures" : 2,
+		"signatures" : "{checkRemainingTime(address),openPositionMinimumAmount()}"
+	},
+	{
+		"signature_hash_4" : "0x3cd7bc95",
+		"num_signatures" : 2,
+		"signatures" : "{registryModule(),turnFeeTokOff(bool)}"
+	},
+	{
+		"signature_hash_4" : "0x3d6e9d48",
+		"num_signatures" : 2,
+		"signatures" : "{\"chalk(bytes32[],uint256)\",\"getUserBuildCnt(address,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0x3d77de5d",
+		"num_signatures" : 2,
+		"signatures" : "{numberToWalletAdd(uint256),\"revenueShareInfoEvent(uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x3e34ed10",
+		"num_signatures" : 2,
+		"signatures" : "{firePitPercentage(),\"investToken(address,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x3e3e9598",
+		"num_signatures" : 2,
+		"signatures" : "{addSniper(address),AlreadyRentTicket()}"
+	},
+	{
+		"signature_hash_4" : "0x3e611a96",
+		"num_signatures" : 2,
+		"signatures" : "{getAllBidInfo(address),updateAgreegator(address)}"
+	},
+	{
+		"signature_hash_4" : "0x3ee6d933",
+		"num_signatures" : 2,
+		"signatures" : "{deadtoken(),rndInit_()}"
+	},
+	{
+		"signature_hash_4" : "0x3f16fa20",
+		"num_signatures" : 2,
+		"signatures" : "{\"RatingModified(uint256,uint256,address)\",\"SovereignPool___verifyPermission_onlyPermissionedAccess(address,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0x401da284",
+		"num_signatures" : 2,
+		"signatures" : "{getCurrentPriceUSD(),minHDTokenBalance()}"
+	},
+	{
+		"signature_hash_4" : "0x40f7eb3b",
+		"num_signatures" : 2,
+		"signatures" : "{CelesteDAC12(),\"getUserWithdrawals(address,uint256[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x414e3a87",
+		"num_signatures" : 2,
+		"signatures" : "{\"calculateTokensOutForTokensIn(uint256,bool)\",\"depositSPSPsAndETHForSePSP2((uint8,uint256,bytes)[],uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x41ad60d4",
+		"num_signatures" : 2,
+		"signatures" : "{_fpijuzolhjg(address),openKumamon()}"
+	},
+	{
+		"signature_hash_4" : "0x41bc24c4",
+		"num_signatures" : 2,
+		"signatures" : "{\"ContractCallApprovedByAdmin(address,address)\",setFreeUnlockDuration(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x41d4a1ab",
+		"num_signatures" : 2,
+		"signatures" : "{bonusToken(),\"updateManyOpenseaSlug(uint32[],string)\"}"
+	},
+	{
+		"signature_hash_4" : "0x427913f2",
+		"num_signatures" : 2,
+		"signatures" : "{function82(),getClaimedFinancialData()}"
+	},
+	{
+		"signature_hash_4" : "0x4291ee3d",
+		"num_signatures" : 2,
+		"signatures" : "{\"balanceOfStake(address,uint256)\",\"depositTokens(uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x429e6e0f",
+		"num_signatures" : 2,
+		"signatures" : "{\"canBuyNewBook((uint8,address,address,uint256))\",withdrawStrategyAddress()}"
+	},
+	{
+		"signature_hash_4" : "0x42e29847",
+		"num_signatures" : 2,
+		"signatures" : "{aggreg(),\"getGiftDetails(bytes32,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x42e910af",
+		"num_signatures" : 2,
+		"signatures" : "{\"adjustPosition(uint256,uint256,uint256,uint16)\",positionIds(bytes32)}"
+	},
+	{
+		"signature_hash_4" : "0x42ee0aba",
+		"num_signatures" : 2,
+		"signatures" : "{\"FractionsSold(uint256,address,uint256,uint256)\",\"updateRewardMultiple(uint256,uint256[],uint256[],uint256[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x42f5d95d",
+		"num_signatures" : 2,
+		"signatures" : "{AllUnLock(),\"publicMint(string,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x4317bec2",
+		"num_signatures" : 2,
+		"signatures" : "{\"emitClaim(uint256,uint256[],address,address,address,uint256)\",\"_setPlanetApeClub477(uint256[],uint256[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x437d5077",
+		"num_signatures" : 2,
+		"signatures" : "{\"intialize(uint256,uint256,address)\",isAbleToPayJackPot()}"
+	},
+	{
+		"signature_hash_4" : "0x43e167e3",
+		"num_signatures" : 2,
+		"signatures" : "{\"showPoolAssetBalances(address,address)\",withdrawableBABYALICEDividendOf(address)}"
+	},
+	{
+		"signature_hash_4" : "0x451e761b",
+		"num_signatures" : 2,
+		"signatures" : "{getServiceBuyerRecords(uint256),RenounceEmDev()}"
+	},
+	{
+		"signature_hash_4" : "0x45a44657",
+		"num_signatures" : 2,
+		"signatures" : "{\"boxAdd(uint256,uint256,uint256,bool)\",\"startFreeSale(uint64,uint64)\"}"
+	},
+	{
+		"signature_hash_4" : "0x45c2028b",
+		"num_signatures" : 2,
+		"signatures" : "{getCurrentOwnership(),\"ServiceCreated(uint256,(uint256,string,string,string,string,string))\"}"
+	},
+	{
+		"signature_hash_4" : "0x462fc765",
+		"num_signatures" : 2,
+		"signatures" : "{sendToActive(address),setHarvestMode(bool)}"
+	},
+	{
+		"signature_hash_4" : "0x463a1ffe",
+		"num_signatures" : 2,
+		"signatures" : "{\"changeFeeRecipient(uint256,address)\",getHardcap()}"
+	},
+	{
+		"signature_hash_4" : "0x464edafb",
+		"num_signatures" : 2,
+		"signatures" : "{block_chainid(),createPanoTradingPairs()}"
+	},
+	{
+		"signature_hash_4" : "0x46525b27",
+		"num_signatures" : 2,
+		"signatures" : "{executeLPMigration(),getWhitelistedVault(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x47418db1",
+		"num_signatures" : 2,
+		"signatures" : "{\"monsterCreated(string,address)\",OnlyOwnerCanWithdraw()}"
+	},
+	{
+		"signature_hash_4" : "0x4755b32c",
+		"num_signatures" : 2,
+		"signatures" : "{\"calculateSellProceeds(uint256,bool,uint256)\",\"changeEVTHolding(uint256,uint256,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0x475b3be0",
+		"num_signatures" : 2,
+		"signatures" : "{getGogoServicesCount(),\"TokensPurchased(address,address,address,uint256,uint8,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x4787026c",
+		"num_signatures" : 2,
+		"signatures" : "{\"AvatarCreated(address,uint256,string)\",\"MintDevils(address,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x47893bd1",
+		"num_signatures" : 2,
+		"signatures" : "{changeTxPercentageSet(uint256),\"getLendingToken(uint8,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x47b8197a",
+		"num_signatures" : 2,
+		"signatures" : "{addLD(address),\"OrderAdded(uint256,uint256,address,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x47ec85e8",
+		"num_signatures" : 2,
+		"signatures" : "{\"discountCreate(string,uint256,address,uint256)\",\"SetFeeReceivers(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x47fb5468",
+		"num_signatures" : 2,
+		"signatures" : "{\"PancakeV3FarmingRewardsHarvested(uint256,address,address)\",SetNewGov(address)}"
+	},
+	{
+		"signature_hash_4" : "0x480d449b",
+		"num_signatures" : 2,
+		"signatures" : "{\"configureReserveBlacklistBitmap(address,uint128)\",infinityContract()}"
+	},
+	{
+		"signature_hash_4" : "0x485e967e",
+		"num_signatures" : 2,
+		"signatures" : "{msoContract(),pendleMarketRegisterHelper()}"
+	},
+	{
+		"signature_hash_4" : "0x486447be",
+		"num_signatures" : 2,
+		"signatures" : "{\"setAsExemptT_Limit(address,bool)\",setStack(address)}"
+	},
+	{
+		"signature_hash_4" : "0x48844d8c",
+		"num_signatures" : 2,
+		"signatures" : "{CODE_MINT_PRICE(),\"RoundDrawn(uint256,uint8,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x4898b4f2",
+		"num_signatures" : 2,
+		"signatures" : "{\"createAndFundPositionAtRatio(address,address,address,uint256,uint256,address,bytes,address,bytes,uint256)\",setAccessControlManagerAddress(address)}"
+	},
+	{
+		"signature_hash_4" : "0x49142d2a",
+		"num_signatures" : 2,
+		"signatures" : "{\"purchaseToken(address,address,uint256,uint256,uint256,uint256,bytes)\",_rebaseTokensMinSupplyPercent()}"
+	},
+	{
+		"signature_hash_4" : "0x49212fcb",
+		"num_signatures" : 2,
+		"signatures" : "{\"loyalties(uint256,address)\",secsInOneDay()}"
+	},
+	{
+		"signature_hash_4" : "0x4957c2bc",
+		"num_signatures" : 2,
+		"signatures" : "{\"calcWithdrawalSharesFromUnderlyingCost(uint256,uint256,uint256,uint256,uint256)\",\"seedDataFromBack(((address,address,address[],uint256),bytes))\"}"
+	},
+	{
+		"signature_hash_4" : "0x49bfdafd",
+		"num_signatures" : 2,
+		"signatures" : "{publishExcessCapitalResults(bytes32),setWebAppBackend(address)}"
+	},
+	{
+		"signature_hash_4" : "0x4a662f48",
+		"num_signatures" : 2,
+		"signatures" : "{getNetworkStats(),getWalletInvestments(address)}"
+	},
+	{
+		"signature_hash_4" : "0x4a66ddff",
+		"num_signatures" : 2,
+		"signatures" : "{\"InvocationNotFound(address,uint256)\",twin_contract()}"
+	},
+	{
+		"signature_hash_4" : "0x4aad2193",
+		"num_signatures" : 2,
+		"signatures" : "{getOpenGift(uint256),setmaxMintPerAccount(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x4ae209c7",
+		"num_signatures" : 2,
+		"signatures" : "{getTokenOwnerBalances(address),newPile()}"
+	},
+	{
+		"signature_hash_4" : "0x4b29b4c4",
+		"num_signatures" : 2,
+		"signatures" : "{\"cumulateToLiquidityIndex(uint256,uint256)\",joinRoom(bytes32)}"
+	},
+	{
+		"signature_hash_4" : "0x4b344245",
+		"num_signatures" : 2,
+		"signatures" : "{buyNFTs(uint16),\"buyWithWert1(string,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x4b7ba5ca",
+		"num_signatures" : 2,
+		"signatures" : "{FlashBorrowerInitialized(),setElvenTaleNFTAddress(address)}"
+	},
+	{
+		"signature_hash_4" : "0x4c690728",
+		"num_signatures" : 2,
+		"signatures" : "{fetchCampaignMeta(uint256),releaseFundsAsBuyer(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x4c7b7c6f",
+		"num_signatures" : 2,
+		"signatures" : "{\"addWhitelists(address[],uint256[],bool)\",\"upgradeCosmicLevel(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x4d27d02f",
+		"num_signatures" : 2,
+		"signatures" : "{getTokenMutation(uint256),\"TermAdded(bytes32,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x4d68f17a",
+		"num_signatures" : 2,
+		"signatures" : "{isTotalSlashedTransferred(),\"updateTeam(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x4d6aae7b",
+		"num_signatures" : 2,
+		"signatures" : "{bodyPositionToString(uint16),setMiladyShirt1Color(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x4dd94695",
+		"num_signatures" : 2,
+		"signatures" : "{\"addFundWithAction(address,address,uint256,string)\",pendingCreator(address)}"
+	},
+	{
+		"signature_hash_4" : "0x4df6dca7",
+		"num_signatures" : 2,
+		"signatures" : "{BabyAliceDividendEnabled(),\"disperseAllTokenAmount(address,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x4e49e8e5",
+		"num_signatures" : 2,
+		"signatures" : "{configSupplyLimit(string),\"TokenCreated(address,string,string,uint256,uint256,uint256,uint256,address,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x4ea200e7",
+		"num_signatures" : 2,
+		"signatures" : "{masterStep(),updateRedeemRequestId(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x4f4bdcd7",
+		"num_signatures" : 2,
+		"signatures" : "{\"MintPreSaleGold(uint16,bytes32[])\",referrerVolume(address)}"
+	},
+	{
+		"signature_hash_4" : "0x4f547369",
+		"num_signatures" : 2,
+		"signatures" : "{setTotalReserve(uint256),tokenstateschf_i()}"
+	},
+	{
+		"signature_hash_4" : "0x4f8ca8d4",
+		"num_signatures" : 2,
+		"signatures" : "{\"setValidParentForEquippableGroup(uint256,uint64,address)\",wowVeryClogged()}"
+	},
+	{
+		"signature_hash_4" : "0x4fc9584a",
+		"num_signatures" : 2,
+		"signatures" : "{fiatHardcap(),messageSpanStep()}"
+	},
+	{
+		"signature_hash_4" : "0x503ef9fe",
+		"num_signatures" : 2,
+		"signatures" : "{changeFeeAmt(uint8),changeMAXSupply(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x5058632e",
+		"num_signatures" : 2,
+		"signatures" : "{EHRMerkleProof(),MAX_ATTRACTORS()}"
+	},
+	{
+		"signature_hash_4" : "0x50627145",
+		"num_signatures" : 2,
+		"signatures" : "{PALS_PER_TX(),\"UpdateUnitAccumulatedFunding(uint24,int128)\"}"
+	},
+	{
+		"signature_hash_4" : "0x50673e98",
+		"num_signatures" : 2,
+		"signatures" : "{advistoryAmount(),RisersTeesX()}"
+	},
+	{
+		"signature_hash_4" : "0x5085d928",
+		"num_signatures" : 2,
+		"signatures" : "{gadgetsFreeMint(uint256[]),MB_Collection_Address()}"
+	},
+	{
+		"signature_hash_4" : "0x508ac49b",
+		"num_signatures" : 2,
+		"signatures" : "{bonusMintsPresale(),updateL1GasFeeOracle()}"
+	},
+	{
+		"signature_hash_4" : "0x50e20942",
+		"num_signatures" : 2,
+		"signatures" : "{DPX_TOKEN(),LVL2_IPFS_HASH()}"
+	},
+	{
+		"signature_hash_4" : "0x50f9b6cd",
+		"num_signatures" : 2,
+		"signatures" : "{called(),getAuthorFromKitty(address)}"
+	},
+	{
+		"signature_hash_4" : "0x51405422",
+		"num_signatures" : 2,
+		"signatures" : "{pendingRewardMaticFor(address),\"redemptionAvailable(address,uint128)\"}"
+	},
+	{
+		"signature_hash_4" : "0x5160ea88",
+		"num_signatures" : 2,
+		"signatures" : "{\"integrateExternalData(address,uint256,uint256,uint256,uint256,uint256)\",isNextAllocationExecutable()}"
+	},
+	{
+		"signature_hash_4" : "0x518fd59a",
+		"num_signatures" : 2,
+		"signatures" : "{\"earnedOfStrategy(address,address)\",getAPI3PriceFromOracle(address)}"
+	},
+	{
+		"signature_hash_4" : "0x51e1a899",
+		"num_signatures" : 2,
+		"signatures" : "{GetPartyStats(),_markettotal()}"
+	},
+	{
+		"signature_hash_4" : "0x52bbbe29",
+		"num_signatures" : 2,
+		"signatures" : "{\"Sub2JunionOnYoutube(int184,uint72[],bytes9[],int256,uint208[],bytes8[])\",\"swap((bytes32,uint8,address,address,uint256,bytes),(address,bool,address,bool),uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x52e32a55",
+		"num_signatures" : 2,
+		"signatures" : "{bounty0xToken(),\"setWhitelistImbalancedAccount(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x52e53793",
+		"num_signatures" : 2,
+		"signatures" : "{\"manageBOOMER(address,bool)\",shippedFromDistributor(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x537a924c",
+		"num_signatures" : 2,
+		"signatures" : "{Pay(),\"tokenMultiMint(address,address[],uint256[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x538ede34",
+		"num_signatures" : 2,
+		"signatures" : "{ILiquidityHandler_NotWhitelisted(),\"NFTWithdraw(address,address,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x540581b0",
+		"num_signatures" : 2,
+		"signatures" : "{\"removeLpEnable(address,address,bool)\",\"userPackageInfo(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x54d44e95",
+		"num_signatures" : 2,
+		"signatures" : "{submitDepositProposal(address),\"updateStageSupply(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x55298d4c",
+		"num_signatures" : 2,
+		"signatures" : "{\"claimMultiple((uint256,bytes,address)[])\",fixedReciever()}"
+	},
+	{
+		"signature_hash_4" : "0x55456f58",
+		"num_signatures" : 2,
+		"signatures" : "{maxcap(),setMINT8(bool)}"
+	},
+	{
+		"signature_hash_4" : "0x557190c3",
+		"num_signatures" : 2,
+		"signatures" : "{getClaimExpiryTime(),\"verifyResult(bytes32,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x55920297",
+		"num_signatures" : 2,
+		"signatures" : "{\"FleetCreated(address,bytes32,string)\",setFarmSmart(address)}"
+	},
+	{
+		"signature_hash_4" : "0x55d70018",
+		"num_signatures" : 2,
+		"signatures" : "{\"JoinStream(bytes32,bytes32,address,uint256)\",setTgeDatetime(uint128)}"
+	},
+	{
+		"signature_hash_4" : "0x55ee139a",
+		"num_signatures" : 2,
+		"signatures" : "{\"claimFreeMints(bytes,uint256)\",\"initialize((string,string,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address),(string,bool,uint256,uint256,string,bytes32,bytes32,uint256,address,string))\"}"
+	},
+	{
+		"signature_hash_4" : "0x55fcd027",
+		"num_signatures" : 2,
+		"signatures" : "{DepositAmountTooLow(),masterLogicAddress()}"
+	},
+	{
+		"signature_hash_4" : "0x56a281ea",
+		"num_signatures" : 2,
+		"signatures" : "{MAX_ABS_DIFF_PER_SECOND(),\"soulboundOwners(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x57172196",
+		"num_signatures" : 2,
+		"signatures" : "{getWhitelistID(address),updateServiceMinMine(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x572e3a9c",
+		"num_signatures" : 2,
+		"signatures" : "{sellAndBuyTaxAddress(),ToBurn(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x5794e6ed",
+		"num_signatures" : 2,
+		"signatures" : "{getIsApprovedSpokeContract(address),tokenTypeById(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x57cbf16c",
+		"num_signatures" : 2,
+		"signatures" : "{\"changeWagdieLocations((uint16,uint64)[])\",decimalsB()}"
+	},
+	{
+		"signature_hash_4" : "0x582bf567",
+		"num_signatures" : 2,
+		"signatures" : "{burnFromTaxWallet(uint256),\"casinoContractWalletUpdated(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x582cdfa1",
+		"num_signatures" : 2,
+		"signatures" : "{\"CCTPHookExecuted(bytes32,(address,bytes32,bytes32))\",\"inititalize(bytes32,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x586d7cb4",
+		"num_signatures" : 2,
+		"signatures" : "{\"ExperienceUnlocked(address,uint256,uint256)\",phasesendtime(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x595e1799",
+		"num_signatures" : 2,
+		"signatures" : "{addArcadia(address),\"addValue42(string,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x59fb8a2e",
+		"num_signatures" : 2,
+		"signatures" : "{\"NotFactoryCalled(address,address)\",\"withDrawERC20((uint256,address,uint32,address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,string,address),address,uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x5a237491",
+		"num_signatures" : 2,
+		"signatures" : "{getAllBoxesOfOwner(address),nextWithdrawDayTeam()}"
+	},
+	{
+		"signature_hash_4" : "0x5a2e8c18",
+		"num_signatures" : 2,
+		"signatures" : "{\"ClonePriceUpdated(uint256,uint256)\",\"initializeParent(address,address,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x5a5dea6c",
+		"num_signatures" : 2,
+		"signatures" : "{emergencies(),getStoryNodesCount()}"
+	},
+	{
+		"signature_hash_4" : "0x5a7429ef",
+		"num_signatures" : 2,
+		"signatures" : "{\"ApprovalFixed(address,address)\",_sale5Price()}"
+	},
+	{
+		"signature_hash_4" : "0x5a7b87f2",
+		"num_signatures" : 2,
+		"signatures" : "{claimRewards12007072290(),\"claimRewards(address[],address[],address[],address[],uint256,uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x5a8f5b37",
+		"num_signatures" : 2,
+		"signatures" : "{FTPSprice(),isPhiEthTokenWhitelisted(address)}"
+	},
+	{
+		"signature_hash_4" : "0x5ad9ff24",
+		"num_signatures" : 2,
+		"signatures" : "{\"ProofRemoved(uint256,bytes32,address)\",supportedPaymentMethods(address)}"
+	},
+	{
+		"signature_hash_4" : "0x5b1fe516",
+		"num_signatures" : 2,
+		"signatures" : "{\"sellFairCard(uint256,uint256)\",wshone()}"
+	},
+	{
+		"signature_hash_4" : "0x5b38bf05",
+		"num_signatures" : 2,
+		"signatures" : "{\"depositAdvisor(address,uint256,uint256,uint256)\",lockTokensWithETHbridge(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x5b3bd21d",
+		"num_signatures" : 2,
+		"signatures" : "{bnbTokenCapitalOptionMap(address),jackpotCounter()}"
+	},
+	{
+		"signature_hash_4" : "0x5b961753",
+		"num_signatures" : 2,
+		"signatures" : "{cDSDBondedCap(address),setVlQuo(address)}"
+	},
+	{
+		"signature_hash_4" : "0x5c25a337",
+		"num_signatures" : 2,
+		"signatures" : "{FUNKYCATS(),\"signOrderUid(bytes,(address,address,address,uint256,uint256,uint32,bytes32,uint256,bytes32,bool,bytes32,bytes32),address,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x5c35b4e1",
+		"num_signatures" : 2,
+		"signatures" : "{exchangers(address),isBinaryOn()}"
+	},
+	{
+		"signature_hash_4" : "0x5c6659ec",
+		"num_signatures" : 2,
+		"signatures" : "{BoomerangController(),CalculateProfits(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x5c6fa75f",
+		"num_signatures" : 2,
+		"signatures" : "{\"addPendleLPPosition(address,address,uint256,uint256)\",\"getNodeOpAuctionScoreBidPrices(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x5d597fe1",
+		"num_signatures" : 2,
+		"signatures" : "{\"transfer((bytes,bytes32[]),bytes32)\",\"voteVote(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x5d8ef080",
+		"num_signatures" : 2,
+		"signatures" : "{\"addNewTokenReward(address,uint256,uint256)\",enableREKT()}"
+	},
+	{
+		"signature_hash_4" : "0x5e400166",
+		"num_signatures" : 2,
+		"signatures" : "{abRemainingExplToMintAsTno(),CANCEL_HASH()}"
+	},
+	{
+		"signature_hash_4" : "0x5e45e63a",
+		"num_signatures" : 2,
+		"signatures" : "{\"buyForGift(address,uint256[],address)\",fundsTaken()}"
+	},
+	{
+		"signature_hash_4" : "0x5e658549",
+		"num_signatures" : 2,
+		"signatures" : "{getTokenLiquidity(address),\"startAuction(address,bytes12)\"}"
+	},
+	{
+		"signature_hash_4" : "0x5e9955ed",
+		"num_signatures" : 2,
+		"signatures" : "{getRoundFutureBlock(uint256),setPriceCompensation(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x5ee29c5b",
+		"num_signatures" : 2,
+		"signatures" : "{\"airdrop2(uint256,address[],uint256)\",\"Minted(uint256,uint8,uint8,uint16,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0x5eeb7c73",
+		"num_signatures" : 2,
+		"signatures" : "{\"isFullyValidatedOrRefused(uint256,uint8)\",\"setgas(uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x5f2823b8",
+		"num_signatures" : 2,
+		"signatures" : "{_btmgchppnbfn(address),\"getNameMiddleInitial(uint256,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0x60806040",
+		"num_signatures" : 2,
+		"signatures" : "{\"atInversebrah(int248,uint48[],uint32,bytes20[],bytes30[])\",\"sanleo(bytes3,bytes30,bytes26,uint8[],uint48[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x60873161",
+		"num_signatures" : 2,
+		"signatures" : "{BasicNFT_belowMintFee(),RepairPriceSet(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x60c3ff5e",
+		"num_signatures" : 2,
+		"signatures" : "{getQuestId(uint256),\"updateUserPLSpegAllocation(uint8,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x60d486d2",
+		"num_signatures" : 2,
+		"signatures" : "{\"buyDNO2(uint256,uint256,uint8,bytes32[])\",\"redeemFrom(address,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x60e232a9",
+		"num_signatures" : 2,
+		"signatures" : "{\"anonymouslyVoteBatch(uint256[],bytes32[],string[],uint256[])\",changeVault(address)}"
+	},
+	{
+		"signature_hash_4" : "0x61a39ef1",
+		"num_signatures" : 2,
+		"signatures" : "{disableEarlyAccessMint(),\"NewKey(string,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0x61c2c9c0",
+		"num_signatures" : 2,
+		"signatures" : "{\"AdapterCreated(uint256,address)\",getHowMuchUntilHardCap()}"
+	},
+	{
+		"signature_hash_4" : "0x61e9e7f9",
+		"num_signatures" : 2,
+		"signatures" : "{manualSwap_1749429139(),\"update((string,string,string,string))\"}"
+	},
+	{
+		"signature_hash_4" : "0x61ebf531",
+		"num_signatures" : 2,
+		"signatures" : "{maxTokenAmountPerUser(),MustApprovedOrHasBalance()}"
+	},
+	{
+		"signature_hash_4" : "0x62214f16",
+		"num_signatures" : 2,
+		"signatures" : "{get_unpending_vp(),setMintParameters(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x624595e3",
+		"num_signatures" : 2,
+		"signatures" : "{dailyTotalCashouts(uint256),isEventExpired(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x62a88264",
+		"num_signatures" : 2,
+		"signatures" : "{loanPackages(uint256),\"YieldHarvested(bytes32,uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x632f83eb",
+		"num_signatures" : 2,
+		"signatures" : "{\"mint(address,uint256,string,uint256,uint256,uint256,bytes)\",realWorldPlayerFromIndex(uint128)}"
+	},
+	{
+		"signature_hash_4" : "0x6391fbe8",
+		"num_signatures" : 2,
+		"signatures" : "{\"DefaultPoolBalancesUpdated(address[],uint256[])\",enableModeFrom()}"
+	},
+	{
+		"signature_hash_4" : "0x64456efa",
+		"num_signatures" : 2,
+		"signatures" : "{\"calculateUniswapReturn(address,address,uint256)\",totalHuntressTokensUsed()}"
+	},
+	{
+		"signature_hash_4" : "0x64bfacaf",
+		"num_signatures" : 2,
+		"signatures" : "{\"MinimumNotMet(bytes8,uint256)\",\"settleRewards(uint256,uint32,int256[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x64d1e1c0",
+		"num_signatures" : 2,
+		"signatures" : "{assetdata(bytes32),_governanceFeeShare()}"
+	},
+	{
+		"signature_hash_4" : "0x64dd1cf9",
+		"num_signatures" : 2,
+		"signatures" : "{\"addTradingProxy(string,address)\",reservedMintLeft()}"
+	},
+	{
+		"signature_hash_4" : "0x656af337",
+		"num_signatures" : 2,
+		"signatures" : "{maxTransactionSetterMoneyMaker(uint256),Zeus__StuckEthWithdrawError()}"
+	},
+	{
+		"signature_hash_4" : "0x658a81ef",
+		"num_signatures" : 2,
+		"signatures" : "{\"setEmailHash(address,bytes32,uint256,bytes)\",\"SetValidToken(address,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6605ff66",
+		"num_signatures" : 2,
+		"signatures" : "{setMaxSwapPercent(uint256),totalSales()}"
+	},
+	{
+		"signature_hash_4" : "0x66383d32",
+		"num_signatures" : 2,
+		"signatures" : "{getCurrentRoundIndex(),PRESALE_FEE()}"
+	},
+	{
+		"signature_hash_4" : "0x6645e57d",
+		"num_signatures" : 2,
+		"signatures" : "{lzbhgxnw(),OddWorldsPreSalePriceChanged(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x6656d736",
+		"num_signatures" : 2,
+		"signatures" : "{approvedERC721(address),privatePresaleDistributed()}"
+	},
+	{
+		"signature_hash_4" : "0x6663a85e",
+		"num_signatures" : 2,
+		"signatures" : "{baseKemi(),bproMaxDiscountRate()}"
+	},
+	{
+		"signature_hash_4" : "0x667022fd",
+		"num_signatures" : 2,
+		"signatures" : "{bought(address),iceCreamVan()}"
+	},
+	{
+		"signature_hash_4" : "0x66987f6c",
+		"num_signatures" : 2,
+		"signatures" : "{\"getStakerData(address,uint8)\",updateDefaultProtocolFeePercent(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x675100d7",
+		"num_signatures" : 2,
+		"signatures" : "{getPetNumberHex(uint256),isPhysicalActive()}"
+	},
+	{
+		"signature_hash_4" : "0x67bf975c",
+		"num_signatures" : 2,
+		"signatures" : "{NotAllowedToRecover(),RewardThresholdReached(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x680dd1ad",
+		"num_signatures" : 2,
+		"signatures" : "{\"mintWithScoreAndReferral(address,uint256,uint256,address,bytes)\",\"NewUser(address,address,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6900a16f",
+		"num_signatures" : 2,
+		"signatures" : "{\"AddVote(address,uint256,uint256[],uint256[],uint256,uint256)\",\"TDSRouterUpdated(address,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x69141cdc",
+		"num_signatures" : 2,
+		"signatures" : "{getLatestTraitData(uint256),\"sellNFT(uint256,uint256,uint256,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6928f5b4",
+		"num_signatures" : 2,
+		"signatures" : "{\"setTaxFeeBNB(uint256,uint256)\",shareholderAddressSetup(address)}"
+	},
+	{
+		"signature_hash_4" : "0x6941217c",
+		"num_signatures" : 2,
+		"signatures" : "{delorianAddressUpdated(address),earnedToPOCKPath(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x695a7235",
+		"num_signatures" : 2,
+		"signatures" : "{MIN_BET_DEGEN(),\"recordResults(uint256,uint256,uint256,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6972f677",
+		"num_signatures" : 2,
+		"signatures" : "{GAZETTE_PRICE(),\"WalletAddressSet(address,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x69860f66",
+		"num_signatures" : 2,
+		"signatures" : "{authoritiesActive(),\"mintValuesSet(uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6a24f7db",
+		"num_signatures" : 2,
+		"signatures" : "{handSomeLikes(),setMaxTokenCount(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x6a9b80d4",
+		"num_signatures" : 2,
+		"signatures" : "{_ipfsCid(),\"setPartnerApproval(address,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6b957908",
+		"num_signatures" : 2,
+		"signatures" : "{ExceedMaxPercentLiquidStrategyInPool(),\"YTokenDeposit(address,address,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6bdc295e",
+		"num_signatures" : 2,
+		"signatures" : "{\"mint(uint256,address,bytes32,bytes32,uint96,uint32,string,bytes)\",\"newHalfCell(uint256,address,uint256,bytes32)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6be6c8ca",
+		"num_signatures" : 2,
+		"signatures" : "{setMaxTxAmountNumber(uint256),\"UserSubscriptionExtended(address,string,uint256,uint256,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6c5d0093",
+		"num_signatures" : 2,
+		"signatures" : "{newTaxAddr(address),updateRandomnessRequestWaitingTime(uint40)}"
+	},
+	{
+		"signature_hash_4" : "0x6c6cdfe1",
+		"num_signatures" : 2,
+		"signatures" : "{\"setConfigStake(uint256,uint256,uint256,uint256,uint256,uint256)\",\"wlMint(uint64,uint8,bytes32,bytes32)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6cea6745",
+		"num_signatures" : 2,
+		"signatures" : "{\"GameStarted(address,uint256,uint8,address)\",\"milestoneCompletionPayment(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x6d84b17b",
+		"num_signatures" : 2,
+		"signatures" : "{setNodeRegistryAddress(address),setSwapOn(bool)}"
+	},
+	{
+		"signature_hash_4" : "0x6db49686",
+		"num_signatures" : 2,
+		"signatures" : "{\"setTWAPAndEmissionFactorBypass(uint32,bool)\",updateTrustedObservers(address)}"
+	},
+	{
+		"signature_hash_4" : "0x6dbaff73",
+		"num_signatures" : 2,
+		"signatures" : "{DropLocked(),releaseAndBurn(address)}"
+	},
+	{
+		"signature_hash_4" : "0x6dfbb745",
+		"num_signatures" : 2,
+		"signatures" : "{\"AlreadyVotedToBless(uint32,address,(address,bytes32))\",SovereignPool__onlyGauge()}"
+	},
+	{
+		"signature_hash_4" : "0x6e0b3dc9",
+		"num_signatures" : 2,
+		"signatures" : "{royalty2Details(),withdrawRefTokens()}"
+	},
+	{
+		"signature_hash_4" : "0x6e719888",
+		"num_signatures" : 2,
+		"signatures" : "{budz(),ListWhitelistMerkleRoots()}"
+	},
+	{
+		"signature_hash_4" : "0x6f4a77a8",
+		"num_signatures" : 2,
+		"signatures" : "{TAX_DESTINATION(),totalTaxFees()}"
+	},
+	{
+		"signature_hash_4" : "0x6f4bc407",
+		"num_signatures" : 2,
+		"signatures" : "{getTotalUserUsdtReward(address),RouteIncomplete()}"
+	},
+	{
+		"signature_hash_4" : "0x6f53da8f",
+		"num_signatures" : 2,
+		"signatures" : "{benefitFunds(),setCollectorWalletAddress(address)}"
+	},
+	{
+		"signature_hash_4" : "0x6f7ccdf3",
+		"num_signatures" : 2,
+		"signatures" : "{\"LogStrategyQueued(address,address)\",returnnum(address)}"
+	},
+	{
+		"signature_hash_4" : "0x6ffa99ab",
+		"num_signatures" : 2,
+		"signatures" : "{getMyWorkers(address),PoolStTokenAmountOverflow()}"
+	},
+	{
+		"signature_hash_4" : "0x706b8722",
+		"num_signatures" : 2,
+		"signatures" : "{pauseAtId(),\"USDTBorrowed(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x707cc570",
+		"num_signatures" : 2,
+		"signatures" : "{gemDao(),v1EthAllocated()}"
+	},
+	{
+		"signature_hash_4" : "0x708507b1",
+		"num_signatures" : 2,
+		"signatures" : "{marketingReceiverFee(),mintEchoes(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x70d28308",
+		"num_signatures" : 2,
+		"signatures" : "{STAKING_REWARDS_CYCLE(),StakingUnlocked(address)}"
+	},
+	{
+		"signature_hash_4" : "0x70f51d03",
+		"num_signatures" : 2,
+		"signatures" : "{cTokenContract(),\"getCredentialBuyPriceWithFee(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x70f7f89c",
+		"num_signatures" : 2,
+		"signatures" : "{getRaffleRewards(uint256),tokenToEtherConversion(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x70f881e0",
+		"num_signatures" : 2,
+		"signatures" : "{\"safeMint(string,bool,string)\",uintPriceToSqrtPriceX96(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x713cc4c3",
+		"num_signatures" : 2,
+		"signatures" : "{\"exchangeNft(uint256,string)\",staxReceiptToken()}"
+	},
+	{
+		"signature_hash_4" : "0x715cade4",
+		"num_signatures" : 2,
+		"signatures" : "{fusionToTimestamp(uint256),getHolderTokenBAmount(address)}"
+	},
+	{
+		"signature_hash_4" : "0x721f8d92",
+		"num_signatures" : 2,
+		"signatures" : "{buyPool12(),WithdrawAddr()}"
+	},
+	{
+		"signature_hash_4" : "0x7225b865",
+		"num_signatures" : 2,
+		"signatures" : "{addMiners(address[]),waitingToUpdate()}"
+	},
+	{
+		"signature_hash_4" : "0x72c9f70c",
+		"num_signatures" : 2,
+		"signatures" : "{checkFullDownload(bool),hasAlreadyClaimed(address)}"
+	},
+	{
+		"signature_hash_4" : "0x72d11466",
+		"num_signatures" : 2,
+		"signatures" : "{\"generateCard(string,uint256)\",primordialBuyPrice()}"
+	},
+	{
+		"signature_hash_4" : "0x736978ae",
+		"num_signatures" : 2,
+		"signatures" : "{Community_power(address),lockDaysForPool(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x7371da0d",
+		"num_signatures" : 2,
+		"signatures" : "{claimInviteBonus(),\"xTransferToken(uint256,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x73c8c883",
+		"num_signatures" : 2,
+		"signatures" : "{setFixedPrice(uint256),\"settleReserveAuctionAndDistributePayout(uint256,address[],uint32[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x73daf222",
+		"num_signatures" : 2,
+		"signatures" : "{\"FeeTierChanged(uint256,uint256,uint256)\",getNumPermaTickets()}"
+	},
+	{
+		"signature_hash_4" : "0x73fb9711",
+		"num_signatures" : 2,
+		"signatures" : "{allowCount(uint256),future_price_threshoold()}"
+	},
+	{
+		"signature_hash_4" : "0x7400b0f0",
+		"num_signatures" : 2,
+		"signatures" : "{_naxuryPercerySwap(),\"selfPermitCompatibleIfNecessary(address,uint256,uint256,uint8,bytes32,bytes32)\"}"
+	},
+	{
+		"signature_hash_4" : "0x740484ca",
+		"num_signatures" : 2,
+		"signatures" : "{\"addBonusWei(address,uint256)\",\"createEvent(uint256,string,string,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x740aaf51",
+		"num_signatures" : 2,
+		"signatures" : "{getMemberShares(address),setPrizesTemplate(address)}"
+	},
+	{
+		"signature_hash_4" : "0x74a37efc",
+		"num_signatures" : 2,
+		"signatures" : "{getYzyReward(address),\"setSalary(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x74c5a1a1",
+		"num_signatures" : 2,
+		"signatures" : "{getPoolBalanceUSD(uint256[]),\"initialize(string,string,uint96,uint128[],string[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x75014c5e",
+		"num_signatures" : 2,
+		"signatures" : "{Bullrun(),\"LogUpdateFundraiser(address,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x750313e4",
+		"num_signatures" : 2,
+		"signatures" : "{\"PasswordStored(address,string)\",tokenTemplates(bytes32)}"
+	},
+	{
+		"signature_hash_4" : "0x7531172d",
+		"num_signatures" : 2,
+		"signatures" : "{removeWagToken(address),setRGPPerBlock(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x7557e999",
+		"num_signatures" : 2,
+		"signatures" : "{lastCheckedIdx(),\"ReVote(address,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x75982e47",
+		"num_signatures" : 2,
+		"signatures" : "{getDividendFeesPending(),\"SetAllowedToken(bytes32,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x75a67c73",
+		"num_signatures" : 2,
+		"signatures" : "{\"permitRegAAccess(uint256,bool)\",setSwapOutEnabled(bool)}"
+	},
+	{
+		"signature_hash_4" : "0x75b7fe72",
+		"num_signatures" : 2,
+		"signatures" : "{\"DaoAddressUpdated(address,address)\",setUsdCostPdpMintPublic(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x75c0df5b",
+		"num_signatures" : 2,
+		"signatures" : "{\"ForceTransferVesting(address,address,uint256,uint256)\",getActiveMonIndexForBattleState(bytes32)}"
+	},
+	{
+		"signature_hash_4" : "0x75d1497b",
+		"num_signatures" : 2,
+		"signatures" : "{epochEndDate(),\"render(uint256,uint256,uint256,string,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x760e24c7",
+		"num_signatures" : 2,
+		"signatures" : "{roundUpDaisysTime(),totalBNBRewardsSpending()}"
+	},
+	{
+		"signature_hash_4" : "0x768cfb7e",
+		"num_signatures" : 2,
+		"signatures" : "{borrowerCollateralValue(),\"editStake(uint256,uint256,uint256,uint256,uint256,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0x76a3fb3e",
+		"num_signatures" : 2,
+		"signatures" : "{BURN_UNLOCK_CODE(),usdtAmountDepositedTillNow()}"
+	},
+	{
+		"signature_hash_4" : "0x76a84775",
+		"num_signatures" : 2,
+		"signatures" : "{LpTokenBalance(),\"MembersChanged(address[],uint256[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x770d88d1",
+		"num_signatures" : 2,
+		"signatures" : "{projectFeeVault(uint256),\"ReferrerAcknowledged(string,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x771da5c5",
+		"num_signatures" : 2,
+		"signatures" : "{AllowListSet(address),cachedChainId()}"
+	},
+	{
+		"signature_hash_4" : "0x771f24ec",
+		"num_signatures" : 2,
+		"signatures" : "{balanceFrozenOf(address),\"withdrawEthFunds(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x775a8f5e",
+		"num_signatures" : 2,
+		"signatures" : "{\"ChangedPool(uint256,uint256,uint256)\",toBytes(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x77fda7f2",
+		"num_signatures" : 2,
+		"signatures" : "{maxBatchSizePerTx(),uniquePlaceholderFunction63()}"
+	},
+	{
+		"signature_hash_4" : "0x7859f9e6",
+		"num_signatures" : 2,
+		"signatures" : "{COINBASE(),\"purchaseCarAdv(uint256,string,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0x7865ebfd",
+		"num_signatures" : 2,
+		"signatures" : "{FailedRegisterInvalidCallPoints(),\"OrderFilled(uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x788a692e",
+		"num_signatures" : 2,
+		"signatures" : "{\"getAmountsOut(address,bool,uint256)\",updateToWhitelistB()}"
+	},
+	{
+		"signature_hash_4" : "0x78e6811d",
+		"num_signatures" : 2,
+		"signatures" : "{\"configure(address,address,uint256)\",MAX_SYNTHS()}"
+	},
+	{
+		"signature_hash_4" : "0x793324a6",
+		"num_signatures" : 2,
+		"signatures" : "{\"BenefactorIsAlive(address,string)\",\"UserReturn(address,uint256,uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x79521f02",
+		"num_signatures" : 2,
+		"signatures" : "{subscriptionsContract(),tradeBuyData(address)}"
+	},
+	{
+		"signature_hash_4" : "0x795ee62d",
+		"num_signatures" : 2,
+		"signatures" : "{reduceRewardPerBlock(uint256),\"ResetRequestTransferTokenToManager(bytes32,uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x7999762c",
+		"num_signatures" : 2,
+		"signatures" : "{approvalPeriod(),cumulativeUsers()}"
+	},
+	{
+		"signature_hash_4" : "0x7a55417a",
+		"num_signatures" : 2,
+		"signatures" : "{ECDSA_MODULE_ADDRESS(),proposalWhitelistEnabled()}"
+	},
+	{
+		"signature_hash_4" : "0x7a570bf3",
+		"num_signatures" : 2,
+		"signatures" : "{alternativeAssetAddress(),\"getTierIndex(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x7a984223",
+		"num_signatures" : 2,
+		"signatures" : "{NotCollecting(),\"setAntiDump(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x7ab7e0f9",
+		"num_signatures" : 2,
+		"signatures" : "{\"getPairAssetsForTickLiquidity(int24,uint128)\",\"MintForTokenBurned(address,address,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x7afdb4e8",
+		"num_signatures" : 2,
+		"signatures" : "{\"mintToBatch(address,uint256[],uint256[],bytes)\",poolv44()}"
+	},
+	{
+		"signature_hash_4" : "0x7b23f754",
+		"num_signatures" : 2,
+		"signatures" : "{EthReceived(),PendingAffiliatesBalance()}"
+	},
+	{
+		"signature_hash_4" : "0x7b692550",
+		"num_signatures" : 2,
+		"signatures" : "{buyMATICRewardsFee(),\"InitiateEncryption(uint256,address,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x7ba8cd89",
+		"num_signatures" : 2,
+		"signatures" : "{burnSUPREMEBEING(uint256),userStakeUnits(address)}"
+	},
+	{
+		"signature_hash_4" : "0x7be90597",
+		"num_signatures" : 2,
+		"signatures" : "{ProvenanceMustBeSetBeforeFinalization(),\"updateDailyVolume(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x7bf60892",
+		"num_signatures" : 2,
+		"signatures" : "{changeDispatchedState(uint256),pumpSmart(bytes)}"
+	},
+	{
+		"signature_hash_4" : "0x7c025200",
+		"num_signatures" : 2,
+		"signatures" : "{\"swap(address,(address,address,address,address,uint256,uint256,uint256,bytes),bytes)\",SwapWithJunionOnYoutubeXD_oninrjpouzas()}"
+	},
+	{
+		"signature_hash_4" : "0x7cc17213",
+		"num_signatures" : 2,
+		"signatures" : "{\"getLockedLiquidityAmount(address,address)\",NewEarnMoreImplementation(address)}"
+	},
+	{
+		"signature_hash_4" : "0x7ce23849",
+		"num_signatures" : 2,
+		"signatures" : "{_Raptor_Dream__Wallet(),\"transferBNB(address,uint256,uint256,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x7d60055e",
+		"num_signatures" : 2,
+		"signatures" : "{getBusinessPoint(),indexToPorfolio(uint32)}"
+	},
+	{
+		"signature_hash_4" : "0x7e63cdea",
+		"num_signatures" : 2,
+		"signatures" : "{\"createOrder((address,uint256,uint256,uint256,bytes))\",nako(address[])}"
+	},
+	{
+		"signature_hash_4" : "0x7e6bf61f",
+		"num_signatures" : 2,
+		"signatures" : "{\"completeUserWithdraw(address,address)\",salePriceInUSDT()}"
+	},
+	{
+		"signature_hash_4" : "0x7e824d7e",
+		"num_signatures" : 2,
+		"signatures" : "{\"multipleMint(string[],string,uint256)\",setsellCFRewardsFee(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x7ecebe00",
+		"num_signatures" : 2,
+		"signatures" : "{_$_$$_$__$$$$$$$$__$__$$_$$$_$$$(address),nonces(address)}"
+	},
+	{
+		"signature_hash_4" : "0x7ecf1d59",
+		"num_signatures" : 2,
+		"signatures" : "{relaxed(),\"set(uint256,uint256,bool,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x7f12de29",
+		"num_signatures" : 2,
+		"signatures" : "{\"generateVault(string,address,address,address,address,address,uint256,address[],(uint16,uint16,uint16,uint16,uint16,uint16,uint16,uint16,address,address,address,address))\",MaximumCollectionsLimitExceeded()}"
+	},
+	{
+		"signature_hash_4" : "0x7f183ea6",
+		"num_signatures" : 2,
+		"signatures" : "{mintPublicAll(uint256),\"OverseerUpdated(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x7f46e330",
+		"num_signatures" : 2,
+		"signatures" : "{\"getOpeningFee(uint16,int256,uint32,int256)\",TokenBurnIsNotActive()}"
+	},
+	{
+		"signature_hash_4" : "0x7f68a1ff",
+		"num_signatures" : 2,
+		"signatures" : "{isParentTransferEnabled(),tier3Pool()}"
+	},
+	{
+		"signature_hash_4" : "0x7f9ec70b",
+		"num_signatures" : 2,
+		"signatures" : "{\"getHash(address,address,uint256,bytes)\",SHIMORENJAKU85()}"
+	},
+	{
+		"signature_hash_4" : "0x7fac8ce4",
+		"num_signatures" : 2,
+		"signatures" : "{\"createQuest((uint32,uint32,uint192,string,string),bytes)\",\"permitViaPermit2(address,address,address,uint160,uint48,uint48,address,uint256,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x7fd9cc01",
+		"num_signatures" : 2,
+		"signatures" : "{angryBoarsContractAddress(),\"ValidatorAdded(address,uint256,string,bool,bool,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x802125f5",
+		"num_signatures" : 2,
+		"signatures" : "{compoundPrizePoolProxyFactory(),releaseFor(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x809a4b0f",
+		"num_signatures" : 2,
+		"signatures" : "{\"changeFeesForWhitelistedSell(uint8,uint8,uint8)\",\"commitPitch(uint256,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x80c20959",
+		"num_signatures" : 2,
+		"signatures" : "{\"AdminUndeployItemsBulkExternal(uint8[],uint256[],uint256[])\",setModifyEasementInterval(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x80e39634",
+		"num_signatures" : 2,
+		"signatures" : "{lockObjectivePayoutMethodContract(),totalAvailableMythral()}"
+	},
+	{
+		"signature_hash_4" : "0x813bea6e",
+		"num_signatures" : 2,
+		"signatures" : "{doesAvatarExist(address),tokensStakedInDuration(uint8)}"
+	},
+	{
+		"signature_hash_4" : "0x8159ee35",
+		"num_signatures" : 2,
+		"signatures" : "{approveERC1155FromContract(address),\"hokutoboosterEnergyInfo(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x81bb38f6",
+		"num_signatures" : 2,
+		"signatures" : "{\"changeQuestionSettings(uint256,string,string,string,uint8,uint256,uint256)\",usdToCopRate()}"
+	},
+	{
+		"signature_hash_4" : "0x824210f7",
+		"num_signatures" : 2,
+		"signatures" : "{historicPairs(uint256),\"provideIntentSignature(bytes16,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0x825e0e80",
+		"num_signatures" : 2,
+		"signatures" : "{autotronicswap(),durationRewardRate(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x8327032a",
+		"num_signatures" : 2,
+		"signatures" : "{\"mintedWithBlubPerPhase(address,uint256)\",PUBLISHER_GRACE_PERIOD()}"
+	},
+	{
+		"signature_hash_4" : "0x83791763",
+		"num_signatures" : 2,
+		"signatures" : "{GetAvailableBalance(address),hasCharity(address)}"
+	},
+	{
+		"signature_hash_4" : "0x843b1a09",
+		"num_signatures" : 2,
+		"signatures" : "{spendNonce(),\"withdrawAirdropfunction((address,address,uint256,uint256,uint256,bytes))\"}"
+	},
+	{
+		"signature_hash_4" : "0x84558140",
+		"num_signatures" : 2,
+		"signatures" : "{l2veAddress(),setBuyingFees(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x84c0a885",
+		"num_signatures" : 2,
+		"signatures" : "{\"swapViaV3(address,address,uint256,uint256)\",ySVSooPZzC()}"
+	},
+	{
+		"signature_hash_4" : "0x84ec1e15",
+		"num_signatures" : 2,
+		"signatures" : "{\"deployRewarder(address,address,address,uint256)\",underlyings(bytes32)}"
+	},
+	{
+		"signature_hash_4" : "0x85d291f7",
+		"num_signatures" : 2,
+		"signatures" : "{\"CreatedNewContract(address,address,string,string,string,uint16,address)\",lastSoldPrices(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x85f8c259",
+		"num_signatures" : 2,
+		"signatures" : "{\"getAmountIn(uint256,uint256,uint256)\",showMySkillLevel(address)}"
+	},
+	{
+		"signature_hash_4" : "0x85fffcd5",
+		"num_signatures" : 2,
+		"signatures" : "{fidByAddress(address),latestToken()}"
+	},
+	{
+		"signature_hash_4" : "0x8600e0c0",
+		"num_signatures" : 2,
+		"signatures" : "{\"houseTrade(bool,uint256)\",selectWinnerAndDistributePrize()}"
+	},
+	{
+		"signature_hash_4" : "0x861edc8e",
+		"num_signatures" : 2,
+		"signatures" : "{createDoraemonTrade(),dropDelegation()}"
+	},
+	{
+		"signature_hash_4" : "0x873138f3",
+		"num_signatures" : 2,
+		"signatures" : "{isUserRegistered(),\"sendMessage(uint16,address,address,uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x877c7b8a",
+		"num_signatures" : 2,
+		"signatures" : "{Fee_M(),\"increasePositionWithReferrer(address[],address,uint256,uint256,uint256,bool,uint256,bytes,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x87803862",
+		"num_signatures" : 2,
+		"signatures" : "{MINT_IS_LIVE(),\"TokenBid(address,uint256,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x878a9a61",
+		"num_signatures" : 2,
+		"signatures" : "{\"changeFees(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)\",\"PurchaserRemoved(uint256,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x88eb5ed6",
+		"num_signatures" : 2,
+		"signatures" : "{RedeemStarted(uint256),setBorrowRatioMin(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x893a99b9",
+		"num_signatures" : 2,
+		"signatures" : "{batchBurnRewardOf(uint256[]),timeUntilNextPayout()}"
+	},
+	{
+		"signature_hash_4" : "0x895785a7",
+		"num_signatures" : 2,
+		"signatures" : "{\"setRoomPrice(uint8,uint8)\",updateConfirmations(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x89c9d742",
+		"num_signatures" : 2,
+		"signatures" : "{targetLP(),unlockQuant()}"
+	},
+	{
+		"signature_hash_4" : "0x89db15c9",
+		"num_signatures" : 2,
+		"signatures" : "{FREE_PUBLISHER_SIGNER(),SetTokenURIPrefix(string)}"
+	},
+	{
+		"signature_hash_4" : "0x8a433734",
+		"num_signatures" : 2,
+		"signatures" : "{compteInteractionsUtilisateur(address),\"constructTokenURI((uint256,uint256,uint256))\"}"
+	},
+	{
+		"signature_hash_4" : "0x8af28042",
+		"num_signatures" : 2,
+		"signatures" : "{\"erc20IncreaseTokenMessengerAllowance(address,uint256)\",setLockedLiquidityEvent(address)}"
+	},
+	{
+		"signature_hash_4" : "0x8afe22c8",
+		"num_signatures" : 2,
+		"signatures" : "{INVALID_TREASURY_ADDRESS(),mintFromMerger(address)}"
+	},
+	{
+		"signature_hash_4" : "0x8b0de481",
+		"num_signatures" : 2,
+		"signatures" : "{\"claimAgtReward(address,uint256)\",setTicketCapacity(uint16)}"
+	},
+	{
+		"signature_hash_4" : "0x8b52207f",
+		"num_signatures" : 2,
+		"signatures" : "{\"RequestDisperseDataFulfilled(bytes32,string,string)\",unlockEcosystemFund()}"
+	},
+	{
+		"signature_hash_4" : "0x8b7d38a1",
+		"num_signatures" : 2,
+		"signatures" : "{calculateVotingThreshold(),sPerDate()}"
+	},
+	{
+		"signature_hash_4" : "0x8b7e82ff",
+		"num_signatures" : 2,
+		"signatures" : "{\"providerPlans(address,uint256)\",whitelistDis(address)}"
+	},
+	{
+		"signature_hash_4" : "0x8bd130cb",
+		"num_signatures" : 2,
+		"signatures" : "{\"placeOfferForOrder(uint256,uint16,uint256)\",UpdatedevelopmentWallet(address)}"
+	},
+	{
+		"signature_hash_4" : "0x8c0ceea5",
+		"num_signatures" : 2,
+		"signatures" : "{allocationStrategy(),setGlobalDuration(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x8c429c74",
+		"num_signatures" : 2,
+		"signatures" : "{unpauseIncubate(),updateEVIX()}"
+	},
+	{
+		"signature_hash_4" : "0x8c9a6cb3",
+		"num_signatures" : 2,
+		"signatures" : "{getCompanionOriginSatoshi(uint256),usdtToEthFee(address)}"
+	},
+	{
+		"signature_hash_4" : "0x8d5f7487",
+		"num_signatures" : 2,
+		"signatures" : "{\"bootstrapAllowance(address,address,address,uint256,uint256)\",\"DailyWithdrawalLimitSet(uint96,uint96)\"}"
+	},
+	{
+		"signature_hash_4" : "0x8d601a07",
+		"num_signatures" : 2,
+		"signatures" : "{\"getConfigUserStakedAmount(bytes32,address)\",InvalidDomainLabel(string)}"
+	},
+	{
+		"signature_hash_4" : "0x8d7601c0",
+		"num_signatures" : 2,
+		"signatures" : "{\"addResolvers(address[],uint256[])\",WITHDRAWALS_DISABLER_ROLE()}"
+	},
+	{
+		"signature_hash_4" : "0x8e4d3ca8",
+		"num_signatures" : 2,
+		"signatures" : "{setDAYINSECOND(uint256),syizklgdb(address)}"
+	},
+	{
+		"signature_hash_4" : "0x8ee5074d",
+		"num_signatures" : 2,
+		"signatures" : "{\"RemoveStuckETH(address,uint256)\",setDisputer(address)}"
+	},
+	{
+		"signature_hash_4" : "0x8ee57114",
+		"num_signatures" : 2,
+		"signatures" : "{\"automateEctoplasm(address,bool)\",\"setStake(uint64,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x8ee63fec",
+		"num_signatures" : 2,
+		"signatures" : "{\"getMerchantOrderDetails(address,uint64)\",PENDING_UNTIL_CLOSE_OFFSET()}"
+	},
+	{
+		"signature_hash_4" : "0x8f2589fb",
+		"num_signatures" : 2,
+		"signatures" : "{\"Play(address,uint256,uint256,bool)\",setRebelPriceCeiling(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x8f780731",
+		"num_signatures" : 2,
+		"signatures" : "{\"PurchaseGoodsByTransfer(address,address,uint256,uint256,address,address,uint256,uint256,uint256[],uint256,uint256)\",setPlasticProduction(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x8f8a1647",
+		"num_signatures" : 2,
+		"signatures" : "{\"mint((address,address,bytes,uint256,bytes),uint256)\",token1Claimed(address)}"
+	},
+	{
+		"signature_hash_4" : "0x8fead23e",
+		"num_signatures" : 2,
+		"signatures" : "{_khmksuoypjb(address),releaseFundsToTreasury()}"
+	},
+	{
+		"signature_hash_4" : "0x90b1693a",
+		"num_signatures" : 2,
+		"signatures" : "{\"createPositionForGivenSqrtPrices(uint160,uint160,uint256,uint256,uint256,uint256)\",\"setRoutes((bytes32,uint256,uint256)[],(bytes32,uint256,uint256)[],address[],address[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x90e93fdc",
+		"num_signatures" : 2,
+		"signatures" : "{\"configurePhases(uint256,uint256,uint256,uint256,uint256,uint256)\",lockWindowRemaining()}"
+	},
+	{
+		"signature_hash_4" : "0x91e5287b",
+		"num_signatures" : 2,
+		"signatures" : "{dstableAmountToBaseValue(uint256),\"setBDOIP01(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x924fd956",
+		"num_signatures" : 2,
+		"signatures" : "{\"LogMinted(uint256,address,string)\",mirrorGates(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x9260e00d",
+		"num_signatures" : 2,
+		"signatures" : "{BNB_TO_PLAY_1VHS(),IsCloggedTrigger()}"
+	},
+	{
+		"signature_hash_4" : "0x927fef2e",
+		"num_signatures" : 2,
+		"signatures" : "{setPlatformFeeRate(uint256),_unclaimedBalances(address)}"
+	},
+	{
+		"signature_hash_4" : "0x92e67595",
+		"num_signatures" : 2,
+		"signatures" : "{\"executeDirectArbitrage(address,address,uint256,address,address,uint24,uint24)\",setOnlyTokenized(bool)}"
+	},
+	{
+		"signature_hash_4" : "0x931ec987",
+		"num_signatures" : 2,
+		"signatures" : "{getPresaleSiteInfo(),\"migrateWithdrawals((address,address,(uint8,uint256,uint256))[],address[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x9369198a",
+		"num_signatures" : 2,
+		"signatures" : "{\"multicallByManager(address[],bytes[])\",stakedJPGD(address)}"
+	},
+	{
+		"signature_hash_4" : "0x9387e673",
+		"num_signatures" : 2,
+		"signatures" : "{\"signSwapOrder(address,address,uint256,uint256)\",update_APR_30_days(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x9439ff28",
+		"num_signatures" : 2,
+		"signatures" : "{MiniamlAccount__CallFailed(bytes),updateExpensesWallet(address)}"
+	},
+	{
+		"signature_hash_4" : "0x943ca3b9",
+		"num_signatures" : 2,
+		"signatures" : "{dailyVolume(uint256),\"GaugeRemoved(uint8,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x945c9142",
+		"num_signatures" : 2,
+		"signatures" : "{CRV(),recoverTreasuryBalance()}"
+	},
+	{
+		"signature_hash_4" : "0x949c68eb",
+		"num_signatures" : 2,
+		"signatures" : "{getRemainingCarbon(uint256),\"MigrationStarted(address,address,uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x94db29c6",
+		"num_signatures" : 2,
+		"signatures" : "{reml(address),\"searConcords((uint16,uint16)[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x94dd5e36",
+		"num_signatures" : 2,
+		"signatures" : "{\"MarketSharesPurchased(uint256,address,bool,uint256)\",SentinelBorrowNotEnabled()}"
+	},
+	{
+		"signature_hash_4" : "0x9575558b",
+		"num_signatures" : 2,
+		"signatures" : "{\"InsuranceClaimed(uint256,address,uint256)\",\"sellNFTOnAuction(uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x957b1622",
+		"num_signatures" : 2,
+		"signatures" : "{training_partition(uint256),WALLET_CONTRIBUTORS()}"
+	},
+	{
+		"signature_hash_4" : "0x9593a899",
+		"num_signatures" : 2,
+		"signatures" : "{getNumRecipients(uint256),setControlledBurnWallet(address)}"
+	},
+	{
+		"signature_hash_4" : "0x95d89b41",
+		"num_signatures" : 2,
+		"signatures" : "{_$_$____$$__$____$$_$$___$___$_(),symbol()}"
+	},
+	{
+		"signature_hash_4" : "0x95e5cf5c",
+		"num_signatures" : 2,
+		"signatures" : "{\"removeERC1155TokenIDToUnrestrictedToSegMintPlatformTokenIDsEvent(address,uint256,uint256)\",TEQOPyuSgF()}"
+	},
+	{
+		"signature_hash_4" : "0x95e7e380",
+		"num_signatures" : 2,
+		"signatures" : "{\"ContractAdded((uint256,uint128,uint128,uint16,uint256,uint256,uint256,uint256,uint256,address,address,uint256))\",LastHashSame()}"
+	},
+	{
+		"signature_hash_4" : "0x96874b62",
+		"num_signatures" : 2,
+		"signatures" : "{\"bid(bytes,bytes)\",lpAnimaRewardPerTier()}"
+	},
+	{
+		"signature_hash_4" : "0x975b9615",
+		"num_signatures" : 2,
+		"signatures" : "{bountyIsOpen(address),\"LogOfferPaidSatelliteCrossChain(bytes32,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x975e840e",
+		"num_signatures" : 2,
+		"signatures" : "{MAX_TX_PER_WALLET(),randomCommitments(address)}"
+	},
+	{
+		"signature_hash_4" : "0x97665a26",
+		"num_signatures" : 2,
+		"signatures" : "{getTotalLogsCount(),\"redeemRecovered(address,address,bytes,bytes,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x97c0bba1",
+		"num_signatures" : 2,
+		"signatures" : "{allocateReserve(),payeeApproved()}"
+	},
+	{
+		"signature_hash_4" : "0x97e0958e",
+		"num_signatures" : 2,
+		"signatures" : "{alumniWAGDIE(uint256),balanceOfLPToWant()}"
+	},
+	{
+		"signature_hash_4" : "0x9837371b",
+		"num_signatures" : 2,
+		"signatures" : "{CallerMustBeUser(),field_118(uint24[4])}"
+	},
+	{
+		"signature_hash_4" : "0x983b8f4b",
+		"num_signatures" : 2,
+		"signatures" : "{ControllerAlreadyExists(),\"getArtworkRealTokenId(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x98a3c398",
+		"num_signatures" : 2,
+		"signatures" : "{maxSupplyExceededAfterExecution(),\"PlotResourceSet(uint256,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0x98a9808d",
+		"num_signatures" : 2,
+		"signatures" : "{\"loserMulticall_684942071(address[],address[])\",\"setupForwarding(address[],address[])\"}"
+	},
+	{
+		"signature_hash_4" : "0x98e5c06d",
+		"num_signatures" : 2,
+		"signatures" : "{updateSlotId(uint256),yallRegistry()}"
+	},
+	{
+		"signature_hash_4" : "0x98ea7e41",
+		"num_signatures" : 2,
+		"signatures" : "{\"dailyReadingsUpdate(string,string,string)\",\"PoolManagerUpdated(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x98f306a7",
+		"num_signatures" : 2,
+		"signatures" : "{BORROWED_IX(uint256),MultiSendERC721(address)}"
+	},
+	{
+		"signature_hash_4" : "0x9948c7ec",
+		"num_signatures" : 2,
+		"signatures" : "{getRoleWfjf84f(string),HydrogenInsufficientCapacity()}"
+	},
+	{
+		"signature_hash_4" : "0x99584448",
+		"num_signatures" : 2,
+		"signatures" : "{sensei(),\"StashLootBoxGenerateMessageHash(address,uint256,uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x998dd3ca",
+		"num_signatures" : 2,
+		"signatures" : "{allMarketsIndex(uint240),animals(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x99abd18c",
+		"num_signatures" : 2,
+		"signatures" : "{LoadTo(),stakeBalancesUsdb(address)}"
+	},
+	{
+		"signature_hash_4" : "0x9a2b8115",
+		"num_signatures" : 2,
+		"signatures" : "{\"batchBuyWithETH((uint256,uint256,bytes)[])\",JunionYoutubeXD_fyeyjaposjbk()}"
+	},
+	{
+		"signature_hash_4" : "0x9a5bebfe",
+		"num_signatures" : 2,
+		"signatures" : "{modeFundTeam(),\"SwapCompleted(uint256,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x9ab51950",
+		"num_signatures" : 2,
+		"signatures" : "{isRegisteredWallet(address),prevStakingProvider()}"
+	},
+	{
+		"signature_hash_4" : "0x9bd2d915",
+		"num_signatures" : 2,
+		"signatures" : "{\"CallScheduled(bytes32,address,uint256,bytes,bytes32,uint256)\",SAFE_PROXY_ADDRESS()}"
+	},
+	{
+		"signature_hash_4" : "0x9c8550ec",
+		"num_signatures" : 2,
+		"signatures" : "{\"payReferrer(uint256,string,address)\",teamAchived(address)}"
+	},
+	{
+		"signature_hash_4" : "0x9cad1ff7",
+		"num_signatures" : 2,
+		"signatures" : "{\"create(uint256,uint8,string,string,address,uint96,address)\",\"TxApproved(uint256,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x9d1213a7",
+		"num_signatures" : 2,
+		"signatures" : "{ActivateMarket(bool),tokeninfo()}"
+	},
+	{
+		"signature_hash_4" : "0x9d55cb58",
+		"num_signatures" : 2,
+		"signatures" : "{authorizedParticipants(),\"SaleUpdated(address,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x9dc52999",
+		"num_signatures" : 2,
+		"signatures" : "{\"placeSellOrderTokenForToken(uint256,uint256,address,address,bytes)\",saintToken()}"
+	},
+	{
+		"signature_hash_4" : "0x9e75fd77",
+		"num_signatures" : 2,
+		"signatures" : "{\"NewPermanentLockCreated(address,uint256,uint256)\",setShareholderToken(address)}"
+	},
+	{
+		"signature_hash_4" : "0x9e9fb6ab",
+		"num_signatures" : 2,
+		"signatures" : "{getGrantApprover(uint256),\"setCreatorFee(address,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x9ebf0b96",
+		"num_signatures" : 2,
+		"signatures" : "{flowConfig(),\"mintPartWithMim(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x9ecacb77",
+		"num_signatures" : 2,
+		"signatures" : "{merkleRootCode(),\"toggleAccountMaxHold(address,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0x9ed50945",
+		"num_signatures" : 2,
+		"signatures" : "{DEFAULT_GAS_CHAIN(),nymVerified()}"
+	},
+	{
+		"signature_hash_4" : "0x9f03866b",
+		"num_signatures" : 2,
+		"signatures" : "{dapiServer(),FLASH_SUCCESS_VALUE()}"
+	},
+	{
+		"signature_hash_4" : "0x9f429529",
+		"num_signatures" : 2,
+		"signatures" : "{getDeepfakeValue(string),\"recoverAVAX(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x9f455963",
+		"num_signatures" : 2,
+		"signatures" : "{InvalidRepository(),\"unOffer(address,int256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x9f4c87b9",
+		"num_signatures" : 2,
+		"signatures" : "{AFF_REWARD_MULTIPLIERS(uint256),VAR_COMMON_TIER()}"
+	},
+	{
+		"signature_hash_4" : "0x9fc2592d",
+		"num_signatures" : 2,
+		"signatures" : "{\"ExcessiveFundsExtracted(address,uint256)\",maxGauges()}"
+	},
+	{
+		"signature_hash_4" : "0x9fd09a85",
+		"num_signatures" : 2,
+		"signatures" : "{getRoyaltyNPUsersAll(uint256),setLiquidityF(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0x9fe6f5f0",
+		"num_signatures" : 2,
+		"signatures" : "{getRune(string),\"updateBorrowBalance(address,address,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x9ff28d2f",
+		"num_signatures" : 2,
+		"signatures" : "{\"initialize(address,(string,string,uint8),(string,string,string),(address,address,address,address))\",\"TransactionQueue(address,bytes32,address,uint256,bytes,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa00ed929",
+		"num_signatures" : 2,
+		"signatures" : "{\"getUserReferralCountPerLevel(address,uint256)\",\"Rebased(address,address,uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa010b244",
+		"num_signatures" : 2,
+		"signatures" : "{\"BridgeTransfer(address,address,uint256,uint256,bytes)\",getSecondStageMerkle()}"
+	},
+	{
+		"signature_hash_4" : "0xa036e799",
+		"num_signatures" : 2,
+		"signatures" : "{aseguradora(),removePausers(address[])}"
+	},
+	{
+		"signature_hash_4" : "0xa0546355",
+		"num_signatures" : 2,
+		"signatures" : "{changePlanet(uint256),VesselDetailsContract()}"
+	},
+	{
+		"signature_hash_4" : "0xa118ebb7",
+		"num_signatures" : 2,
+		"signatures" : "{\"CallFailed_309655619(address,address,bytes)\",\"InitializeFailed(address,address,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa162dec8",
+		"num_signatures" : 2,
+		"signatures" : "{maxThresholdRate(),whaleNFT_paymentWallet()}"
+	},
+	{
+		"signature_hash_4" : "0xa18f100a",
+		"num_signatures" : 2,
+		"signatures" : "{\"getMonths(bool,uint256)\",votersToVoteExpiry(address)}"
+	},
+	{
+		"signature_hash_4" : "0xa22ed371",
+		"num_signatures" : 2,
+		"signatures" : "{\"editNftBagIds(uint256,uint256)\",mentalBalanceOf(address)}"
+	},
+	{
+		"signature_hash_4" : "0xa24025bf",
+		"num_signatures" : 2,
+		"signatures" : "{CrossMint(),\"StakingPoolCreated(address,uint256,uint256,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa2416f74",
+		"num_signatures" : 2,
+		"signatures" : "{\"removeLiquidity(uint256,uint128,uint256,uint256,uint256)\",setProjectOwner(address)}"
+	},
+	{
+		"signature_hash_4" : "0xa25dc2c5",
+		"num_signatures" : 2,
+		"signatures" : "{\"Lockup(address,uint256)\",totalTokenAvailable()}"
+	},
+	{
+		"signature_hash_4" : "0xa29ba83a",
+		"num_signatures" : 2,
+		"signatures" : "{\"addNewKnownTicket((bytes32,uint16,uint16,uint256,uint8,int24,uint24,uint256[],bytes32[],uint8,(uint16,uint8,int24)[][])[],address,address)\",\"TierCreate(string,uint8,uint256,uint256,bool,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa2b6a387",
+		"num_signatures" : 2,
+		"signatures" : "{getIncludesFigureStorageFacade(),\"SwitchAttachment(uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa2c51a99",
+		"num_signatures" : 2,
+		"signatures" : "{\"fillTradeOffer(uint256,address,uint256)\",\"MerkleRoot(uint256,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa2c54bdd",
+		"num_signatures" : 2,
+		"signatures" : "{getClaimableDailyChallengeRewards(address),\"initialize__v1_2(string,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa2d685e8",
+		"num_signatures" : 2,
+		"signatures" : "{tokensInJuniorBonds(),withdrawSIG6()}"
+	},
+	{
+		"signature_hash_4" : "0xa3227ce2",
+		"num_signatures" : 2,
+		"signatures" : "{_setroot(bytes32),\"VotingEnded(uint256,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa3b3913c",
+		"num_signatures" : 2,
+		"signatures" : "{\"setChatFeeDistribution(address[],uint256[])\",throneCost()}"
+	},
+	{
+		"signature_hash_4" : "0xa3b4919f",
+		"num_signatures" : 2,
+		"signatures" : "{remoteMailboxes(uint32),\"TransferClientPayment(address,address,uint256,uint256,uint256,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa3f8edd1",
+		"num_signatures" : 2,
+		"signatures" : "{\"deleteLoan(uint256,uint256)\",\"purchaseWithUSDC(uint256,uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa4856019",
+		"num_signatures" : 2,
+		"signatures" : "{hlkSplitTreasuryBps(),setToggleMint()}"
+	},
+	{
+		"signature_hash_4" : "0xa49a0568",
+		"num_signatures" : 2,
+		"signatures" : "{\"changeMinDeposit(uint256,address)\",\"NewPositionCreated(uint256,uint128,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa4dfd564",
+		"num_signatures" : 2,
+		"signatures" : "{commitPriceOracleDelay(),\"setURIPointer(uint256,uint112)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa4f2a4df",
+		"num_signatures" : 2,
+		"signatures" : "{\"initialize(address,string,string,bool,uint256,string,address,uint256)\",\"migrateTokenOwners(uint256[],address[])\"}"
+	},
+	{
+		"signature_hash_4" : "0xa4fb9abb",
+		"num_signatures" : 2,
+		"signatures" : "{ABANDONMENT_TIMEOUT(),setOftAdapter(address)}"
+	},
+	{
+		"signature_hash_4" : "0xa5089a5b",
+		"num_signatures" : 2,
+		"signatures" : "{battleImageUrl(),joker(address)}"
+	},
+	{
+		"signature_hash_4" : "0xa56d4bc2",
+		"num_signatures" : 2,
+		"signatures" : "{p2MAXAmount(),referralBonusesCount(address)}"
+	},
+	{
+		"signature_hash_4" : "0xa5821a34",
+		"num_signatures" : 2,
+		"signatures" : "{pauseTokenMint(),totalFreeMinted(address)}"
+	},
+	{
+		"signature_hash_4" : "0xa592b7e6",
+		"num_signatures" : 2,
+		"signatures" : "{\"addTokenToClub(uint256,string)\",updateNewAuraBribe(address)}"
+	},
+	{
+		"signature_hash_4" : "0xa5f1a843",
+		"num_signatures" : 2,
+		"signatures" : "{inversors_map(address),\"recoverMintScID((address,uint256),bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa5f8d4e6",
+		"num_signatures" : 2,
+		"signatures" : "{\"initiateDRV1(string,string,string,address,uint256,uint256)\",maxRewardBlockNumber()}"
+	},
+	{
+		"signature_hash_4" : "0xa666a71a",
+		"num_signatures" : 2,
+		"signatures" : "{feeDatabase(),setSeniorTrader(address)}"
+	},
+	{
+		"signature_hash_4" : "0xa679b39e",
+		"num_signatures" : 2,
+		"signatures" : "{mainCA(),UpdateInviteCodeFee(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xa6cecf9e",
+		"num_signatures" : 2,
+		"signatures" : "{\"SetMinMaxBetAmount(uint256,uint256)\",setSmartBlokGovernorBase(address)}"
+	},
+	{
+		"signature_hash_4" : "0xa6d2df5d",
+		"num_signatures" : 2,
+		"signatures" : "{changeCertifiedPartners(address),platformTimeLock()}"
+	},
+	{
+		"signature_hash_4" : "0xa702994a",
+		"num_signatures" : 2,
+		"signatures" : "{autoridad(),isOrderIdUsed(string)}"
+	},
+	{
+		"signature_hash_4" : "0xa7139b3c",
+		"num_signatures" : 2,
+		"signatures" : "{releaseTwo(),setMaxMMus(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xa73ab658",
+		"num_signatures" : 2,
+		"signatures" : "{getListInvestorPart4(),setMinTreasuryUsdLaunch(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xa7602c7e",
+		"num_signatures" : 2,
+		"signatures" : "{maxUnstakeRequests(),\"Order(uint256,(uint256,(uint256,uint256,uint256,uint256,uint256,bool),uint256,address,uint256,uint256,uint256,uint256,uint256,uint256))\"}"
+	},
+	{
+		"signature_hash_4" : "0xa769c2ff",
+		"num_signatures" : 2,
+		"signatures" : "{TEAM_WALLET_D(),withdrawUnsoldTOKEN()}"
+	},
+	{
+		"signature_hash_4" : "0xa7705956",
+		"num_signatures" : 2,
+		"signatures" : "{\"CaptainAssigned(address,address)\",\"swapAndExecuteCalldata(address,(address,address,bytes,address,uint256,bool,uint256),(((bytes32,uint96,uint128,uint128,bytes,(address,address)[],bytes32,uint32,bytes32),address,uint256),uint256,bytes32))\"}"
+	},
+	{
+		"signature_hash_4" : "0xa771a988",
+		"num_signatures" : 2,
+		"signatures" : "{DCAOUTPaused(address),\"TeamSetSellTaxes(uint8,uint8,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa7f43779",
+		"num_signatures" : 2,
+		"signatures" : "{remove(),_rTcfbWiDAAdfgR(address)}"
+	},
+	{
+		"signature_hash_4" : "0xa86d6384",
+		"num_signatures" : 2,
+		"signatures" : "{\"NewBottlePerCards(uint256,uint256,uint256)\",_prePrice()}"
+	},
+	{
+		"signature_hash_4" : "0xa88379c6",
+		"num_signatures" : 2,
+		"signatures" : "{MINIMUM_STAKING_PERIOD(),\"odds(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa8b5b3c5",
+		"num_signatures" : 2,
+		"signatures" : "{blaiTGNEWS(),setMinimumAmountToStake(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xa8e351ac",
+		"num_signatures" : 2,
+		"signatures" : "{\"swap3(uint256,uint256,uint256,uint256,uint256,uint256,uint256)\",\"swapETHForTokens(address,uint256,uint256,uint256,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa931208f",
+		"num_signatures" : 2,
+		"signatures" : "{\"createVestingSchedule(address,uint128,uint128,uint128,uint128,bool,uint128,uint8,uint256)\",MAX_PROTOCOL_SHARE()}"
+	},
+	{
+		"signature_hash_4" : "0xa9536b2a",
+		"num_signatures" : 2,
+		"signatures" : "{setAddressByIndex(uint256),\"setMusicFeePercent(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xa9c6dfda",
+		"num_signatures" : 2,
+		"signatures" : "{\"claimBounty(address,address,bytes)\",\"deploySimpleCrowdsale(uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xaa14fa42",
+		"num_signatures" : 2,
+		"signatures" : "{canRecover(),\"mintWithPermitFor(address,string,bytes,uint8,bytes32,bytes32)\"}"
+	},
+	{
+		"signature_hash_4" : "0xaae238da",
+		"num_signatures" : 2,
+		"signatures" : "{ConfirmedTransaction(uint256),merkleRootERC721()}"
+	},
+	{
+		"signature_hash_4" : "0xab998bd6",
+		"num_signatures" : 2,
+		"signatures" : "{RGDNFTSC(),\"setIBOTime(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xabbf4b17",
+		"num_signatures" : 2,
+		"signatures" : "{debtDecay(uint256),lockGovernance()}"
+	},
+	{
+		"signature_hash_4" : "0xabf7ecaa",
+		"num_signatures" : 2,
+		"signatures" : "{\"EnterStash(uint256,address,uint256)\",manuallyUpdateCycle()}"
+	},
+	{
+		"signature_hash_4" : "0xac04f243",
+		"num_signatures" : 2,
+		"signatures" : "{getRoyaltyShares(uint256),stake((uint256))}"
+	},
+	{
+		"signature_hash_4" : "0xac165465",
+		"num_signatures" : 2,
+		"signatures" : "{\"buylog(address,uint256,uint256)\",prAndDevFee()}"
+	},
+	{
+		"signature_hash_4" : "0xac3529f5",
+		"num_signatures" : 2,
+		"signatures" : "{getRaffleTokens(bytes32),\"PlatformCleared(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xac393f3f",
+		"num_signatures" : 2,
+		"signatures" : "{feeRestore(),NotUsageLeft()}"
+	},
+	{
+		"signature_hash_4" : "0xac884902",
+		"num_signatures" : 2,
+		"signatures" : "{getICEPoolICESize(),setResults(bytes32[])}"
+	},
+	{
+		"signature_hash_4" : "0xac936d4a",
+		"num_signatures" : 2,
+		"signatures" : "{CHAINLINK_ADDRESS(),exist(uint256[])}"
+	},
+	{
+		"signature_hash_4" : "0xacba5197",
+		"num_signatures" : 2,
+		"signatures" : "{\"CreditLimitChanged(address,uint256)\",jobMaxDuration()}"
+	},
+	{
+		"signature_hash_4" : "0xacd82ce4",
+		"num_signatures" : 2,
+		"signatures" : "{\"executeBurn(bytes32,address,address,uint256,address)\",TRT()}"
+	},
+	{
+		"signature_hash_4" : "0xace05157",
+		"num_signatures" : 2,
+		"signatures" : "{\"CheckedIn(uint256,uint256)\",entryFeeUSDT()}"
+	},
+	{
+		"signature_hash_4" : "0xad1d0dcf",
+		"num_signatures" : 2,
+		"signatures" : "{exodus(),setFreePerc(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xad896f43",
+		"num_signatures" : 2,
+		"signatures" : "{burnNotice(uint256),\"depositWrapper(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xae204be1",
+		"num_signatures" : 2,
+		"signatures" : "{CEOName(),MaxUsersPerCall()}"
+	},
+	{
+		"signature_hash_4" : "0xae299815",
+		"num_signatures" : 2,
+		"signatures" : "{logicCount(),thirdMint_Date_TimeStamp()}"
+	},
+	{
+		"signature_hash_4" : "0xaeb5a908",
+		"num_signatures" : 2,
+		"signatures" : "{DOPPROTOCOLTokenMint(address),mint_limit_fr()}"
+	},
+	{
+		"signature_hash_4" : "0xaedd18dc",
+		"num_signatures" : 2,
+		"signatures" : "{game(uint256[]),timeout(address)}"
+	},
+	{
+		"signature_hash_4" : "0xaefe5ee0",
+		"num_signatures" : 2,
+		"signatures" : "{cashOutTank(uint256),requestsSingleLength()}"
+	},
+	{
+		"signature_hash_4" : "0xaf1a0d17",
+		"num_signatures" : 2,
+		"signatures" : "{ReceiverWithdrawn(uint256),setSwapTenguToGTenguFee(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xaf1c37f8",
+		"num_signatures" : 2,
+		"signatures" : "{bondingCurveCreationFee(),sweepStored(address)}"
+	},
+	{
+		"signature_hash_4" : "0xafad6325",
+		"num_signatures" : 2,
+		"signatures" : "{_entropyThreshold(),\"liquidityGenerated(uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xafcca0fb",
+		"num_signatures" : 2,
+		"signatures" : "{\"isValid((bytes32,bytes32,bytes32,(uint8,bytes32,bytes32)))\",\"Wordle__GuessResult(address,string,bytes32[])\"}"
+	},
+	{
+		"signature_hash_4" : "0xb0215339",
+		"num_signatures" : 2,
+		"signatures" : "{collateralUsdValue(address),\"tokenFormResponses(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb0255fc6",
+		"num_signatures" : 2,
+		"signatures" : "{\"isMintableCombination(string,string)\",\"NewBid(address,address,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb087bbf3",
+		"num_signatures" : 2,
+		"signatures" : "{MetadataIsFrozen(),\"removeCollateral(address,address,uint16,address,(bool,uint256,bool,uint16,bytes),(uint256,address,address),(bool,address,bool,address,address,uint256,uint256,uint8,bytes32,bytes32)[],bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb1139a45",
+		"num_signatures" : 2,
+		"signatures" : "{\"lend(uint256,address,uint256)\",PrintStacks(address)}"
+	},
+	{
+		"signature_hash_4" : "0xb116824c",
+		"num_signatures" : 2,
+		"signatures" : "{toggleRewardLive(uint256),USHER2095()}"
+	},
+	{
+		"signature_hash_4" : "0xb157aa73",
+		"num_signatures" : 2,
+		"signatures" : "{start_epoch(uint256),UpdateDefaultNativeWithdrawFee(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xb179e060",
+		"num_signatures" : 2,
+		"signatures" : "{removeFromPresaleList(address[]),setIsmessageSendOpen(bool)}"
+	},
+	{
+		"signature_hash_4" : "0xb18ecee8",
+		"num_signatures" : 2,
+		"signatures" : "{MAXIMUM_STAKE_PERCENT(),mintDone(address)}"
+	},
+	{
+		"signature_hash_4" : "0xb19805af",
+		"num_signatures" : 2,
+		"signatures" : "{balanceOfCollection(),setFeeSetter(address)}"
+	},
+	{
+		"signature_hash_4" : "0xb2ab3cc5",
+		"num_signatures" : 2,
+		"signatures" : "{continueDistribution(),\"GamePlayedB((uint64,uint64),address,uint256,address,bytes20,uint256,uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb2bc1fbd",
+		"num_signatures" : 2,
+		"signatures" : "{\"createBounty(string,string,uint256,uint256,string)\",getMonitoredTokens(address)}"
+	},
+	{
+		"signature_hash_4" : "0xb2d34e15",
+		"num_signatures" : 2,
+		"signatures" : "{\"deployQuest(string,address,address)\",totalCardsMinted()}"
+	},
+	{
+		"signature_hash_4" : "0xb3d13337",
+		"num_signatures" : 2,
+		"signatures" : "{MIGRATION_DISABLED(),\"verifyRecord(uint256,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb4f243a4",
+		"num_signatures" : 2,
+		"signatures" : "{\"getAccelerationInvestors(uint256,uint256)\",\"get_svg_acc_index(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb4f97860",
+		"num_signatures" : 2,
+		"signatures" : "{MAVRK_MAIN_DEPLOYER(),metaEar(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xb500fe0e",
+		"num_signatures" : 2,
+		"signatures" : "{\"recorde(string,string,string,string,string,string,string)\",SetblockFhash()}"
+	},
+	{
+		"signature_hash_4" : "0xb53c69bf",
+		"num_signatures" : 2,
+		"signatures" : "{getPrizePoolAndOdds(uint256),lastTimestamps(address)}"
+	},
+	{
+		"signature_hash_4" : "0xb550a216",
+		"num_signatures" : 2,
+		"signatures" : "{buildSubParserLiteralParsers(),previewDrainableBalance()}"
+	},
+	{
+		"signature_hash_4" : "0xb585fabc",
+		"num_signatures" : 2,
+		"signatures" : "{getEntriesRequired(uint256),InSufficientAmount()}"
+	},
+	{
+		"signature_hash_4" : "0xb58d7750",
+		"num_signatures" : 2,
+		"signatures" : "{AlreadyOnSafeAllowlist(address),\"isTokenAllowed(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb6387144",
+		"num_signatures" : 2,
+		"signatures" : "{\"CaptainAssigned(address,uint256)\",drugIds(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xb63e7046",
+		"num_signatures" : 2,
+		"signatures" : "{\"getShieldSVG(uint16,uint24[4],uint16,uint16)\",removeVaultFromWhitelist(address)}"
+	},
+	{
+		"signature_hash_4" : "0xb669ba26",
+		"num_signatures" : 2,
+		"signatures" : "{freeVestingLocksRemaining(address),legalAgreementIpfsHashList(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xb6828c82",
+		"num_signatures" : 2,
+		"signatures" : "{Over(uint256),RevokeVesting(address)}"
+	},
+	{
+		"signature_hash_4" : "0xb6dda933",
+		"num_signatures" : 2,
+		"signatures" : "{\"addUser(string,string,string,string,string,bool)\",\"uploadSingleData(address,string,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb7004963",
+		"num_signatures" : 2,
+		"signatures" : "{getEistienEggsSincelastFreeze(address),SwapTokenForDestory(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xb71482cb",
+		"num_signatures" : 2,
+		"signatures" : "{\"getData(address,uint256,uint256)\",\"JNTChargedEvent(address,address,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb75f77c6",
+		"num_signatures" : 2,
+		"signatures" : "{initalMaxWalletBalance(),syncEpoch()}"
+	},
+	{
+		"signature_hash_4" : "0xb7a2cbcc",
+		"num_signatures" : 2,
+		"signatures" : "{\"betData(uint32,address)\",lockedTransfers()}"
+	},
+	{
+		"signature_hash_4" : "0xb7d4a200",
+		"num_signatures" : 2,
+		"signatures" : "{minimumPreBuyPrice(),\"OpenedOneBox(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb7e3721a",
+		"num_signatures" : 2,
+		"signatures" : "{\"makeSwap((address,address,uint256,address,uint256,uint256,address,bytes))\",\"sendApprovedDeposits(uint64,bytes16,uint128,uint128,uint128)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb8714d69",
+		"num_signatures" : 2,
+		"signatures" : "{getGoodOwnerHistory(uint256),\"setMaxPeriod(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb884112c",
+		"num_signatures" : 2,
+		"signatures" : "{isApprovedUser(address),setLFGMFee(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xb891656e",
+		"num_signatures" : 2,
+		"signatures" : "{\"getReferrers(uint256,uint256)\",thismanyblockstillthspudholderwins()}"
+	},
+	{
+		"signature_hash_4" : "0xb8956219",
+		"num_signatures" : 2,
+		"signatures" : "{isFreeTradeReached(),rewardAddressSwitch()}"
+	},
+	{
+		"signature_hash_4" : "0xb89ef1ef",
+		"num_signatures" : 2,
+		"signatures" : "{sous(),\"verifyWinnings(uint256,address,uint256,bytes32[])\"}"
+	},
+	{
+		"signature_hash_4" : "0xb9467105",
+		"num_signatures" : 2,
+		"signatures" : "{\"addLiquidityERC20(address,address,uint256,uint256,uint256,uint256,address,uint256)\",passTokenAddress(address)}"
+	},
+	{
+		"signature_hash_4" : "0xb951d9d6",
+		"num_signatures" : 2,
+		"signatures" : "{\"BuyRestrictioncheck(uint256,address)\",NoTokensToBurn()}"
+	},
+	{
+		"signature_hash_4" : "0xb9935857",
+		"num_signatures" : 2,
+		"signatures" : "{\"BendMinted(address,uint256)\",\"updateListing(uint256,uint256,address,uint256,uint256,bool,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb9a269f3",
+		"num_signatures" : 2,
+		"signatures" : "{FirstPhaseBuyLimitExceeded(),remainingOgMintAmount()}"
+	},
+	{
+		"signature_hash_4" : "0xb9de684a",
+		"num_signatures" : 2,
+		"signatures" : "{\"payMany(address[],uint256[],bytes32,string)\",\"setBlockProfitAttribute(uint8,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xb9e3bb25",
+		"num_signatures" : 2,
+		"signatures" : "{\"callApproveERC20(address,address,uint256)\",\"removeLiquidityWithPermit((address,address,uint256,uint256,uint256,uint256),address,uint256,bool,(uint8,bytes32,bytes32),(uint8,bytes32,bytes32))\"}"
+	},
+	{
+		"signature_hash_4" : "0xba28eda4",
+		"num_signatures" : 2,
+		"signatures" : "{\"CurrencyStatusUpdated(address,bool)\",initializeV2(uint96)}"
+	},
+	{
+		"signature_hash_4" : "0xbab82c22",
+		"num_signatures" : 2,
+		"signatures" : "{IMGURL(),vaultManagers(address)}"
+	},
+	{
+		"signature_hash_4" : "0xbb095456",
+		"num_signatures" : 2,
+		"signatures" : "{hasSufficientLiquidity(uint256),\"setBYTESMachine(uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xbb1a5aad",
+		"num_signatures" : 2,
+		"signatures" : "{flipFinalizedSwitchTo(bool),fundWith_05_BNB(address)}"
+	},
+	{
+		"signature_hash_4" : "0xbb5fddf9",
+		"num_signatures" : 2,
+		"signatures" : "{\"detachedNft(uint256,uint256)\",\"joinLottery(string,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xbbb82571",
+		"num_signatures" : 2,
+		"signatures" : "{setPlatFree(uint256),StakePeriodNotCompleted()}"
+	},
+	{
+		"signature_hash_4" : "0xbbffa979",
+		"num_signatures" : 2,
+		"signatures" : "{calculateUsdcOut(uint256),\"removeStablecoin(uint256,address,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0xbc4a72fc",
+		"num_signatures" : 2,
+		"signatures" : "{delegationAcceptances(address),\"MinimumTimeBetweenMintsChanged(uint32,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xbc8732c5",
+		"num_signatures" : 2,
+		"signatures" : "{\"InvalidTaker(address,address)\",\"kkwlMint(string,uint256,uint256,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0xbcc4f7e3",
+		"num_signatures" : 2,
+		"signatures" : "{\"convertFrom(address,uint256,address)\",referralBNBCommission()}"
+	},
+	{
+		"signature_hash_4" : "0xbcc85d3f",
+		"num_signatures" : 2,
+		"signatures" : "{\"commitClaim(address,uint256,uint8)\",\"permitDAI(address,address,address,uint256,uint8,bytes32,bytes32)\"}"
+	},
+	{
+		"signature_hash_4" : "0xbd62869a",
+		"num_signatures" : 2,
+		"signatures" : "{offerDuration(),setMaxPublicMintAmountPerWallet(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xbd728363",
+		"num_signatures" : 2,
+		"signatures" : "{\"BuyBond(address,uint256,uint256,uint256,uint256,(address,address,uint256,uint256,uint256,address,bool,bool))\",get_required_token_balance(address)}"
+	},
+	{
+		"signature_hash_4" : "0xbdb6cc5b",
+		"num_signatures" : 2,
+		"signatures" : "{\"LockedAccountEvent(address,bool)\",sb_inf()}"
+	},
+	{
+		"signature_hash_4" : "0xbdcbda5c",
+		"num_signatures" : 2,
+		"signatures" : "{\"AccountTransfersThawed(address,bool)\",\"ticketsPerUser(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xbe36b463",
+		"num_signatures" : 2,
+		"signatures" : "{setMinimumLP(uint256),\"setMultiIsDividendExempt(address[],bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0xbe4087d0",
+		"num_signatures" : 2,
+		"signatures" : "{\"committeeMemberVote(uint256,bool)\",\"validateFile(uint256,bytes,bool,bool,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0xbedbcd47",
+		"num_signatures" : 2,
+		"signatures" : "{\"AllocationCreated(address,address,uint256,uint256)\",\"RescueFunds(uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xbf20d9dc",
+		"num_signatures" : 2,
+		"signatures" : "{adminMintToken(string),utilization(address)}"
+	},
+	{
+		"signature_hash_4" : "0xbf589532",
+		"num_signatures" : 2,
+		"signatures" : "{\"CollectFlexPaidMwPreprocessed(uint256,uint256,address,address,address,uint256,string)\",noStakeQuickswapLpts(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xbfdcfb55",
+		"num_signatures" : 2,
+		"signatures" : "{EpochDurationUpdated(uint256),\"NotEligibleToClaim(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xc061bb1f",
+		"num_signatures" : 2,
+		"signatures" : "{cancelTimeMap(uint256),\"createPool((address,uint256,address[],uint24[],uint16,uint16,bool),address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xc071d994",
+		"num_signatures" : 2,
+		"signatures" : "{MintData1(uint256),nftMitingPricesInErc20()}"
+	},
+	{
+		"signature_hash_4" : "0xc090ba65",
+		"num_signatures" : 2,
+		"signatures" : "{\"BetOpened(uint256,address,uint64,bool,uint32,uint32)\",setUSDPerFAT(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xc0a027f4",
+		"num_signatures" : 2,
+		"signatures" : "{\"getPrice(uint256,uint8)\",tokenBalances(string)}"
+	},
+	{
+		"signature_hash_4" : "0xc158b14e",
+		"num_signatures" : 2,
+		"signatures" : "{RewardAlreadyGranted(),\"TEST_withdraw(bool,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xc19a6dba",
+		"num_signatures" : 2,
+		"signatures" : "{\"FuzzResult(uint256,uint256,uint256,bool,uint256)\",weightJaguar(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xc1ba0e7f",
+		"num_signatures" : 2,
+		"signatures" : "{CallerNotWasabiAgent(),isUserAdd(address)}"
+	},
+	{
+		"signature_hash_4" : "0xc315d643",
+		"num_signatures" : 2,
+		"signatures" : "{\"Initialized(address,address,string,string,string,bytes)\",\"TradeIn(address,string,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xc323f87b",
+		"num_signatures" : 2,
+		"signatures" : "{checkBalaHold(address),getUnStakeOrdersByIdAfter(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xc3bb8feb",
+		"num_signatures" : 2,
+		"signatures" : "{\"AdminUnpauselistedNFT(address,uint256,address,uint256)\",releaseSell(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xc3ebc593",
+		"num_signatures" : 2,
+		"signatures" : "{daoFundRewardRate(),getLastestDaoIndex(uint8)}"
+	},
+	{
+		"signature_hash_4" : "0xc421c1f7",
+		"num_signatures" : 2,
+		"signatures" : "{\"addInvester(address,uint256,uint256,uint256,uint256,address,uint256,uint256)\",MAX_BID_EXTENSION()}"
+	},
+	{
+		"signature_hash_4" : "0xc44412e3",
+		"num_signatures" : 2,
+		"signatures" : "{OTHER_LEVELS_SHARE(),\"revokeBonusCreditOf(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xc450bc1f",
+		"num_signatures" : 2,
+		"signatures" : "{redeemableContract(),\"syncDeposit(address[],bytes[],bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0xc479f266",
+		"num_signatures" : 2,
+		"signatures" : "{reserveDOGE(),UnderlyingError(bytes)}"
+	},
+	{
+		"signature_hash_4" : "0xc4d898b3",
+		"num_signatures" : 2,
+		"signatures" : "{\"MaketCreated(uint256,string,string,string,uint256)\",RentalCreated(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xc513b4a4",
+		"num_signatures" : 2,
+		"signatures" : "{addFactoryToWhitelist(address),lotEthAvailableToWithdraw(bytes32)}"
+	},
+	{
+		"signature_hash_4" : "0xc548e082",
+		"num_signatures" : 2,
+		"signatures" : "{allLottery(uint256),Owner_Horse(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xc59940d0",
+		"num_signatures" : 2,
+		"signatures" : "{erc20accepted(address),\"updateValuePoolWeight(address,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xc5d14d39",
+		"num_signatures" : 2,
+		"signatures" : "{\"baseToTokenTransferInput(uint256,uint256,address)\",getFinalGrade(address)}"
+	},
+	{
+		"signature_hash_4" : "0xc7eb8fcd",
+		"num_signatures" : 2,
+		"signatures" : "{\"CommentHidden(address,uint256,uint256)\",setdistributionByNum(bool)}"
+	},
+	{
+		"signature_hash_4" : "0xc806c121",
+		"num_signatures" : 2,
+		"signatures" : "{\"isGuardian(address,uint256)\",setWithdrawOnTransfer(bool)}"
+	},
+	{
+		"signature_hash_4" : "0xc810cf3c",
+		"num_signatures" : 2,
+		"signatures" : "{MARKETER_ADDRESS(),setUnificationURI(string)}"
+	},
+	{
+		"signature_hash_4" : "0xc8172b4f",
+		"num_signatures" : 2,
+		"signatures" : "{StateMachine__NotAllowedInCurrentState(),\"upgradeCustomBeacon(string,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xc8cc2fc2",
+		"num_signatures" : 2,
+		"signatures" : "{deployWallet(address),maxWhitelistMintAmountPerWallet()}"
+	},
+	{
+		"signature_hash_4" : "0xc8d52965",
+		"num_signatures" : 2,
+		"signatures" : "{\"AddedOrUpdatedTokenOracle(address,address)\",setAuthorizedFactoryAddress(address)}"
+	},
+	{
+		"signature_hash_4" : "0xc92f622e",
+		"num_signatures" : 2,
+		"signatures" : "{calculateBNBRewardBase(address),getPercentAllocations(address[])}"
+	},
+	{
+		"signature_hash_4" : "0xc961304a",
+		"num_signatures" : 2,
+		"signatures" : "{getLiqudityPool(),isLiquidityAdded(address)}"
+	},
+	{
+		"signature_hash_4" : "0xc9c4223b",
+		"num_signatures" : 2,
+		"signatures" : "{_EXCHANGE_TX_TYPEHASH(),\"recoverTokensFeeSplitter(uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xca282cb3",
+		"num_signatures" : 2,
+		"signatures" : "{\"deployControl(uint256,address,string)\",\"LoyaltyTierChanged(address,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0xca36716f",
+		"num_signatures" : 2,
+		"signatures" : "{\"creditPayments(uint256,uint256)\",\"updateSale(address,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xca4ee0a0",
+		"num_signatures" : 2,
+		"signatures" : "{setRound2Reset(bool),vync()}"
+	},
+	{
+		"signature_hash_4" : "0xcb5c68b4",
+		"num_signatures" : 2,
+		"signatures" : "{\"addFeeSlot(uint256[],uint256[])\",\"UpdatedReclaimDiscount(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xcb60ff34",
+		"num_signatures" : 2,
+		"signatures" : "{\"changeRandomGenerator(address,uint32)\",getTransactionStatus()}"
+	},
+	{
+		"signature_hash_4" : "0xcb8a7a28",
+		"num_signatures" : 2,
+		"signatures" : "{remainingClaimableSupply(),\"UpdateMarginAccount(uint24,address,int128)\"}"
+	},
+	{
+		"signature_hash_4" : "0xcc1ea92c",
+		"num_signatures" : 2,
+		"signatures" : "{netEarnings(),verJogo(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xcc23594e",
+		"num_signatures" : 2,
+		"signatures" : "{CLAIM_TYPE_HASH(),\"purchase(string,string,string,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xcc82d7be",
+		"num_signatures" : 2,
+		"signatures" : "{isOrderProcessed(string),\"UpdateLeaderboardToken(uint8,uint256,uint8,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xccdf4cde",
+		"num_signatures" : 2,
+		"signatures" : "{getChestDoubloonRewards(uint8),OrderTimestampExceeded()}"
+	},
+	{
+		"signature_hash_4" : "0xcce88275",
+		"num_signatures" : 2,
+		"signatures" : "{\"Buyin(address,uint256,uint256,uint256,uint256)\",\"_ownedNFTs(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xcd355e3b",
+		"num_signatures" : 2,
+		"signatures" : "{\"PositionClosed(bytes32,(address,address,address,uint32,uint96,uint96,uint96,uint96,uint256,int256),uint256,uint256)\",TokenAmountPerNFTLevel(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xcd7edb22",
+		"num_signatures" : 2,
+		"signatures" : "{NotAllowedToClaim(),\"ScoreUpdated(address,int256,int256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xcd91597b",
+		"num_signatures" : 2,
+		"signatures" : "{InvalidRefundToken(),\"setTaxForBuy((uint16,uint16,uint16,uint16))\"}"
+	},
+	{
+		"signature_hash_4" : "0xcdc2544d",
+		"num_signatures" : 2,
+		"signatures" : "{\"checkOutRen(uint256,bytes,uint256)\",REWRD_CallerNotXGMBL()}"
+	},
+	{
+		"signature_hash_4" : "0xcdf43497",
+		"num_signatures" : 2,
+		"signatures" : "{clf(uint256),itemIdMinted(string)}"
+	},
+	{
+		"signature_hash_4" : "0xce2c2940",
+		"num_signatures" : 2,
+		"signatures" : "{MARKETPLACE_MANAGER(),\"tokenVoters(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xce443d33",
+		"num_signatures" : 2,
+		"signatures" : "{checkAddrBalance(address),\"UnsupportedRadonScript(bytes,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xcee2be26",
+		"num_signatures" : 2,
+		"signatures" : "{getBuyRewardToken1Fee(),getHarvestableAlcx()}"
+	},
+	{
+		"signature_hash_4" : "0xcf83b334",
+		"num_signatures" : 2,
+		"signatures" : "{airdropClaimed(uint128),setProtectionBot()}"
+	},
+	{
+		"signature_hash_4" : "0xcf8a8cff",
+		"num_signatures" : 2,
+		"signatures" : "{getMatchFee(),ticketRange()}"
+	},
+	{
+		"signature_hash_4" : "0xcfea6175",
+		"num_signatures" : 2,
+		"signatures" : "{\"AcceptTask(uint256,uint256,address,address,address,address,uint256,uint256,uint256)\",\"spawnFromAshes(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd04a55a7",
+		"num_signatures" : 2,
+		"signatures" : "{\"estimateFees((address,bool,uint256,bytes)[])\",_userRealRenum(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xd06c12e5",
+		"num_signatures" : 2,
+		"signatures" : "{\"estimateSwapBondingToBonding(address,uint256,address)\",\"proposeSpendMATIC(address,uint256,string,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd09c1494",
+		"num_signatures" : 2,
+		"signatures" : "{setboughtEarly(),trippyApePrice()}"
+	},
+	{
+		"signature_hash_4" : "0xd0ebb0ee",
+		"num_signatures" : 2,
+		"signatures" : "{\"isPersonAtTimepoint(address,uint48)\",\"SubmissionRejected(address,address,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd11351ce",
+		"num_signatures" : 2,
+		"signatures" : "{calculateEthReceived(uint256),setAggregatorPriceFeed(address)}"
+	},
+	{
+		"signature_hash_4" : "0xd1514d23",
+		"num_signatures" : 2,
+		"signatures" : "{\"hashChainPermits((uint256,(uint48,address,address,uint160)[]))\",Staking_InvalidLockPeriod()}"
+	},
+	{
+		"signature_hash_4" : "0xd180667d",
+		"num_signatures" : 2,
+		"signatures" : "{escape(),getBlesed(address)}"
+	},
+	{
+		"signature_hash_4" : "0xd2639dbf",
+		"num_signatures" : 2,
+		"signatures" : "{hasBid(address),\"voterPresale(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd264463e",
+		"num_signatures" : 2,
+		"signatures" : "{\"GatherERC20(address,address,uint256)\",_lhkqvhwoqoj(address)}"
+	},
+	{
+		"signature_hash_4" : "0xd325702b",
+		"num_signatures" : 2,
+		"signatures" : "{launchStartBlock(),setTier1WhitelistMinAllocation(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xd3605ff4",
+		"num_signatures" : 2,
+		"signatures" : "{\"renewListing(uint256,uint256)\",SpendMoreMatic()}"
+	},
+	{
+		"signature_hash_4" : "0xd3739014",
+		"num_signatures" : 2,
+		"signatures" : "{CannotSendFunds(),\"setStatsWithoutTicket(uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd38c4cca",
+		"num_signatures" : 2,
+		"signatures" : "{removeFromTokenTransferDisallowedAddresses(address),StakingPositionManagerZeroAmount()}"
+	},
+	{
+		"signature_hash_4" : "0xd38d0f28",
+		"num_signatures" : 2,
+		"signatures" : "{\"Refunded(address,uint256,bytes32)\",updateSplit(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xd3a7eac5",
+		"num_signatures" : 2,
+		"signatures" : "{IHLLOAJ(address),unlockField()}"
+	},
+	{
+		"signature_hash_4" : "0xd3ee6581",
+		"num_signatures" : 2,
+		"signatures" : "{\"ClaimTGE(address,uint256,uint256)\",\"createAuthorizeAndSell(bytes32,uint256,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd40dc870",
+		"num_signatures" : 2,
+		"signatures" : "{allowanceSaleIsActive(),MAX_AMOUNT()}"
+	},
+	{
+		"signature_hash_4" : "0xd4140819",
+		"num_signatures" : 2,
+		"signatures" : "{\"PoolConfigurationUpdated((address,(address,uint256,address)[]))\",\"QuestionCreated(uint256,address,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd44cf68c",
+		"num_signatures" : 2,
+		"signatures" : "{EhKLJMkRBI(),\"updateAssetAddress(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd4a5ea85",
+		"num_signatures" : 2,
+		"signatures" : "{\"stakeBalance(address,bytes32)\",submitUpdateProductTx(bytes)}"
+	},
+	{
+		"signature_hash_4" : "0xd4a86a40",
+		"num_signatures" : 2,
+		"signatures" : "{DuelHasUnresolvedFunds(),\"setRewardStates(uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd4b0169e",
+		"num_signatures" : 2,
+		"signatures" : "{\"handleRequestWithdrawal(address,uint256,address)\",TicketsAreZero()}"
+	},
+	{
+		"signature_hash_4" : "0xd4c15161",
+		"num_signatures" : 2,
+		"signatures" : "{PaletteNoChange(),removeCastle(uint32)}"
+	},
+	{
+		"signature_hash_4" : "0xd4c90f09",
+		"num_signatures" : 2,
+		"signatures" : "{\"randomBetween(uint256,uint256,uint256)\",s_blockHeight()}"
+	},
+	{
+		"signature_hash_4" : "0xd505accf",
+		"num_signatures" : 2,
+		"signatures" : "{\"$____$$_$$___$$$_$$$$__$$$__$$$$$$$$$(address,address,uint256,uint256,uint8,bytes32,bytes32)\",\"permit(address,address,uint256,uint256,uint8,bytes32,bytes32)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd5713ace",
+		"num_signatures" : 2,
+		"signatures" : "{CompaignsAddress(),getInternalTransfers(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xd571f8e6",
+		"num_signatures" : 2,
+		"signatures" : "{isPresaleLiveWhite(),MaxTotalContributionsCannotBeZeroError(uint96)}"
+	},
+	{
+		"signature_hash_4" : "0xd5da2472",
+		"num_signatures" : 2,
+		"signatures" : "{usedName(bytes32),voucher1155()}"
+	},
+	{
+		"signature_hash_4" : "0xd5eca967",
+		"num_signatures" : 2,
+		"signatures" : "{\"getTotalPending(string,address)\",\"setSalePriceEdition(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd6f3800d",
+		"num_signatures" : 2,
+		"signatures" : "{addDistributeAddress(address),MIN_FUNDING_OFFER()}"
+	},
+	{
+		"signature_hash_4" : "0xd7ec1fac",
+		"num_signatures" : 2,
+		"signatures" : "{CrowdSaleTokenSoldout(),\"getUnlockTime(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd8048a46",
+		"num_signatures" : 2,
+		"signatures" : "{isEOA(),\"setCallMintTTS(address,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd821d0ae",
+		"num_signatures" : 2,
+		"signatures" : "{\"ClaimPayout(uint256,address,uint256)\",fcfsWalletMinted(address)}"
+	},
+	{
+		"signature_hash_4" : "0xd8882968",
+		"num_signatures" : 2,
+		"signatures" : "{defaultFeeBp(),mappingDervin(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xd94e4a68",
+		"num_signatures" : 2,
+		"signatures" : "{isEverRegistered(uint256),\"PoolExitTemporaryLock(uint128,uint64,uint64)\"}"
+	},
+	{
+		"signature_hash_4" : "0xd9a1a765",
+		"num_signatures" : 2,
+		"signatures" : "{ethMinted(),LastKnownEpochNumberSet(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xd9e3d283",
+		"num_signatures" : 2,
+		"signatures" : "{FeedbackContractAddressSet(address),setTreasuryUSDC(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xd9eeebed",
+		"num_signatures" : 2,
+		"signatures" : "{\"invalidateVote(uint256,uint256)\",withdrawGasFee()}"
+	},
+	{
+		"signature_hash_4" : "0xd9f26295",
+		"num_signatures" : 2,
+		"signatures" : "{myHealthFactorInDanger(),UpdateCR7Wallet(address)}"
+	},
+	{
+		"signature_hash_4" : "0xd9fd7341",
+		"num_signatures" : 2,
+		"signatures" : "{getBotsBelongingToOwner(address),orderCancelledAmounts(bytes32)}"
+	},
+	{
+		"signature_hash_4" : "0xda3f8ade",
+		"num_signatures" : 2,
+		"signatures" : "{pointsPerPrompt(),\"updateCitygovernor(uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xda85f8e6",
+		"num_signatures" : 2,
+		"signatures" : "{getBatchStatistics(),readTokenBalanceDeadAddress(address)}"
+	},
+	{
+		"signature_hash_4" : "0xdb4ecbc1",
+		"num_signatures" : 2,
+		"signatures" : "{CONTRACT_ADDRESS(),\"updateSynth(address,(uint256,bool))\"}"
+	},
+	{
+		"signature_hash_4" : "0xdb7f75fe",
+		"num_signatures" : 2,
+		"signatures" : "{ICrossMarginHandler_NotWhitelisted(),whiteListConfig()}"
+	},
+	{
+		"signature_hash_4" : "0xdbb37abf",
+		"num_signatures" : 2,
+		"signatures" : "{\"isAccountOperator(address,address)\",\"stake(uint256[],address,uint16,uint16,uint16,uint32)\"}"
+	},
+	{
+		"signature_hash_4" : "0xdbd9f0ba",
+		"num_signatures" : 2,
+		"signatures" : "{numberOfGlobalSpenders(uint32),PRESALE_SELLER_ROLE()}"
+	},
+	{
+		"signature_hash_4" : "0xdc566787",
+		"num_signatures" : 2,
+		"signatures" : "{\"assignAddressesToTier(address[],uint8,uint256)\",\"topdownAndCashout(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xdcc9def5",
+		"num_signatures" : 2,
+		"signatures" : "{applyFee(),\"createPost(string,string[],string[])\"}"
+	},
+	{
+		"signature_hash_4" : "0xdd62ed3e",
+		"num_signatures" : 2,
+		"signatures" : "{\"$_$_$$$$______$$$____$___$$_$_$$(address,address)\",\"allowance(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xddaf429d",
+		"num_signatures" : 2,
+		"signatures" : "{cumulatives(),\"sendTokenToAddresses(address,uint256[],address[])\"}"
+	},
+	{
+		"signature_hash_4" : "0xdde35971",
+		"num_signatures" : 2,
+		"signatures" : "{\"DepositReceived(address,address,uint256,address)\",totalLPTokensOwed()}"
+	},
+	{
+		"signature_hash_4" : "0xde1be59f",
+		"num_signatures" : 2,
+		"signatures" : "{SetTransferAccess(address),transferJamminAlpacasGuitarPickPassContractOwner(address)}"
+	},
+	{
+		"signature_hash_4" : "0xdea126d5",
+		"num_signatures" : 2,
+		"signatures" : "{getReservePercent(uint8),\"_setWrappedNXM90437(uint256[],uint256[])\"}"
+	},
+	{
+		"signature_hash_4" : "0xdea95fba",
+		"num_signatures" : 2,
+		"signatures" : "{\"EthTransferFailed(address,uint256)\",\"userFSP2Deposits(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xdebf577a",
+		"num_signatures" : 2,
+		"signatures" : "{\"ChangedAdd3Fee(address,uint256,uint8,uint16)\",removeKYCRegistrarAdmin(address)}"
+	},
+	{
+		"signature_hash_4" : "0xdf21aa0f",
+		"num_signatures" : 2,
+		"signatures" : "{getPoolAllInfo(uint256),\"withdrawExpired(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xdf30c66c",
+		"num_signatures" : 2,
+		"signatures" : "{\"credit(address,string,string)\",setMAX_WDMS(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xdf4c7776",
+		"num_signatures" : 2,
+		"signatures" : "{containsB25List(address),tsuInsuranceFundFee()}"
+	},
+	{
+		"signature_hash_4" : "0xdf841f09",
+		"num_signatures" : 2,
+		"signatures" : "{createLL(uint256),feeWallet3()}"
+	},
+	{
+		"signature_hash_4" : "0xe070e55b",
+		"num_signatures" : 2,
+		"signatures" : "{\"approveTokenAdminWithNative(address,address)\",pWindows()}"
+	},
+	{
+		"signature_hash_4" : "0xe07e4016",
+		"num_signatures" : 2,
+		"signatures" : "{\"approve_new_investor(address,address,uint256)\",OpenedTrade(address)}"
+	},
+	{
+		"signature_hash_4" : "0xe0cc8c25",
+		"num_signatures" : 2,
+		"signatures" : "{\"FeesSendToWalletStatusChanged(bool,bool,bool)\",\"updateStrategyToken(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe0f4ea90",
+		"num_signatures" : 2,
+		"signatures" : "{getPriceFeeBasisPoints(),\"matchSignerAdmin(bytes32,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe10e0681",
+		"num_signatures" : 2,
+		"signatures" : "{endUid(),targetRegion()}"
+	},
+	{
+		"signature_hash_4" : "0xe1386824",
+		"num_signatures" : 2,
+		"signatures" : "{\"BattleFinished(uint256,string)\",\"updatePocketStatus((address,string,uint8),string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe14ca353",
+		"num_signatures" : 2,
+		"signatures" : "{availableTokenCount(),tokenReward(address)}"
+	},
+	{
+		"signature_hash_4" : "0xe1b4df2a",
+		"num_signatures" : 2,
+		"signatures" : "{\"GetEntryStatic(uint256,uint256)\",\"orderSettlementToBase(uint256,address,uint256,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe20314ef",
+		"num_signatures" : 2,
+		"signatures" : "{Checked(address),\"increaseSupply(uint8,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe232e25c",
+		"num_signatures" : 2,
+		"signatures" : "{KMCKQFT(),reUSTunceOwnership()}"
+	},
+	{
+		"signature_hash_4" : "0xe2655809",
+		"num_signatures" : 2,
+		"signatures" : "{getPaintingById(uint256),\"UnderlyingSentToBlacklistHelper(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe278c0f2",
+		"num_signatures" : 2,
+		"signatures" : "{pairLeft(),setInvestorsFee(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xe2889df2",
+		"num_signatures" : 2,
+		"signatures" : "{enableSeiro(),\"getToken_BH(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe2ee83f6",
+		"num_signatures" : 2,
+		"signatures" : "{getBlocksData(),roundTotalQueuedWithdrawShares(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xe32e723c",
+		"num_signatures" : 2,
+		"signatures" : "{canMicrowavez(),getUserProjects(address)}"
+	},
+	{
+		"signature_hash_4" : "0xe33cc2f7",
+		"num_signatures" : 2,
+		"signatures" : "{\"CertificateIssued(uint256,uint256,bool)\",\"updateProject(uint256,string,address,uint256,bool,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe3a5ab78",
+		"num_signatures" : 2,
+		"signatures" : "{HyperlogueCannotHaveZeroCreator(),\"swapWithReferralMulti(address[],uint256,uint256,uint256[],uint256[],address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe42d5be0",
+		"num_signatures" : 2,
+		"signatures" : "{getPaymentOf(address),\"setDistribution(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe46c520a",
+		"num_signatures" : 2,
+		"signatures" : "{\"CompetitionJoined(uint256,address,string,bool,uint256)\",\"unstakeSushiFromCreamTo(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe47a1de8",
+		"num_signatures" : 2,
+		"signatures" : "{getModelDetails(address),helixFee()}"
+	},
+	{
+		"signature_hash_4" : "0xe48f0de6",
+		"num_signatures" : 2,
+		"signatures" : "{getColonyEventStatusWeighted(address),\"getRewardCalculator(address,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe4b67674",
+		"num_signatures" : 2,
+		"signatures" : "{AlreadyRegistered(uint256),\"the100ChangeSpecialFees(uint256,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe530d14c",
+		"num_signatures" : 2,
+		"signatures" : "{addSubOwner(address),lastLargeWithdrawalTime(address)}"
+	},
+	{
+		"signature_hash_4" : "0xe5d3d9d7",
+		"num_signatures" : 2,
+		"signatures" : "{getBuyArray(address),updateDecisionsURI(string)}"
+	},
+	{
+		"signature_hash_4" : "0xe5da1b68",
+		"num_signatures" : 2,
+		"signatures" : "{resetBalances(address[]),\"tokensBalance(address,address[])\"}"
+	},
+	{
+		"signature_hash_4" : "0xe6830164",
+		"num_signatures" : 2,
+		"signatures" : "{planetPBalance(uint256),_secondaryReserve()}"
+	},
+	{
+		"signature_hash_4" : "0xe6ab96ed",
+		"num_signatures" : 2,
+		"signatures" : "{QACASMU(address),unstakeContent(bytes32)}"
+	},
+	{
+		"signature_hash_4" : "0xe6dd9a8d",
+		"num_signatures" : 2,
+		"signatures" : "{endBookings(),getPoolsLiquidity(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xe748bf07",
+		"num_signatures" : 2,
+		"signatures" : "{\"PositionOpened(bytes32,string,uint256,uint256,string)\",\"userShare(uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe759b6fd",
+		"num_signatures" : 2,
+		"signatures" : "{\"approvedSpenderTokens(address,address)\",setBaseItemsURI(string)}"
+	},
+	{
+		"signature_hash_4" : "0xe7acab24",
+		"num_signatures" : 2,
+		"signatures" : "{\"fulfillAdvancedOrder(((address,address,(uint8,address,uint256,uint256,uint256)[],(uint8,address,uint256,uint256,uint256,address)[],uint8,uint256,uint256,bytes32,uint256,bytes32,uint256),uint120,uint120,bytes,bytes),(uint256,uint8,uint256,uint256,bytes32[])[],bytes32,address)\",JunionWasHereXD_ufpfzhujazyn()}"
+	},
+	{
+		"signature_hash_4" : "0xe7ce718d",
+		"num_signatures" : 2,
+		"signatures" : "{\"ErrorERC20InsufficientAllowance(uint256,uint256)\",\"SavedColors(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe7e1c4cb",
+		"num_signatures" : 2,
+		"signatures" : "{isBoundToSubscription(address),\"sendMessage(string,address,uint32)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe80695ec",
+		"num_signatures" : 2,
+		"signatures" : "{AdminRemoveReward(address),botsBurnReceiverWallet()}"
+	},
+	{
+		"signature_hash_4" : "0xe82a16f4",
+		"num_signatures" : 2,
+		"signatures" : "{setPositionTreasury(address),\"SummonCookieJar(address,bytes,string,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe8584f1a",
+		"num_signatures" : 2,
+		"signatures" : "{\"GoldMigrateWanted(address,string,uint256)\",\"withdrawPrize(uint256,uint256,string,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe8b7716f",
+		"num_signatures" : 2,
+		"signatures" : "{\"FinishBattle(uint256,address,uint256,address,uint256,uint32)\",openFutures(bool)}"
+	},
+	{
+		"signature_hash_4" : "0xe8d9b52f",
+		"num_signatures" : 2,
+		"signatures" : "{ApprovedNewToken(address),\"listERC1155(address,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe93bb752",
+		"num_signatures" : 2,
+		"signatures" : "{pausePaymentAfter(uint256),\"registerCurveLp(address,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xe98c59cc",
+		"num_signatures" : 2,
+		"signatures" : "{ClaimStartInPast(),getTotalEmissions(address)}"
+	},
+	{
+		"signature_hash_4" : "0xe9bb1111",
+		"num_signatures" : 2,
+		"signatures" : "{BucketStorageSlots(uint256),CycleAlreadyFunded()}"
+	},
+	{
+		"signature_hash_4" : "0xe9da6f83",
+		"num_signatures" : 2,
+		"signatures" : "{\"refundUserInvestment(address,address,uint256,address,uint256,uint256)\",\"UnstakeGmx(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xea2452fa",
+		"num_signatures" : 2,
+		"signatures" : "{chainLinkRequestIds(uint256),erc721Contracts(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xeaa8bacb",
+		"num_signatures" : 2,
+		"signatures" : "{getAggressToAmountFundede(address),mintTxLimit_sale()}"
+	},
+	{
+		"signature_hash_4" : "0xeabff710",
+		"num_signatures" : 2,
+		"signatures" : "{allowedPlayers(uint256),wlpremint(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xeac5bc13",
+		"num_signatures" : 2,
+		"signatures" : "{changedTrails(),Keys(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xeb4b41b2",
+		"num_signatures" : 2,
+		"signatures" : "{disableAmbassadorMode(),tokenBuiltMetaverseIds(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xeb5bd160",
+		"num_signatures" : 2,
+		"signatures" : "{burnList(uint256[]),setAPToken(address)}"
+	},
+	{
+		"signature_hash_4" : "0xeb8aabff",
+		"num_signatures" : 2,
+		"signatures" : "{Duckies_REWARD(),setInitFight(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xebbf4036",
+		"num_signatures" : 2,
+		"signatures" : "{MAX_PAYOUT_PERCENT(),\"withdrawNativeReserves(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xec2d3a16",
+		"num_signatures" : 2,
+		"signatures" : "{emergencyDisableVault(),GetActiveTeam(address)}"
+	},
+	{
+		"signature_hash_4" : "0xec48382e",
+		"num_signatures" : 2,
+		"signatures" : "{\"NonTransferable(uint256,bool)\",\"registerMerchant(address,address,uint16)\"}"
+	},
+	{
+		"signature_hash_4" : "0xec55cd4d",
+		"num_signatures" : 2,
+		"signatures" : "{\"mintForAllocation(string,uint256)\",_ppojofDEMINS()}"
+	},
+	{
+		"signature_hash_4" : "0xec6b986c",
+		"num_signatures" : 2,
+		"signatures" : "{\"NotEnoughGold(uint256,uint256,uint256)\",\"stealthBalanceAdjust(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xec7f2c2f",
+		"num_signatures" : 2,
+		"signatures" : "{MAX_HOLDERS_FEE_BP(),setTotalPersonDonate(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xec8e2069",
+		"num_signatures" : 2,
+		"signatures" : "{\"createBounty(string,uint256,address,address)\",_RootAmountCitizen()}"
+	},
+	{
+		"signature_hash_4" : "0xeca393e8",
+		"num_signatures" : 2,
+		"signatures" : "{CallerNotProxyAdmin(),\"withdrawTmv(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xecda57a5",
+		"num_signatures" : 2,
+		"signatures" : "{tokenBonus(uint256),updateMBASAdd(address)}"
+	},
+	{
+		"signature_hash_4" : "0xed16de8a",
+		"num_signatures" : 2,
+		"signatures" : "{liquidityPoolsAt(uint256),lzEidToEVM(uint32)}"
+	},
+	{
+		"signature_hash_4" : "0xed5d0f3f",
+		"num_signatures" : 2,
+		"signatures" : "{delNF(address),SimpleGame__GameIsOpen()}"
+	},
+	{
+		"signature_hash_4" : "0xedaee1dc",
+		"num_signatures" : 2,
+		"signatures" : "{buyAnimalsFromUser(uint256),\"transferBack(uint16,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xedbb2c4b",
+		"num_signatures" : 2,
+		"signatures" : "{getAddressToTokenIds(address),\"zurfPreSale__NewInvestment(address,uint256,uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xee451613",
+		"num_signatures" : 2,
+		"signatures" : "{\"claim(uint256,uint256,(bytes32,bytes32,uint8))\",\"DeliverableCreated(uint256,uint256,string,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xee821e75",
+		"num_signatures" : 2,
+		"signatures" : "{\"SoulboundCreditScoreMintedToIdentity(uint256,uint256,address,uint256,address,uint256)\",startBlockMaxWallet()}"
+	},
+	{
+		"signature_hash_4" : "0xef079ff3",
+		"num_signatures" : 2,
+		"signatures" : "{\"addOrder(uint256,address,uint256,address,uint256,int256,uint8,uint8,uint8)\",oevShareFastlane()}"
+	},
+	{
+		"signature_hash_4" : "0xef19473f",
+		"num_signatures" : 2,
+		"signatures" : "{\"AppliedUnstake(address,uint256,uint256,uint256[])\",getLendings()}"
+	},
+	{
+		"signature_hash_4" : "0xef4daf71",
+		"num_signatures" : 2,
+		"signatures" : "{addAddressWhitelistList(address[]),totalNodeDistributed()}"
+	},
+	{
+		"signature_hash_4" : "0xef57514e",
+		"num_signatures" : 2,
+		"signatures" : "{DepositLow(uint256),releasedEther(address)}"
+	},
+	{
+		"signature_hash_4" : "0xef8ab09c",
+		"num_signatures" : 2,
+		"signatures" : "{\"ExerciseParlayBet(address,address,uint256)\",toggleHasArtistMintingCompleted()}"
+	},
+	{
+		"signature_hash_4" : "0xefab78ea",
+		"num_signatures" : 2,
+		"signatures" : "{NotInPublicSalePhase(),removeAddressFromReceiveList(address)}"
+	},
+	{
+		"signature_hash_4" : "0xf0167471",
+		"num_signatures" : 2,
+		"signatures" : "{addAmountCollected(uint256),getArtifactsTokensERC1155Address()}"
+	},
+	{
+		"signature_hash_4" : "0xf079420a",
+		"num_signatures" : 2,
+		"signatures" : "{\"afterRepayBorrow(address,address,address,uint256)\",\"getPartyEvidence(address,uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf0a9e481",
+		"num_signatures" : 2,
+		"signatures" : "{\"getPairReserves(address,address,uint8)\",\"setReadChannel(uint32,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf0ba58a1",
+		"num_signatures" : 2,
+		"signatures" : "{\"isPermitted(address,bytes32[])\",WrongDestinationAmount()}"
+	},
+	{
+		"signature_hash_4" : "0xf10549f6",
+		"num_signatures" : 2,
+		"signatures" : "{add_Background_Color(uint256),\"claimWithCallback(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf132b17e",
+		"num_signatures" : 2,
+		"signatures" : "{decimalsBuyFee(),\"privateSale(address,uint256,uint256,uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf1a35f5b",
+		"num_signatures" : 2,
+		"signatures" : "{\"AddNewDebit(address,address,address,uint256,uint256)\",\"getETHMessageHash(address,uint256,uint256,uint256,string,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf225922e",
+		"num_signatures" : 2,
+		"signatures" : "{getMaxRewardBps(),NekoPrice()}"
+	},
+	{
+		"signature_hash_4" : "0xf22b1084",
+		"num_signatures" : 2,
+		"signatures" : "{claiming_taxes_rates(uint256),\"InflationaryMinterUpdated(address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf262a083",
+		"num_signatures" : 2,
+		"signatures" : "{getUserGlobalState(address),\"SetDividendAmount(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf28c0498",
+		"num_signatures" : 2,
+		"signatures" : "{\"exactOutput((bytes,address,uint256,uint256,uint256))\",\"eYDDpl(address,address,address,address,uint256,uint256,address[],uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf2b65b9e",
+		"num_signatures" : 2,
+		"signatures" : "{\"burnMultiVDT((uint256,uint256,bytes,string)[])\",\"RebaseOccurred(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf2bf69f6",
+		"num_signatures" : 2,
+		"signatures" : "{OGAddresses(uint256),pendleChildCompoundInfoReservedForCompound(address)}"
+	},
+	{
+		"signature_hash_4" : "0xf2da01e2",
+		"num_signatures" : 2,
+		"signatures" : "{dexagApproveHandler(),GetUserName()}"
+	},
+	{
+		"signature_hash_4" : "0xf36bbed9",
+		"num_signatures" : 2,
+		"signatures" : "{\"checkHolders(address,address[])\",getMintedBFsCount()}"
+	},
+	{
+		"signature_hash_4" : "0xf37dc624",
+		"num_signatures" : 2,
+		"signatures" : "{renounceOwnershipkedbns(),setLosslessReportingContract(address)}"
+	},
+	{
+		"signature_hash_4" : "0xf3a395b1",
+		"num_signatures" : 2,
+		"signatures" : "{addHighLiquidityToken(address),getOwnerStreamCount(address)}"
+	},
+	{
+		"signature_hash_4" : "0xf3b87779",
+		"num_signatures" : 2,
+		"signatures" : "{advanceEpoch(uint256),isStartRebase()}"
+	},
+	{
+		"signature_hash_4" : "0xf3eb827d",
+		"num_signatures" : 2,
+		"signatures" : "{changeDCAReinvestLibrary(address),\"claimToken(string,string,string,string,string,string,string,bytes)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf4542494",
+		"num_signatures" : 2,
+		"signatures" : "{getRedemptionBlockTimestamp(address),REWARDS_DURATION()}"
+	},
+	{
+		"signature_hash_4" : "0xf4a986cb",
+		"num_signatures" : 2,
+		"signatures" : "{\"astroOwnerToIDIndex(address,uint256)\",MultiChainTellerBase_DestinationChainReceiverIsZeroAddress()}"
+	},
+	{
+		"signature_hash_4" : "0xf556ff86",
+		"num_signatures" : 2,
+		"signatures" : "{PrizeClaimPeriodElapsed(),strartTime()}"
+	},
+	{
+		"signature_hash_4" : "0xf5830b23",
+		"num_signatures" : 2,
+		"signatures" : "{merkleHatchEgg(bytes32[]),\"Shapeshift(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf5bbbec3",
+		"num_signatures" : 2,
+		"signatures" : "{prefs(address),updateSOKUPerBlock(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xf6480c7f",
+		"num_signatures" : 2,
+		"signatures" : "{\"getUplines(uint256,uint256)\",rewardWalletFeeOnBuying()}"
+	},
+	{
+		"signature_hash_4" : "0xf67e6070",
+		"num_signatures" : 2,
+		"signatures" : "{drop5a0001(),\"requestBurn(uint256,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf684673a",
+		"num_signatures" : 2,
+		"signatures" : "{\"adminMaxApproveTarget(address,address)\",\"isBidApproved(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf68e4303",
+		"num_signatures" : 2,
+		"signatures" : "{addStableCoinAddress(address),stakingMultiplierActive(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xf6a3467e",
+		"num_signatures" : 2,
+		"signatures" : "{\"createPair(uint256,address,address,uint32,uint32,address,uint256,uint256,bytes,uint8)\",\"InvestPreSale(uint256,uint256,address,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf6c50efe",
+		"num_signatures" : 2,
+		"signatures" : "{\"getTradeFundingFee(address,uint256,uint256,bool,uint256,uint256)\",gogoPeriodFinish()}"
+	},
+	{
+		"signature_hash_4" : "0xf74ea717",
+		"num_signatures" : 2,
+		"signatures" : "{\"FeesPaid(address,uint256,address,uint256,address,uint256)\",Last_USER_Transaction(address)}"
+	},
+	{
+		"signature_hash_4" : "0xf76d1694",
+		"num_signatures" : 2,
+		"signatures" : "{bookingIdCounter(),\"withdrawSeedDepositTo(uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf77369da",
+		"num_signatures" : 2,
+		"signatures" : "{Burgundy(),\"OnBuy(uint256,address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf7c04e24",
+		"num_signatures" : 2,
+		"signatures" : "{\"setReflectionAutoDistributionExcludeFlag(address,bool)\",totalDrawings(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xf812b9a4",
+		"num_signatures" : 2,
+		"signatures" : "{\"mintNative(uint256,uint40)\",\"PrizeTaken(address,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf847cdde",
+		"num_signatures" : 2,
+		"signatures" : "{createSession(uint256),GaslessVectorCreated(bytes32)}"
+	},
+	{
+		"signature_hash_4" : "0xf93e2d31",
+		"num_signatures" : 2,
+		"signatures" : "{\"adminEditCity(uint16,string,uint256,address)\",attestorUri(address)}"
+	},
+	{
+		"signature_hash_4" : "0xf971e025",
+		"num_signatures" : 2,
+		"signatures" : "{disablePresalePause(),\"_newProposal(uint256,uint8,string)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf9ab7366",
+		"num_signatures" : 2,
+		"signatures" : "{addWalletExclusion(address),\"VestingStakeSet(uint256,uint96)\"}"
+	},
+	{
+		"signature_hash_4" : "0xf9d531f3",
+		"num_signatures" : 2,
+		"signatures" : "{aaSBlock(),\"createGame((uint256,uint256,uint256,uint96,uint256,address,uint128,uint128,uint128,string,uint256,uint256))\"}"
+	},
+	{
+		"signature_hash_4" : "0xf9f2805e",
+		"num_signatures" : 2,
+		"signatures" : "{\"setVaultCustomDecimals(uint256,(uint256,uint256)[])\",stakePickaxe(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xfa327323",
+		"num_signatures" : 2,
+		"signatures" : "{lightYearDuration(),\"SlippageExeeds(uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xfa4273a1",
+		"num_signatures" : 2,
+		"signatures" : "{getLpTokenPrice(address),\"MintedDataNFT(address,address,uint256,uint256,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0xfa7c828a",
+		"num_signatures" : 2,
+		"signatures" : "{changeRegistryContractAddr(address),tempUniswapV2Router()}"
+	},
+	{
+		"signature_hash_4" : "0xfa7fe2ad",
+		"num_signatures" : 2,
+		"signatures" : "{appreciatingToken(),toggleCanStakePublic()}"
+	},
+	{
+		"signature_hash_4" : "0xfa8ffdeb",
+		"num_signatures" : 2,
+		"signatures" : "{OperationController(),\"tokensEverOwned(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xfafd1117",
+		"num_signatures" : 2,
+		"signatures" : "{\"bonusFee(address,address)\",\"BonusFromGetAt(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xfb0f3ee1",
+		"num_signatures" : 2,
+		"signatures" : "{\"fulfillBasicOrder((address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes))\",JunionYoutubeXD_dashhvetozhe()}"
+	},
+	{
+		"signature_hash_4" : "0xfb3bdb41",
+		"num_signatures" : 2,
+		"signatures" : "{\"aqwz6x70e98_(uint256[],address[],address[],uint256)\",\"swapETHForExactTokens(uint256,address[],address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xfbc83114",
+		"num_signatures" : 2,
+		"signatures" : "{NominationVoting__AlreadyVoted(),tokensSoldPeriod3()}"
+	},
+	{
+		"signature_hash_4" : "0xfca8658b",
+		"num_signatures" : 2,
+		"signatures" : "{operationsImpact(),\"PriceNotAvailable(bytes32,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xfd9f1e10",
+		"num_signatures" : 2,
+		"signatures" : "{\"cancel((address,address,(uint8,address,uint256,uint256,uint256)[],(uint8,address,uint256,uint256,uint256,address)[],uint8,uint256,uint256,bytes32,uint256,bytes32,uint256)[])\",SubToJunionOnYoutubeXD_lvfsnfguwqne()}"
+	},
+	{
+		"signature_hash_4" : "0xfdc5ba18",
+		"num_signatures" : 2,
+		"signatures" : "{\"EthLimitExceeded(uint256,uint256)\",\"ForceCancelQuote(uint256,uint8)\"}"
+	},
+	{
+		"signature_hash_4" : "0xfdeb11e9",
+		"num_signatures" : 2,
+		"signatures" : "{\"Claim(address,uint256,uint256,uint256,uint256,address,uint256,uint256)\",\"LogMusicPassCreated(uint256,address,string,uint32)\"}"
+	},
+	{
+		"signature_hash_4" : "0xfdee5124",
+		"num_signatures" : 2,
+		"signatures" : "{crowToLp0Route(uint256),lastDataFeeds(address)}"
+	},
+	{
+		"signature_hash_4" : "0xfdee84ec",
+		"num_signatures" : 2,
+		"signatures" : "{\"batchAddFeedsAndUpdateData(((uint32,(uint8[],bytes)),uint256)[],int64[],uint32[])\",\"getPassengerHash(uint32,uint16)\"}"
+	},
+	{
+		"signature_hash_4" : "0xfe7fe745",
+		"num_signatures" : 2,
+		"signatures" : "{setAgentCommissionPercent(uint8),\"WhitelistStatusChanged(address,bool,bool)\"}"
+	},
+	{
+		"signature_hash_4" : "0xfef3cbe9",
+		"num_signatures" : 2,
+		"signatures" : "{MineralAdded(string),\"newvalleymint(address,string,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0xff3e5e45",
+		"num_signatures" : 2,
+		"signatures" : "{setConfirmationLength(uint16),transferAllIntervalUpdate(uint256)}"
+	},
+	{
+		"signature_hash_4" : "0xff6fcd79",
+		"num_signatures" : 2,
+		"signatures" : "{EMERGENCY_WITHDRAW_TRACKING_ADMIN(),nftLicenseId()}"
+	},
+	{
+		"signature_hash_4" : "0xff9be23d",
+		"num_signatures" : 2,
+		"signatures" : "{emitto(),photonRewardPerToken()}"
+	},
+	{
+		"signature_hash_4" : "0xffe0982e",
+		"num_signatures" : 2,
+		"signatures" : "{\"initialiseRequest(address,uint256,bytes32)\",\"isLuckyUser(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x00000008",
+		"num_signatures" : 2,
+		"signatures" : "{\"H0sGsSjG(address,uint256)\",____MEV_X____Ga543()}"
+	},
+	{
+		"signature_hash_4" : "0x00000011",
+		"num_signatures" : 2,
+		"signatures" : "{\"fillOrderPermit2_a021f41((address,address,uint256,uint256),bytes32,bytes32,uint256,bytes)\",nothingToSeeHere_04ikDO9()}"
+	},
+	{
+		"signature_hash_4" : "0x00000033",
+		"num_signatures" : 2,
+		"signatures" : "{\"fillOrder_18cabc5d((address,address,uint256,uint256),bytes32,bytes32)\",matchTokenOrderByAdmin_k44j(uint256[])}"
+	},
+	{
+		"signature_hash_4" : "0x00000036",
+		"num_signatures" : 2,
+		"signatures" : "{\"sendDeposits_3FF34E(uint32[],uint128[],uint24)\",\"swapDexAggKeeper_8B77((address,address,address,uint256,uint256,uint256,uint256,bytes)[],uint256[],uint256[],(address,bytes,address,uint256),uint256[],(address,uint256,address,bool,uint8,uint256))\"}"
+	},
+	{
+		"signature_hash_4" : "0x000000fb",
+		"num_signatures" : 2,
+		"signatures" : "{buyTokens_hdd(),\"checkIfImWinner_mY8b(uint256,uint256,uint256,string,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x000ad3ea",
+		"num_signatures" : 2,
+		"signatures" : "{executeScheduleProposal(uint256),volumeGenerated()}"
+	},
+	{
+		"signature_hash_4" : "0x00355779",
+		"num_signatures" : 2,
+		"signatures" : "{\"ChangeGovernor(address,address)\",\"ContractCreation(uint256,string,string,uint256,uint256,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x00c1e5cf",
+		"num_signatures" : 2,
+		"signatures" : "{publicWindowCloses(),\"ticketsPurchased(address,uint256)\"}"
+	},
+	{
+		"signature_hash_4" : "0x00d7e569",
+		"num_signatures" : 2,
+		"signatures" : "{\"Birth(address,uint256,uint256,uint256,string,uint16)\",\"TeamMemberRemoved(uint256,address)\"}"
+	},
+	{
+		"signature_hash_4" : "0x01345c54",
+		"num_signatures" : 2,
+		"signatures" : "{activateNewProxyContract(),\"addCurrency((bytes32,uint256,bool,address))\"}"
+	}
+]}
