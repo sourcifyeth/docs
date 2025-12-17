@@ -1,0 +1,108 @@
+---
+title: "Sourcify 2025 Recap"
+authors:
+  - name: Kaan Uzdogan
+    url: https://github.com/kuzdogan
+    image_url: https://github.com/kuzdogan.png
+tags: [Sourcify, Recap]
+date: 2025-12-17
+---
+
+# Sourcify 2025 Recap
+
+2025 is coming to an end and it's a good time to look back at what we've achieved this year. 
+
+This year was the year we shipped the most within Sourcify. We were mostly heads down building. We now have the feeling that Sourcify in its current form has a solid foundation and we completed most of the "must have" features. 
+
+Next year we will be focusing on getting out there and promoting Sourcify, and having such a strong foundation will let us go all in on community building and outreach. We still saw a lot of traction even if we haven't put much effort into it this year.
+
+This also means the next year will be more about getting out there and promoting Sourcify, as well as focusing our efforts elsewhere where we think we can make a bigger impact. More on that in a separate post. 
+
+**Argot:** Before we get into the technical achievements, the biggest news for Sourcify has been the foundation of the [Argot Collective](https://argot.org). Argot is an Ethereum Foundation spin-out with Ethereum infrastructure projects, including the Solidity language, and will be the new home for Sourcify!
+
+Next, here's a quick recap of what we've achieved this year at Sourcify:
+
+### APIv2
+
+The biggest change this year was finalizing the [APIv2](/docs/api/). We first shipped endpoints to lookup verified contracts (see the [blog post](/blog/apiv2-lookup-endpoints/)), and later we shipped the [verify endpoints](https://github.com/argotorg/sourcify/issues/2033). 
+
+There were many reasons to move into this direction. The main ones were:
+- The legacy API was based on a filesystem storage. The filesystem does not scale and limits us in many ways.
+- After switching to a database storage, we were able to share a lot more data around the verification process, which wasn't reflected in the legacy API.
+- After submitting a verification, users received a response only after compilation and verification completes. This often led to timeouts and hanging requests causing both bad UX and server load.
+
+This was a very well executed series of milestones with a [clear design process](https://github.com/argotorg/sourcify/issues/1470), through thinking, discussion, and feedback from the community. We are proud of how and what we shipped. 
+
+Our APIs serve over 15 Million requests per day as of now with minimal downtime this year (all Sourcify APIs). 
+
+### Verifier Alliance
+
+The other most impactful change this year was the [Verifier Alliance](https://verifieralliance.org/). We teamed up with Blockscout and Routescan to create a shared database of verified contracts. The initiative's seeds were planted in 2024 and this year we finally shipped the first version of the database and got all members to start sharing their verified contracts.
+
+This dataset is crucial for the decentralization and openness of the verified contract data, and we believe this will enable a lot of innovation in the EVM tooling space. Our efforts were also recognized by the [Trillion Dollar Security Initiative](https://blog.ethereum.org/2025/08/20/trillion-dollar-sec-2) by the Ethereum Foundation, as well as through direct feedback from the community. 
+
+### Verify Everywhere
+
+"Verify Everywhere" is our motto moving forward and the direction we are trying to push the whole ecosystem towards. We believe contracts should be verified everywhere instead of a single verifier/explorer. This should not cause any friction for the user and should be seamless. 
+
+In this direction we shipped the [Remix plugin](/docs/how-to-verify/#remix) and it received a lot of traction from day 1.
+
+We also implemented the necessary changes in Hardhat to get [our PR](https://github.com/NomicFoundation/hardhat/pull/7600) accepted and shipped, and since recently Hardhat also supports verifying on multiple verifiers at once.
+
+We are hoping to have this in Foundry ASAP as well.
+
+Finally, apart from the tooling, we also implemented this on Sourcify side. This means, whenever a user verifies a contract on Sourcify, we will [**submit this verification to all verifiers**](https://github.com/argotorg/sourcify/issues/2417) (Blockscout, Etherscan, Routescan). 
+
+### Vyper support
+
+We shipped Vyper support this year. This was a long time coming and we are happy to have Vyper on board! Our language agnostic architecture allows us to support any EVM language without any friction.
+
+### verify.sourcify.dev UI
+
+Our new verification UI [verify.sourcify.dev](https://verify.sourcify.dev) was live this year. It leverages the new APIv2 capabilities such as showing job status, user friendly error messages, bytecode diffs, etc. See one example [here](https://verify.sourcify.dev/jobs/ada9b20e-5304-494d-ad87-c2ef2f11c3b2).
+
+### repo.sourcify.dev UI
+
+We also shipped the new [repo.sourcify.dev](https://repo.sourcify.dev) based on the rich information APIv2 endpoints provide. 
+
+All information a user might need related to a compilation and a verified contract is available in the repo. 
+
+### 4byte.sourcify.dev
+
+We took over the most popular 4byte signature service [openchain.xyz](https://openchain.xyz)'s database and API. Today this service serves over 7 Million requests per day.
+
+We seeded the database with the existing openchain dataset, the [4byte.directory](https://4byte.directory) dataset, and the [etherface](https://github.com/volsa/etherface) data, as well as our own verified contracts dataset. We implemented the exact openchain API and now Sourcify serves all signature requests to openchain.xyz as well.
+
+We also shipped a friendly web interface to search for signatures in the database. See [4byte.sourcify.dev](https://4byte.sourcify.dev) for more details, and this [short analysis](/blog/signatures-analysis/) on signature collisions.
+
+### BigQuery and AI Playground
+
+We started to mirror the Sourcify dataset on BigQuery. This allows fast querying and analysis of the data, as well as using Google Colab Python notebooks to analyze data, combined with other datasets ([example](https://colab.research.google.com/drive/19g-wOgVmEdxhOF159Qh-93g1xVlpOoZ3?usp=sharing)).
+
+We also built an [AI playground](https://sourcify.dev/#/dataset-playground) on our main page to demonstrate the power of the open Sourcify dataset. Users can ask questions like "How many contracts are verified on Sourcify?" or "What is the most verified contract?" and the AI will answer with the necessary SQL query to be executed on the BigQuery dataset.
+
+### Verified Contract Coverage
+
+We reached a whopping 11 million verified contracts on Sourcify at this year's end, from 6M in January. We are mostly either on par with or with higher verified contract count per chain than other verifiers.
+
+### Lib-sourcify on Browser (Local Verification)
+
+We refactored lib-sourcify to work on browser. This allows us to use Sourcify in block explorers, wallets and other interfaces, and to verify contracts locally on users' machines.
+
+Indeed this is exactly what [Otterscan](https://github.com/otterscan/otterscan) allows their users to do, and we are happy to see this becoming a reality. See this [example contract](https://sepolia.otterscan.io/address/0xA7777cF34Ff930a60FB890124CE55212f0754f9f/contract) and click "Verify Locally" to see the local verification in action.
+
+### Similarity Search
+
+The new [similarity search API endpoint](https://github.com/argotorg/sourcify/issues/1642) (`/v2/verify/similarity`) allows users to find similar contracts by bytecode. This is a powerful feature that allows block explorers to try to use similarity search if users visit a non-verified contract.
+
+### EIP-7834
+
+We had an EIP within the EOF proposal: [EIP-7834: Separate Metadata Section for EOF](https://eips.ethereum.org/EIPS/eip-7834). EOF would have simplified the verification process massively and we'd be ready day-1. Very unfortunate EOF was not shipped. We still need to continue [workarounds and heuristics](/blog/finding-auxdatas-in-bytecode/) to separate the code from data in the EVM bytecode. Unstructured bytecode is a pain.
+
+### Talks
+
+As said, we were mostly heads down building this year but we still gave a few talks and presentations at the end of the year around Devconnect:
+
+- [Why Contract Verification Needs to Open Up](https://www.youtube.com/watch?v=S8QarbmvpcA) @trustless://eil
+- [The State of Source Code Verification Closed, Painful, and Ready for Change](https://www.youtube.com/watch?v=4DLWcGtzh8A) @Solidity Summit 2025
+- [Sourcify & Open Contract Verification](https://www.youtube.com/watch?v=G4oCJGwPOcI) @Open Source Hub Devconnect ARG.
