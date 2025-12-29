@@ -3,7 +3,7 @@ import TotalRepoSize from "./TotalRepoSize"
 # File Repositories
 
 :::danger Deprecation Notice
-The file repositories are **deprecated** and no longer supported.
+The file repositories are **deprecated** and no longer supported. The [Sourcify Database](/docs/repository/sourcify-database/) serves as the source of truth now.
 
 Only the IPFS pinning service still uses the logical structure of RepositoryV2 for uploading files to IPFS.
 
@@ -83,7 +83,7 @@ Unfortunately, publishing under IPNS is temporarily disabled. This is because of
 ## Download
 
 :::danger No New Exports
-Following deprecating the filesystem based repositories, **we no longer publish new exports**. We recommend resorting to the [Parquet exports](/docs/repository/sourcify-database/#download) instead. 
+Following deprecating the filesystem based repositories, **we no longer publish new exports**. We recommend resorting to the [Parquet exports](/docs/repository/download-dataset/) instead. 
 
 You can still download the existing export for a while. Double check the date of the export in the manifest file. If you need these exports please reach out to us.
 :::
