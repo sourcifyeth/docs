@@ -1,16 +1,13 @@
-# Contract Repository
+# Contract Dataset
 
-Sourcify stores the contracts in multiple storage backends and gives the option to choose which one to use. In short there are the following options:
+Sourcify stores all verified contracts in multiple storage backends and gives multiple options to access the dataset. In short, there are the following options:
 
-- `RepositoryV1`
-- `RepositoryV2`
-- `SourcifyDatabase`
-- `AllianceDatabase`
+- **Sourcify Database**: Sourcify's source of truth, a [postgres database](/docs/repository/sourcify-database). Accessible via the [API](/docs/api/) and the [Repo UI](https://repo.sourcify.dev/).
+- **Verifier Alliance Database**: Shared database with other verification services. See the [Verifier Alliance](https://verifieralliance.org/) website for more info.
+- **BigQuery**: For convenience, the Sourcify dataset is uploaded to [BigQuery](/docs/repository/sourcify-database/#bigquery-datasets).
+- **IPFS**: The sources of all verified contracts are pinned on [IPFS](/docs/repository/file-repositories/#ipfs).
 
-For details see [Choosing the storage backend](https://github.com/argotorg/sourcify/tree/staging/services/server#choosing-the-storage-backend).
 
 ## Download
 
-You can download the whole contract file repository in zips or the Sourcify database in Parquet format. Follow the guides in each page:
-- [Download RepositoryV2](/docs/repository/file-repositories/#download)
-- [Download SourcifyDatabase](/docs/repository/sourcify-database/#download)
+You can download the Sourcify database in Parquet format. Follow this guide: [Download the Dataset](/docs/repository/sourcify-database/#download).

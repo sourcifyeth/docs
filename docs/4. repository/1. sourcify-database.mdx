@@ -1,6 +1,6 @@
 # Sourcify Database
 
-Sourcify Database is the main storage backend for Sourcify. It is a PostgreSQL database that follows the [Verified Alliance Schema](https://github.com/verifier-alliance/database-specs) as its base with few modifications.
+Sourcify Database is the main storage backend for Sourcify. It is a PostgreSQL database that follows the [Verifier Alliance Schema](https://github.com/verifier-alliance/database-specs) as its base with few modifications.
 
 On a high level, these modifications are:
 
@@ -141,8 +141,10 @@ parquet meta compiled_contracts_0_5000.parquet
 
 alternatively use your favorite data processing tool or import this data into a database.
 
-## BigQuery Datasets
+## BigQuery Dataset
 
 We also provide a public BigQuery dataset for convenient querying and exploration:
 
-[Sourcify production dataset](https://console.cloud.google.com/bigquery/analytics-hub/exchanges/projects/1019539084286/locations/europe-west1/dataExchanges/sourcify_19a0c79ef3a/listings/sourcify_19a0c7d0be2?project=tranquil-petal-125711)
+[Sourcify BigQuery dataset](https://console.cloud.google.com/bigquery/analytics-hub/exchanges/projects/1019539084286/locations/europe-west1/dataExchanges/sourcify_19a0c79ef3a/listings/sourcify_19a0c7d0be2?project=tranquil-petal-125711)
+
+The dataset is updated continuously as new contracts are verified. You need a Google account to access it.

@@ -2,14 +2,15 @@ import TotalRepoSize from "./TotalRepoSize"
 
 # File Repositories
 
-This page describes the `RepositoryV1` and `RepositoryV2`, which are file systems (deprecated).
+:::danger Deprecation Notice
+The file repositories are **deprecated** and no longer supported.
 
-:::warning
-The file repositories are used by the legacy API that is deprecated. Please use APIv2 and the [Database](/docs/repository/sourcify-database/) as the main storage backend.
+Only the IPFS pinning service still uses the logical structure of RepositoryV2 for uploading files to IPFS.
 
-You can still use RepositoryV2 just to save files to be pinned on IPFS.
+For custom Sourcify instances, we recommend migrating to APIv2 and the [Database](/docs/repository/sourcify-database/) as the main storage backend. See the [migration guide](/docs/database-migration).
 :::
 
+This page describes the `RepositoryV1` and `RepositoryV2`, which are file systems (deprecated).
 
 ## Table of Contents
 
@@ -74,11 +75,10 @@ The files are exactly the same so their IPFS hashes will not change, and you can
 
 ## IPFS
 
-Unfortunatelly publishing under IPNS is temporarily disabled. This is because of the difficulty of managing the whole filesystem over IPFS (with MFS etc.) and updating the IPNS regularly. 
+The sources of all verified contracts are pinned on IPFS. The logical structure of RepositoryV2 serves as the basis for uploading to IPFS. Files can be accessed via their individual CIDs (e.g. [`QmVij3h9z536ZG5cRpUmTfdoN9KR1Xp4ix2P7to9dPHgE5`](https://ipfs.io/ipfs/QmVij3h9z536ZG5cRpUmTfdoN9KR1Xp4ix2P7to9dPHgE5)).
 
-We still pin all the files on IPFS so you can access them over their individual CIDs (e.g. [`QmVij3h9z536ZG5cRpUmTfdoN9KR1Xp4ix2P7to9dPHgE5`](https://ipfs.io/ipfs/QmVij3h9z536ZG5cRpUmTfdoN9KR1Xp4ix2P7to9dPHgE5)).
+Unfortunately, publishing under IPNS is temporarily disabled. This is because of the difficulty of managing the whole filesystem over IPFS (with MFS etc.) and updating the IPNS regularly. 
 
-Look at the [Download section](#download) to learn how to download the whole repository.
 
 ## Download
 
