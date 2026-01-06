@@ -1,6 +1,6 @@
 # Sourcify Database
 
-Sourcify Database is the main storage backend for Sourcify. It is a PostgreSQL database that follows the [Verified Alliance Schema](https://github.com/verifier-alliance/database-specs) as its base with few modifications.
+Sourcify Database is the main storage backend for Sourcify. It is a PostgreSQL database that follows the [Verifier Alliance Schema](https://github.com/verifier-alliance/database-specs) as its base with few modifications.
 
 On a high level, these modifications are:
 
@@ -65,84 +65,12 @@ Other known inconsistencies in the data below (not planned to fix) are documente
 
 ## Download
 
-:::warning Deprecation Notice
-The current parquet download format will be deprecated. A new `/v2` endpoint will be introduced with an updated format. Documentation for the new format will be added once it is live. Feel free to use the export in its current form, but be aware that it will be replaced.
-:::
+See [Download the Dataset](/docs/repository/download-dataset/) for instructions on downloading the database in Parquet format.
 
-We dump the whole database daily in [Parquet](https://en.wikipedia.org/wiki/Apache_Parquet) format and upload it to a Cloudflare R2 storage. You can access the manifest file at https://export.sourcify.dev ( `.dev` redirects to `.app` domain, which also belongs to Sourcify). The script that does the dump is at [sourcifyeth/parquet-export](https://github.com/sourcifyeth/parquet-export).
-
-[export.sourcify.dev](https://export.sourcify.dev) will redirect to a `manifest.json` file:
-
-<details>
-<summary>manifest.json</summary>
-
-```json
-{
-  "timestamp": 1726030203254,
-  "dateStr": "2024-09-11T04:50:03.254904Z",
-  "files": {
-    "code": [
-      "code/code_0_100000.parquet",
-      "code/code_100000_200000.parquet",
-      ...
-      "code/code_2700000_2800000.parquet"
-    ],
-    "contracts": [
-      "contracts/contracts_0_1000000.parquet",
-      ...
-      "contracts/contracts_4000000_5000000.parquet"
-    ],
-    "contract_deployments": [
-      "contract_deployments/contract_deployments_0_1000000.parquet",
-      ...
-      "contract_deployments/contract_deployments_5000000_6000000.parquet"
-    ],
-    "compiled_contracts": [
-      "compiled_contracts/compiled_contracts_0_5000.parquet",
-      ...
-      "compiled_contracts/compiled_contracts_815000_820000.parquet"
-    ],
-    "verified_contracts": [
-      "verified_contracts/verified_contracts_0_1000000.parquet",
-      ...
-      "verified_contracts/verified_contracts_5000000_6000000.parquet"
-    ],
-    "sourcify_matches": [
-      "sourcify_matches/sourcify_matches_0_100000.parquet",
-      ...
-      "sourcify_matches/sourcify_matches_5300000_5400000.parquet"
-    ]
-  }
-}
-```
-
-</details>
-
-You can download all the files and use a parquet client to query, inspect, or process the data.
-
-1. Download the manifest file (`-L` to follow redirects):
-
-   ```bash
-   curl -L -O https://export.sourcify.dev/manifest.json
-   ```
-
-2. Download all the tables listed in the manifest:
-   ```bash
-   jq -r '.files | keys[] as $k | .[$k][]' manifest.json | xargs -I {} curl -L -O https://export.sourcify.dev/{}
-   ```
-
-For example you can install the [`parquet-cli`](https://github.com/apache/parquet-java/blob/master/parquet-cli/README.md) to do basic inspection:
-
-```bash
-brew install parquet-cli
-
-parquet meta compiled_contracts_0_5000.parquet
-```
-
-alternatively use your favorite data processing tool or import this data into a database.
-
-## BigQuery Datasets
+## BigQuery Dataset
 
 We also provide a public BigQuery dataset for convenient querying and exploration:
 
-[Sourcify production dataset](https://console.cloud.google.com/bigquery/analytics-hub/exchanges/projects/1019539084286/locations/europe-west1/dataExchanges/sourcify_19a0c79ef3a/listings/sourcify_19a0c7d0be2?project=tranquil-petal-125711)
+[Sourcify BigQuery dataset](https://console.cloud.google.com/bigquery/analytics-hub/exchanges/projects/1019539084286/locations/europe-west1/dataExchanges/sourcify_19a0c79ef3a/listings/sourcify_19a0c7d0be2?project=tranquil-petal-125711)
+
+The dataset is updated continuously as new contracts are verified. You need a Google account to access it.
