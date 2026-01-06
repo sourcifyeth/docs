@@ -21,7 +21,7 @@ The export format has undergone a redesign to make it more efficient and easier 
 - **File metadata** (checksums, sizes, timestamps) is provided directly by the Google Cloud Storage API.
 - Files use **zstd compression** built into the Parquet format.
 
-The dataset is available at [export.sourcify.dev](https://export.sourcify.dev/). All files of the v2 format are stored under the `v2/` prefix.
+The dataset is available at [export.sourcify.dev/?prefix=v2/](https://export.sourcify.dev/?prefix=v2/). All files of the v2 format are stored under the `v2/` prefix.
 
 ### Downloading and Syncing the Dataset
 
@@ -36,7 +36,7 @@ curl -s 'https://export.sourcify.dev/?prefix=v2/' | \
 Alternatively, the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html#getting-started-install-instructions) makes it easy to download and keep the dataset in sync. The following command downloads the entire dataset on the first run, and on subsequent runs only downloads new or modified files:
 
 ```bash
-aws s3 sync s3://sourcify-parquet-export/v2/ ./sourcify-dataset --endpoint-url https://storage.googleapis.com --no-sign-request
+aws s3 sync s3://sourcify-production-parquet-export/v2/ ./sourcify-dataset --endpoint-url https://storage.googleapis.com --no-sign-request
 ```
 
 ### Note on `sourcify_matches`
