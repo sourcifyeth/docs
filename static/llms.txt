@@ -37,6 +37,10 @@ The `swagger.json` file above is structured as follows:
 
 - paths["/v2/verify/{chainId}/{address}"].post
 
+### Check verification job status
+
+- paths["/v2/verify/{verificationId}"].get
+
 ### To read smart contracts read
 
 - paths["/v2/contract/{chainId}/{address}"].get
