@@ -27,33 +27,17 @@ import SwaggerContainer from "../src/components/SwaggerContainer";
           curl -sS -X POST \
             'https://sourcify.dev/server/v2/verify/11155111/0x2738d13E81e30bC615766A0410e7cF199FD59A83' \
             -H 'Content-Type: application/json' \
-            --data @- <<'JSON'
-            {
-            "stdJsonInput": {
-                "language": "Solidity",
-                "sources": {
-                "contracts/Storage.sol": {
-                    "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract Storage {\n    uint256 number;\n\n    function setNumber(uint256 newNumber) public {\n        number = newNumber;\n    }\n\n    function getNumber() public view returns (uint256) {\n        return number;\n    }\n}\n"
-                }
-                },
-                "settings": {
-                "optimizer": {
-                    "enabled": false,
-                    "runs": 200
-                }
-                }
-            },
-            "compilerVersion": "0.8.7+commit.e28d00a7",
-            "contractIdentifier": "contracts/Storage.sol:Storage",
-            "creationTransactionHash": "0xb6ee9d528b336942dd70d3b41e2811be10a473776352009fd73f85604f5ed206"
-            }
-            JSON
+            --data-raw '{"stdJsonInput":{"language":"Solidity","sources":{"contracts/Storage.sol":{"content":"// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract Storage {\n    uint256 number;\n\n    function setNumber(uint256 newNumber) public {\n        number = newNumber;\n    }\n\n    function getNumber() public view returns (uint256) {\n        return number;\n    }\n}\n"}},"settings":{"optimizer":{"enabled":false,"runs":200}}},"compilerVersion":"0.8.7+commit.e28d00a7","contractIdentifier":"contracts/Storage.sol:Storage","creationTransactionHash":"0xb6ee9d528b336942dd70d3b41e2811be10a473776352009fd73f85604f5ed206"}'
         )
 
-        verification_id=$(echo "$verification_result" | jq -r '.verificationId')
+        verification_id=$(echo "$verification_result" | jq -r '.verificationId // empty')
 
-        curl -sS \
-          "https://sourcify.dev/server/v2/verify/${verification_id}"
+        if [ -n "$verification_id" ]; then
+          curl -sS \
+            "https://sourcify.dev/server/v2/verify/${verification_id}"
+        else
+          echo "$verification_result"
+        fi
         ```
     </TabItem>
 
@@ -64,40 +48,43 @@ import SwaggerContainer from "../src/components/SwaggerContainer";
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
               stdJsonInput: {
                 language: "Solidity",
                 sources: {
-                  "contracts/Storage.sol": {
-                    content:
-                      "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract Storage {\n    uint256 number;\n\n    function setNumber(uint256 newNumber) public {\n        number = newNumber;\n    }\n\n    function getNumber() public view returns (uint256) {\n        return number;\n    }\n}\n",
-                  },
+                    "contracts/Storage.sol": {
+                        content: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract Storage {\n    uint256 number;\n\n    function setNumber(uint256 newNumber) public {\n        number = newNumber;\n    }\n\n    function getNumber() public view returns (uint256) {\n        return number;\n    }\n}\n",
+                    },
                 },
                 settings: {
-                  optimizer: {
-                    enabled: false,
-                    runs: 200,
-                  },
+                    optimizer: {
+                        enabled: false,
+                        runs: 200,
+                    },
                 },
               },
               compilerVersion: "0.8.7+commit.e28d00a7",
               contractIdentifier: "contracts/Storage.sol:Storage",
-              creationTransactionHash:
-                "0xb6ee9d528b336942dd70d3b41e2811be10a473776352009fd73f85604f5ed206",
+              creationTransactionHash: "0xb6ee9d528b336942dd70d3b41e2811be10a473776352009fd73f85604f5ed206",
             }),
           }
         );
 
-        const { verificationId } = await verificationResponse.json();
+        const verificationResult = await verificationResponse.json();
+        const { verificationId } = verificationResult;
 
-        const jobResponse = await fetch(
-          `https://sourcify.dev/server/v2/verify/${verificationId}`
-        );
+        if (verificationId) {
+          const jobResponse = await fetch(
+            `https://sourcify.dev/server/v2/verify/${verificationId}`
+          );
 
-        const jobResult = await jobResponse.json();
-        console.log(jobResult);
+          const jobResult = await jobResponse.json();
+          console.log(jobResult);
+        } else {
+          console.log(verificationResult);
+        }
         ```
     </TabItem>
 
@@ -116,7 +103,7 @@ import SwaggerContainer from "../src/components/SwaggerContainer";
     <TabItem value="js" label="Javascript">
         ```js
         const response = await fetch(
-          "https://sourcify.dev/server/v2/contract/11155111/0x2738d13E81e30bC615766A0410e7cF199FD59A83?fields=all"
+            "https://sourcify.dev/server/v2/contract/11155111/0x2738d13E81e30bC615766A0410e7cF199FD59A83?fields=all"
         );
 
         const contract = await response.json();
