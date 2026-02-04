@@ -10,15 +10,18 @@ import SwaggerContainer from "../src/components/SwaggerContainer";
 
 # API Documentation
 
-## Table of Contents
+## Table of Contents and resources
 
 - [Basic usage](#basic-usage)
 - [Server API Documentation](#server-api-documentation)
 - [4byte (Signature) Service API Documentation](#4byte-signature-service-api-documentation)
+- [Documentation in JSON format for LLMs](https://sourcify.dev/server/api-docs/swagger.json)
 
 ## Basic usage
 
 ### Verification
+
+The main Sourcify API for verification is `/v2/verify/{chainId}/{address}`, it either returns a `verificationId` or an error. The status of the verification process can be tracked by `/v2/verify/${verificationId}`. For additional details, please check the [documentation below](#server-api-documentation).
 
 <Tabs>
     <TabItem value="curl" label="curl">
@@ -91,6 +94,8 @@ import SwaggerContainer from "../src/components/SwaggerContainer";
 </Tabs>
 
 ### Contract Lookup
+
+Verified contracts data can be fetched using the `/v2/contract/{chainId}/{address}?fields=all` API. For the full list of fields and additional parameters please check the [documentation below](#server-api-documentation).
 
 <Tabs>
     <TabItem value="curl" label="curl">
