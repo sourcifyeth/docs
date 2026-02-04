@@ -4,15 +4,119 @@ title: API
 slug: /api
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 import SwaggerContainer from "../src/components/SwaggerContainer";
 
 # API Documentation
 
-## Table of Contents
+## Table of Contents and resources
 
+- [Basic usage](#basic-usage)
 - [Server API Documentation](#server-api-documentation)
 - [4byte (Signature) Service API Documentation](#4byte-signature-service-api-documentation)
-- [Other Endpoints](#other)
+- [Documentation in JSON format for LLMs](https://sourcify.dev/server/api-docs/swagger.json)
+
+## Basic usage
+
+### Verification
+
+The main Sourcify API for verification is `/v2/verify/{chainId}/{address}`, it either returns a `verificationId` or an error. The status of the verification process can be tracked by `/v2/verify/${verificationId}`. For additional details, please check the [documentation below](#server-api-documentation).
+
+<Tabs>
+    <TabItem value="curl" label="curl">
+        ```bash
+        verification_result=$(
+          curl -sS -X POST \
+            'https://sourcify.dev/server/v2/verify/11155111/0x2738d13E81e30bC615766A0410e7cF199FD59A83' \
+            -H 'Content-Type: application/json' \
+            --data-raw '{"stdJsonInput":{"language":"Solidity","sources":{"contracts/Storage.sol":{"content":"// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract Storage {\n    uint256 number;\n\n    function setNumber(uint256 newNumber) public {\n        number = newNumber;\n    }\n\n    function getNumber() public view returns (uint256) {\n        return number;\n    }\n}\n"}},"settings":{"optimizer":{"enabled":false,"runs":200}}},"compilerVersion":"0.8.7+commit.e28d00a7","contractIdentifier":"contracts/Storage.sol:Storage","creationTransactionHash":"0xb6ee9d528b336942dd70d3b41e2811be10a473776352009fd73f85604f5ed206"}'
+        )
+
+        verification_id=$(echo "$verification_result" | jq -r '.verificationId // empty')
+
+        if [ -n "$verification_id" ]; then
+          curl -sS \
+            "https://sourcify.dev/server/v2/verify/${verification_id}"
+        else
+          echo "$verification_result"
+        fi
+        ```
+    </TabItem>
+
+    <TabItem value="js" label="Javascript">
+        ```js
+        const verificationResponse = await fetch(
+          "https://sourcify.dev/server/v2/verify/11155111/0x2738d13E81e30bC615766A0410e7cF199FD59A83",
+          {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              stdJsonInput: {
+                language: "Solidity",
+                sources: {
+                    "contracts/Storage.sol": {
+                        content: "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract Storage {\n    uint256 number;\n\n    function setNumber(uint256 newNumber) public {\n        number = newNumber;\n    }\n\n    function getNumber() public view returns (uint256) {\n        return number;\n    }\n}\n",
+                    },
+                },
+                settings: {
+                    optimizer: {
+                        enabled: false,
+                        runs: 200,
+                    },
+                },
+              },
+              compilerVersion: "0.8.7+commit.e28d00a7",
+              contractIdentifier: "contracts/Storage.sol:Storage",
+              creationTransactionHash: "0xb6ee9d528b336942dd70d3b41e2811be10a473776352009fd73f85604f5ed206",
+            }),
+          }
+        );
+
+        const verificationResult = await verificationResponse.json();
+        const { verificationId } = verificationResult;
+
+        if (verificationId) {
+          const jobResponse = await fetch(
+            `https://sourcify.dev/server/v2/verify/${verificationId}`
+          );
+
+          const jobResult = await jobResponse.json();
+          console.log(jobResult);
+        } else {
+          console.log(verificationResult);
+        }
+        ```
+    </TabItem>
+
+</Tabs>
+
+### Contract Lookup
+
+Verified contracts data can be fetched using the `/v2/contract/{chainId}/{address}?fields=all` API. For the full list of fields and additional parameters please check the [documentation below](#server-api-documentation).
+
+<Tabs>
+    <TabItem value="curl" label="curl">
+        ```bash
+        curl -sS \
+          'https://sourcify.dev/server/v2/contract/11155111/0x2738d13E81e30bC615766A0410e7cF199FD59A83?fields=all'
+        ```
+    </TabItem>
+
+    <TabItem value="js" label="Javascript">
+        ```js
+        const response = await fetch(
+            "https://sourcify.dev/server/v2/contract/11155111/0x2738d13E81e30bC615766A0410e7cF199FD59A83?fields=all"
+        );
+
+        const contract = await response.json();
+        console.log(contract);
+        ```
+    </TabItem>
+
+</Tabs>
 
 ## Server API Documentation
 
