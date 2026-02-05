@@ -39,6 +39,17 @@ Alternatively, the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/ge
 aws s3 sync s3://sourcify-production-parquet-export/v2/ ./sourcify-dataset --endpoint-url https://storage.googleapis.com --no-sign-request
 ```
 
+:::info Rewriting of files
+
+The newest parquet file per table, i.e. the one with the highest row range, is re-exported to `export.sourcify.dev` until it is full.
+
+For example, if the file `verified_contracts_16000000_17000000.parquet` is the newest file, it does not yet contain 1M records despite its name.
+It will be updated until it reaches 1M records. Then, the export script will work on the next file `verified_contracts_17000000_18000000.parquet` and insert new records there.
+
+Any older files can be expected to never be changed.
+
+:::
+
 ### Note on `sourcify_matches`
 
 The `sourcify_matches` table is the only table that is not append-only and can be updated in the underlying Sourcify Database.
