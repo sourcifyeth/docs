@@ -75,6 +75,22 @@ const config = {
             to: "/docs/exact-match-vs-match",
             from: "/docs/full-vs-partial-match",
           },
+          {
+            to: "/docs/what-is-source-code-verification",
+            from: "/docs/vyper",
+          },
+          {
+            to: "/docs/what-is-source-code-verification",
+            from: "/docs/yul",
+          },
+          {
+            to: "/docs/what-is-source-code-verification",
+            from: "/docs/supported-languages",
+          },
+          {
+            to: "/docs/repository/signature-database",
+            from: "/docs/signature-database",
+          },
         ],
       },
     ],
