@@ -1,0 +1,46 @@
+# Sourcify
+
+This file provides an overview of the Sourcify API documentation.
+
+## Sourcify API versions:
+
+- v1 (deprecated; don't use it)
+- v2 (preferred; choose this)
+
+## API specification (use this URL):
+
+https://sourcify.dev/server/api-docs/swagger.json
+
+### How to read the swagger file
+
+The `swagger.json` file above is structured as follows:
+
+```json
+{
+    "openapi": "OPENAPI_VERSION",
+    "info": {
+        "version": "SOURCIFY_VERSION",
+    },
+    "servers": [
+        { "url": "https://sourcify.dev/server", "description": "Production server" },
+        ...
+    ],
+    "paths": {
+        "SOURCIFY_API_PATH": {
+            "HTTP_METHOD": { /* OPENAPI SPECIFICATIONS */ }
+        }
+    }
+}
+```
+
+### To verify smart contracts read
+
+- paths["/v2/verify/{chainId}/{address}"].post
+
+### Check verification job status
+
+- paths["/v2/verify/{verificationId}"].get
+
+### To read smart contracts read
+
+- paths["/v2/contract/{chainId}/{address}"].get
