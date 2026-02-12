@@ -1,0 +1,93 @@
+---
+id: repo-ui
+slug: /repo-ui
+title: Repo UI
+---
+
+import annotatedBytecode from "./annotated-bytecode.png";
+import sources from "./sources.png";
+import storageLayout from "./storage-layout.png";
+
+The Repository UI is Sourcify's web interface for browsing verified contracts. Use it to inspect contract details and artifacts across supported chains.
+You can access it at [repo.sourcify.dev](https://repo.sourcify.dev).
+
+The repository data model follows the [Verifier Alliance](https://verifieralliance.org) schema with Sourcify-specific extensions, and verified artifacts are available through Sourcify's repository and IPFS.
+
+What you can do:
+
+- Search by contract address and network.
+- Inspect compilation settings, metadata, and match status.
+- Browse/download source files and ABI directly in the browser.
+
+## Features
+
+Every contract's repository page shows compilation settings, ABI, metadata, and onchain information, plus the advanced views below.
+
+<div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    alignItems: "center",
+    marginTop: "50px",
+  }}
+>
+  <img
+    src={annotatedBytecode}
+    alt="Annotated bytecode"
+    style={{ width: "100%", maxWidth: "600px" }}
+  />
+  <div style={{ fontSize: "18px", fontWeight: "bold" }}>Annotated bytecode</div>
+  <div
+    style={{
+      fontSize: "15px",
+      color: "gray",
+      fontStyle: "italic",
+      textAlign: "center",
+    }}
+  >
+    Annotated bytecode views (creation and runtime) highlight transformations
+    and signatures.
+  </div>
+</div>
+
+<div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    alignItems: "center",
+    marginTop: "50px",
+  }}
+>
+  <img
+    src={sources}
+    alt="Sources"
+    style={{ width: "100%", maxWidth: "600px" }}
+  />
+  <div style={{ fontSize: "18px", fontWeight: "bold" }}>Sources</div>
+  <div style={{ fontSize: "15px", color: "gray", fontStyle: "italic" }}>
+    The Sources view provides a source explorer to navigate verified files
+    directly in the browser.
+  </div>
+</div>
+
+<div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    alignItems: "center",
+    marginTop: "50px",
+  }}
+>
+  <img
+    src={storageLayout}
+    alt="Sources"
+    style={{ width: "100%", maxWidth: "600px" }}
+  />
+  <div style={{ fontSize: "18px", fontWeight: "bold" }}>Storage Layout</div>
+  <div style={{ fontSize: "15px", color: "gray", fontStyle: "italic" }}>
+    The Storage Layout view displays variable slots.
+  </div>
+</div>
