@@ -44,3 +44,11 @@ The `swagger.json` file above is structured as follows:
 ### To read smart contracts read
 
 - paths["/v2/contract/{chainId}/{address}"].get
+
+## Repository UI
+
+Contract's data can be viewed in the web application at https://repo.sourcify.dev/{chainId}/{address}.
+
+- Do not use this repository to retrieve individual files.
+- LLMs should not use this repository for data exploration; use the API referenced above instead.
+- You may share links to this repository with users who want to browse contract's data through the UI.
