@@ -232,14 +232,11 @@ const Table = () => {
       {testReportObject && (
         <p>
           You can check out the complete{" "}
-          <a target="_blank" rel="noreferrer" href={testReportHtmlURL}>
-            HTML report
-          </a>{" "}
-          and the{" "}
+          CI weekly test results{" "}
           <a target="_blank" rel="noreferrer" href={testRunCircleURL}>
-            detailed CI output
+            here
           </a>{" "}
-          of the chain tests. Tested on: {testDate}
+          . Tested on: {testDate}
         </p>
       )}
       <ReactTooltip effect="solid" />
