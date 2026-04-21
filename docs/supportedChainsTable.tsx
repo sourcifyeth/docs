@@ -4,59 +4,11 @@ import ReactTooltip from "react-tooltip";
 import LoadingOverlay from "../src/components/LoadingOverlay";
 import Chart from "./Chart";
 
-const Yes = () => <div className="centered-flex">✅</div>;
-const No = () => <div className="centered-flex">❌</div>;
-const C = ({ children }) => <div className="centered-flex">{children}</div>;
 const R = ({ children }) => <div style={{ textAlign: "right", fontFamily: "monospace" }}>{children}</div>;
-
-const TestResult = ({ result, detailedUrl, type, error }) => {
-  const ToolTip = (
-    <span>
-      {`${type} contract verification for the chain failed`}
-      <br />
-      See{" "}
-      <a target="_blank" rel="noreferrer" href={detailedUrl}>
-        CI test run for details
-      </a>
-    </span>
-  );
-  if (error) {
-    return (
-      <div className="centered-flex" data-tip="Error gettings test results">
-        ⚠️
-      </div>
-    );
-  }
-  if (result === true)
-    return (
-      <div className="centered-flex" data-tip={`${type} contract verification for the chain working`}>
-        ✅
-      </div>
-    );
-  if (result === false)
-    return (
-      <>
-        <ReactTooltip effect="solid" delayHide={500} clickable={true} id="failed-test" />
-        <div className="centered-flex" data-html={true} data-tip={renderToString(ToolTip)} data-for="failed-test">
-          ❌
-        </div>
-      </>
-    );
-  if (result === undefined)
-    return (
-      <div className="centered-flex" data-tip="No tests were given for this chain">
-        🤷
-      </div>
-    );
-  return null;
-};
 
 const Table = () => {
   const [sourcifyChains, setSourcifyChains] = useState<any>();
   const [error, setError] = useState("");
-  const [testReportObject, setTestReportObject] = useState<any>();
-  const [testMap, setTestMap] = useState<any>();
-  const [testDate, setTestDate] = useState<any>();
   const [stats, setStats] = useState<any>();
 
   const sourcifyChainMap = useMemo(() => {
@@ -93,20 +45,6 @@ const Table = () => {
         setSourcifyChains(chains);
       })
       .catch((err) => setError("Error fetching chains from the Sourcify server\n\n" + err.message));
-    fetch("https://sourcify.dev/server/chain-tests")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error fetching chain tests \n\n");
-        }
-        return response.json();
-      })
-      .then((json) => {
-        setTestDate(json.testReport.stats.end);
-        const testMap = formatRawTestReport(json.testReport);
-        setTestMap(testMap);
-        setTestReportObject(json);
-      })
-      .catch((err) => setError(err.message));
   }, []);
 
   useEffect(() => {
@@ -164,21 +102,6 @@ const Table = () => {
     });
   }
 
-  // Takes the raw mochawesome test report .json and formats with the result of the standard and immutable contract verification for each chain.
-  const formatRawTestReport = (rawReport) => {
-    const testsArr = rawReport.results[0].suites[0].tests;
-    const testMap = {};
-    testsArr.forEach((test) => {
-      const context = JSON.parse(test.context);
-      if (!context) return;
-      const chainId = context.value.chainId;
-      const testType = context.value.testType; // either "normal" or "immutable"
-      if (!testMap[chainId]) testMap[chainId] = {};
-      testMap[chainId][testType] = test.pass;
-    });
-    return testMap;
-  };
-
   if (!sourcifyChains) {
     return (
       <div style={{ margin: "8rem" }}>
@@ -186,21 +109,6 @@ const Table = () => {
       </div>
     );
   }
-  if ((!testMap || !testReportObject) && !error) {
-    return (
-      <div style={{ margin: "8rem" }}>
-        <LoadingOverlay message="Loading chain verification tests" />
-      </div>
-    );
-  }
-
-  const testRunCircleURL =
-    testReportObject &&
-    `https://app.circleci.com/pipelines/github/argotorg/sourcify/${testReportObject.pipelineNumber}/workflows/${testReportObject.workflowId}/jobs/${testReportObject.jobNumber}`;
-  const testReportHtmlURL =
-    testReportObject &&
-    `https://dl.circleci.com/private/output/job/${testReportObject.jobId}/artifacts/0/chain-tests-report/report.html`;
-
   const rows = sourcifyChains.map((chain, i) => {
     return (
       <tr key={`chain-row-${i}`} style={!chain.supported ? { color: "#ccc" } : {}}>
@@ -214,31 +122,11 @@ const Table = () => {
         </td>
         <td style={{ textAlign: "center" }}>{chain?.traceSupportedRPCs?.length > 0 ? "✅" : ""}</td>
         <td style={{ textAlign: "center" }}>{chain.etherscanAPI ? "✅" : ""}</td>
-        <td>
-          {
-            <TestResult
-              detailedUrl={testRunCircleURL}
-              type="Standard"
-              result={testMap && testMap[chain.chainId] && testMap[chain.chainId].normal}
-              error={!!error}
-            />
-          }
-        </td>
       </tr>
     );
   });
   return (
     <>
-      {testReportObject && (
-        <p>
-          You can check out the complete{" "}
-          CI weekly test results{" "}
-          <a target="_blank" rel="noreferrer" href={testRunCircleURL}>
-            here
-          </a>{" "}
-          . Tested on: {testDate}
-        </p>
-      )}
       <ReactTooltip effect="solid" />
       <div>
         {stats ? (
@@ -318,7 +206,6 @@ const Table = () => {
                 </span>
               </th>
               <th>Import from Etherscan</th>
-              <th>Verification Tests</th>
             </tr>
           </thead>
           <tbody>{rows}</tbody>
