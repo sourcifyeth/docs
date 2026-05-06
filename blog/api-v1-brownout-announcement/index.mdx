@@ -1,0 +1,55 @@
+---
+title: "Sourcify API v1 Scheduled Brownouts"
+authors:
+  - name: Marco Castignoli
+    url: https://github.com/marcocastignoli
+    image_url: https://github.com/marcocastignoli.png
+tags: [Sourcify, Verified Contracts]
+date: 2026-04-13
+---
+
+# Sourcify API v1 Scheduled Brownouts
+
+Starting May 5, 2026, Sourcify will begin scheduled brownout periods for all legacy API v1 endpoints. During these windows, v1 endpoints will return `503 Service Unavailable`. After June 30, 2026, API v1 will be permanently shut down.
+
+Please migrate to API v2. Full documentation is available at https://docs.sourcify.dev/docs/api/.
+
+## Brownout Schedule
+
+All times are in UTC.
+
+| Week | Date   | Duration                  |
+| ---- | ------ | ------------------------- |
+| 1    | May 5  | 1 hour (14:00-15:00 UTC)  |
+| 2    | May 12 | 1 hour (14:00-15:00 UTC)  |
+| 3    | May 19 | 4 hours (14:00-18:00 UTC) |
+| 4    | May 26 | 4 hours (14:00-18:00 UTC) |
+| 5    | Jun 2  | 8 hours (10:00-18:00 UTC) |
+| 6    | Jun 9  | 8 hours (10:00-18:00 UTC) |
+| 7    | Jun 16 | 24 hours                  |
+| 8    | Jun 23 | 24 hours                  |
+| 9+   | Jun 30 | Permanent shutdown        |
+
+## Affected Endpoints
+
+- `/verify`
+- `/repository`
+- `/check-all-by-addresses`
+- `/check-by-addresses`
+- `/files`
+
+Legacy aliases (`/checkAllByAddresses`, `/checkByAddresses`, `POST /`) are also affected.
+
+## What to Expect
+
+During a brownout window, affected endpoints will respond with:
+
+- HTTP status `503 Service Unavailable`
+- A `Retry-After` header indicating when the window ends
+- A JSON body with details about the brownout window
+
+Outside brownout windows, v1 endpoints continue to work as before with deprecation headers.
+
+## How to Migrate
+
+Switch your integrations to the v2 API. Full API documentation: https://docs.sourcify.dev/docs/api/
