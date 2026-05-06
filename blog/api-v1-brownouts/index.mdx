@@ -1,0 +1,89 @@
+---
+title: "API v1 Brownouts: Time to Move to v2"
+authors:
+  - name: Kaan Uzdogan
+    url: https://github.com/kuzdogan
+    image_url: https://github.com/kuzdogan.png
+  - name: Marco Castignoli
+    url: https://github.com/marcocastignoli
+    image_url: https://github.com/marcocastignoli.png
+tags: [Sourcify, API]
+date: 2026-05-06
+---
+
+Sourcify's legacy v1 API has been deprecated for a while. v2 has been the primary, recommended API for over a year: async job-based verification (no more hanging requests), richer responses (storage layouts, source maps, transformations, proxy resolution), clearer naming (`exact_match` / `match` instead of the confusing "perfect" / "partial"), and it's already serving 15M+ requests/day.
+
+But deprecation notices alone don't move the needle. So we're following the GitHub playbook and rolling out **scheduled brownouts** to push the remaining v1 traffic onto v2.
+
+<!-- truncate -->
+
+## What's a brownout?
+
+During a brownout window, the deprecated v1 endpoints return `503 Service Unavailable` with a `Retry-After` header and a pointer to the v2 docs. Outside the windows, behavior is unchanged: the existing `Deprecation: true` and `Warning: 299` headers continue to flag that you're on a legacy path.
+
+The affected v1 endpoints are:
+
+- `/verify`
+- `/repository`
+- `/check-all-by-addresses`
+- `/check-by-addresses`
+- `/files`
+
+Deprecated aliases (`/checkAllByAddresses`, `/checkByAddresses`, `POST /`) are caught automatically.
+
+## The schedule
+
+Windows escalate weekly so integrations have time to notice, fix, and ship before the lights go out for good:
+
+| Week | Date    | Duration                  |
+| ---- | ------- | ------------------------- |
+| 1    | May 12  | 1 hour (14:00–15:00 UTC)  |
+| 2    | May 19  | 1 hour (14:00–15:00 UTC)  |
+| 3    | May 26  | 4 hours (14:00–18:00 UTC) |
+| 4    | Jun 2   | 4 hours (14:00–18:00 UTC) |
+| 5    | Jun 9   | 8 hours (10:00–18:00 UTC) |
+| 6    | Jun 16  | 8 hours (10:00–18:00 UTC) |
+| 7    | Jun 23  | 24 hours                  |
+| 8    | Jun 30  | 24 hours                  |
+| 9+   | Jul 7   | Permanent shutdown        |
+
+## What a brownout response looks like
+
+```json
+{
+  "error": "Service Unavailable - API v1 Brownout",
+  "message": "API v1 is temporarily unavailable during a scheduled brownout period. Please migrate to API v2. Full API docs: https://sourcify.dev/server/api-docs/swagger.json",
+  "brownoutV1": {
+    "currentWindow": {
+      "start": "2026-05-12T14:00:00Z",
+      "end": "2026-05-12T15:00:00Z"
+    }
+  }
+}
+```
+
+Headers: `Retry-After`, `Deprecation: true`, `Warning: 299`.
+
+## Why brownouts and not a flag-day shutdown?
+
+A `Deprecation: true` header is easy to ignore in CI logs. A 503 during a known one-hour window is loud enough to find, small enough to recover from, and a clear signal of what's coming next.
+
+This is the same pattern GitHub used to retire [query-string API authentication](https://github.blog/changelog/2021-05-04-brownout-notice-api-authentication-via-query-parameters-and-the-oauth-applications-api-for-12-hours/) and [Actions Artifacts v3](https://github.com/orgs/community/discussions/142581): graduated, scheduled, and well-telegraphed.
+
+## Migrating to v2
+
+If you (or a tool you depend on) still calls v1, now is the window. The v2 API has been live for over a year and offers:
+
+- **Async, job-based verification**: submit, get a `verificationId`, poll. No more hanging requests or proxy timeouts.
+- **Richer responses**: storage layouts, source maps, CBOR auxdata, transformations, proxy resolution (EIP-1167, EIP-1967, GnosisSafe, Diamond, ZeppelinOS, etc.), `userdoc` / `devdoc`, full standard JSON input/output.
+- **Selective fields**: request only what you need with `?fields=...` or `?omit=...`.
+- **Clearer naming**: `exact_match` and `match` instead of the historically confusing "perfect" and "partial".
+
+Pointers:
+
+- Full v2 docs: [docs.sourcify.dev](https://docs.sourcify.dev)
+- OpenAPI spec: [sourcify.dev/server/api-docs/swagger.json](https://sourcify.dev/server/api-docs/swagger.json)
+- Earlier APIv2 announcement: [APIv2: Getting Verified Contracts](/blog/apiv2-lookup-endpoints/)
+- Implementation PR: [sourcify#2744](https://github.com/argotorg/sourcify/pull/2744)
+
+If you hit a migration snag, open an issue on [argotorg/sourcify](https://github.com/argotorg/sourcify/issues). Happy to help you over the line before Jul 7.
