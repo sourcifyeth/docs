@@ -1,0 +1,70 @@
+---
+title: "Sourcify Mid-2026 Recap & Roadmap"
+authors:
+  - name: Kaan Uzdogan
+    url: https://github.com/kuzdogan
+    image_url: https://github.com/kuzdogan.png
+tags: [Sourcify, Recap, Roadmap]
+date: 2026-06-29
+---
+
+# Sourcify Mid-2026 Recap & Roadmap
+
+Sourcify ensures verified EVM smart contract data remains open and accessible, and is powered by open-source tools.
+
+Our biggest focus this half-year has been on the [Clear Signing Working Group](/blog/clear-signing-launch/) efforts, as this has the highest impact for the ecosystem. On top of that, we kept pushing on increasing the contract coverage and on parallel verification in frameworks to widen the top of the verification funnel. The team worked at roughly 70% capacity this period, as one of the team members has been on parental leave.
+
+Current tasks and milestones can be followed on the [GitHub Project Board](https://github.com/orgs/argotorg/projects/33/views/1).
+
+{/* truncate */}
+
+## Q1/Q2 2026 Review
+
+### Clear Signing Working Group
+
+We became a founding member of the Clear Signing Working Group, an effort to end blind signing on Ethereum through the [ERC-7730](https://eips.ethereum.org/EIPS/eip-7730) standard. This is where we believe we can have the highest impact for the ecosystem right now. See our [launch post](/blog/clear-signing-launch/) for the full picture.
+
+What's live today:
+
+- A **playground** for the TypeScript SDK at [clear-signing.sourcify.dev](https://clear-signing.sourcify.dev)
+- The wallet [**SDK**](https://github.com/sourcifyeth/clear-signing) developed by Sourcify
+- The working group website at [clearsigning.org](https://clearsigning.org)
+
+### Contract coverage
+
+We grew to **38.5 million verified contracts** as of writing, up from 11M at the end of last year. Live numbers are at [stats.sourcify.dev](https://stats.sourcify.dev).
+
+Chain support is now [automated](https://github.com/sourcifyeth/sourcify-chains) so we stay up to date with new and deprecated chains while increasing the total number of supported chains with much less manual effort.
+
+### Language support
+
+- [**Support for older Solidity contracts**](https://github.com/argotorg/sourcify/pull/2652) so a larger share of the historical contract base can be verified.
+- Added [**Fe** support](https://github.com/argotorg/sourcify/pull/2692). Our language-agnostic architecture lets us bring on new EVM languages with minimal friction.
+
+### Verify everywhere
+
+We shipped parallel verification in [Hardhat](https://github.com/NomicFoundation/hardhat/pull/7967), and the [Foundry PR](https://github.com/foundry-rs/foundry/pull/15124) just got merged. Verifications now go to both Sourcify and Etherscan by default, instead of Etherscan only. With that; Foundry, Hardhard and Remix are all covered.
+
+This is a meaningful step towards our "Verify Everywhere" goal of contracts being verified in multiple places without any extra burden on the user.
+
+### Cleanup and sustainability
+
+- We removed the legacy APIv1 through a series of brownouts ([blog post](/blog/api-v1-brownouts/), [PR](https://github.com/argotorg/sourcify/pull/2744)).
+- We [optimized Solidity's CI processes](https://github.com/argotorg/solidity/pull/16385) and the hosting of compiler binaries, resulting in roughly **$180k/year in cost reduction**.
+- We improved our dependency security in response to the recent waves of AI-related supply chain attacks.
+
+### Media
+
+- [ECH podcast](https://www.youtube.com/watch?v=XZDInjWp0Fo)
+- Clear Signing [EthCC panel](https://www.youtube.com/watch?v=rMq78W6667I)
+- Talks at [EthPrague](https://www.youtube.com/watch?v=OFlBA826YXQ&list=PLkCRcxMT8qhYK3Lk_VCNnFkO-GJGxDkRJ&index=97) and [DappCon](https://www.youtube.com/watch?v=4DKnkMpJPmA&feature=youtu.be), and Berlin Ethereum Day.
+
+## Q3/Q4 2026 Focus
+
+- **Tooling on the open dataset**: Explore building tooling on top of Sourcify's open dataset of over 35 million verified contracts: general-purpose search, vulnerability and pattern detection.
+- **Clear Signing — DSL**: Explore designing a [Domain Specific Language](https://youtu.be/4DKnkMpJPmA?t=928) to declare ERC-7730 descriptors directly inside the contract itself.
+- **Clear Signing — SDK**: Improve and maintain the [TypeScript SDK](https://github.com/sourcifyeth/clear-signing), find more users, and gather feedback.
+- **Clear Signing — registry**: Maintain [the registry](https://github.com/ethereum/clear-signing-erc7730-registry) by designing processes and tooling for descriptor submission, setting up the reviewer (auditor) pipeline, and setting up the repo CI.
+- **Infrastructure costs**: Look into optimizing Sourcify's infrastructure architecture to reduce hosting costs, as the Google Cloud stipend is coming to an end.
+- **Web presence**: Improve the design and UX of Sourcify's web presence to better reflect its expanded scope and surface richer contract information.
+- **Chain lists**: Contribute to the maintenance of [ethereum-lists/chains](https://github.com/ethereum-lists/chains) and do market research on its usage relative to other chain lists.
