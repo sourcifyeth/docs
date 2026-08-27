@@ -1,0 +1,227 @@
+---
+title: "Introduction to ERC-7730: Clear Signing for Ethereum"
+authors:
+  - name: Kaan Uzdogan
+    url: https://github.com/kuzdogan
+    image_url: https://github.com/kuzdogan.png
+tags: [ERC-7730, Clear Signing]
+date: 2026-08-27
+---
+
+# Introduction to ERC-7730: Clear Signing for Ethereum
+
+I guess the problem needs no introduction. Blind signing has been a big pain, arguably the biggest UX pain, of Ethereum since its inception. It's just not possible for humans to know what they are about to sign and authorize on their wallets. Any step compromised on the transaction/signature supply chain can cause a malicious signature to enter your wallet and you unknowingly approve a transaction that drains your funds.
+
+We puzzled over this a while ago at Sourcify and we shared our learnings in [this blog post](/blog/human-readable-txs-learnings/) at the time. In short we didn't have the means and resources and we focused back on our main value proposition, that is verifying contract source code and making open-source the default and opening up the siloed verified contract data. 
+
+Recently we formed [a larger working group](/blog/clear-signing-launch/) around the ERC-7730 standard for clear signing and we are excited to be part of it. We believe this movement and the standard is capable enough technically to solve the issue and has the necessary momentum to reach escape velocity and be the shared standard. 
+
+However, building things is hard, especially in a decentralized manner with tens of different stakeholders. It's non-trivial to scale this to millions of contracts, and dozens of wallets and applications that have different needs. We need active feedback to understand better the needs of different users of the standard. 
+
+Here I'll give a short technical introduction to how the ERC-7730 standard works for the human reader, and ask how this fits your wallet or application.
+
+## ERC-7730: Structured Data Clear Signing Format
+
+### The idea 
+
+The ERC-7730 standard was first authored by Ledger, and has been evolving since the formation of the working group mentioned above. The spec defines a JSON file called a "descriptor" that enriches the ABI letting a processor turn a formatted calldata or structured EIP-712 message into human readable intent messages. 
+
+ABI is the default formatting within EVM, and it's oriented for machines, not humans. For example, a token's amount is encoded as `1000000000000000000` but to make this understandable for a human you need to know which token it is, its ticker, and its decimals so that you can show them `1 UNI`. This information is not in the ABI and needs an extra metadata file, hence the ERC-7730 enrichment. (Sadly today a lot of wallets won't even do basic ABI decoding)
+
+The example above is a popular but trivial one. It gets infinitely complicated for arbitrary calldata that can have arrays, tuples, nested calldata etc. What ERC-7730 does is, it declares what each parameter of a function is: this is a token, that one is a date, this is a calldata so decode that recursively etc. and explains how to do the formatting.
+
+The important thing and the tradeoff here is that we can't allow a Turing complete expression system that would open a can of worms for wallets. Wallets need to be isolated and minimal devices. That's why even ERC-7730 is not a silver bullet and can't possibly solve everything, but it can solve maybe 99% of cases.
+
+### Example 
+
+Let's continue with examples. [Here](https://github.com/ethereum/clear-signing-erc7730-registry/blob/master/registry/tether/calldata-usdt.json) is the Tether descriptor in the registry today.
+
+```json
+{
+  "$schema": "../../specs/erc7730-v2.schema.json",
+  "context": {
+    "$id": "Tether USD",
+    "contract": {
+      "deployments": [
+        { "chainId": 1, "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7" },
+        { "chainId": 137, "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F" }
+      ]
+    }
+  },
+  "metadata": {
+    "owner": "Tether Limited",
+    "info": { "url": "https://tether.to/", "deploymentDate": "2017-11-28T12:41:21Z" },
+    "token": { "ticker": "USDT", "name": "Tether USD", "decimals": 6 },
+    "contractName": "Tether USD"
+  },
+  "display": {
+    "formats": {
+      "transfer(address _to, uint256 _value)": {
+        "intent": "Send",
+        "fields": [
+          { "path": "#._value", "label": "Amount", "format": "tokenAmount", "params": { "tokenPath": "@.to" } },
+          { "path": "#._to", "label": "To", "format": "addressName", "params": { "types": ["eoa"], "sources": ["local", "ens"] } }
+        ]
+      },
+      "approve(address _spender, uint256 _value)": {
+        "intent": "Approve",
+        "fields": [
+          { "path": "#._spender", "label": "Spender", "format": "addressName", "params": { "types": ["eoa", "contract"] } },
+          {
+            "path": "#._value",
+            "label": "Amount",
+            "format": "tokenAmount",
+            "params": { "tokenPath": "@.to", "threshold": "0x8000000000000000000000000000000000000000000000000000000000000000" }
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+Let's break it down.
+
+```json
+  "$schema": "../../specs/erc7730-v2.schema.json",
+```
+
+The first line says which JSON schema this JSON file conforms to. The spec declares versioned schema files and it will evolve over time in new versions. You usually want to bind this to a major e.g. `v2` but you can also pin a specific version `v2.1.3`.
+
+```json
+  "context": {
+    "$id": "Tether USD",
+    "contract": {
+      "deployments": [
+        { "chainId": 1, "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7" },
+        { "chainId": 137, "address": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F" }
+      ]
+    }
+  },
+```
+
+Here we have the context, i.e. the chainIds and addresses this descriptor describes.
+
+```json 
+  "metadata": {
+    "owner": "Tether Limited",
+    "info": { "url": "https://tether.to/", "deploymentDate": "2017-11-28T12:41:21Z" },
+    "token": { "ticker": "USDT", "name": "Tether USD", "decimals": 6 },
+    "contractName": "Tether USD"
+  },
+```
+
+Some metadata here about the contract, and also a place where you can declare constants like the `nativeAssetAddress: 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` or enums like: 
+
+```json
+{
+    "metadata": {
+        "enums": {
+            "interestRateMode": {
+                "1": "stable",
+                "2": "variable"
+            }
+        }
+    }
+}
+```
+
+Finally we have the `display` section with `.formats`:
+
+```json
+      "transfer(address _to, uint256 _value)": {
+        "intent": "Send",
+        "fields": [
+          { "path": "#._value", "label": "Amount", "format": "tokenAmount", "params": { "tokenPath": "@.to" } },
+          { "path": "#._to", "label": "To", "format": "addressName", "params": { "types": ["eoa"], "sources": ["local", "ens"] } }
+        ]
+      },
+```
+
+Here this formatting is bound to the transfer function which has the signature `transfer(address,uint256)` with the selector [0xa9059cbb](https://4byte.sourcify.dev/?q=0xa9059cbb). Note the parameter names above: the `path` fields (`#._value`, `#._to`) reference the parameters by these names. Here instead of using the full ABI JSON, we pass a shorthand format, what's called ["Human-Readable ABI"](https://blog.ricmoo.com/human-readable-contract-abis-in-ethers-js-141902f4d917/) by ethers.js.
+
+The intent for this action is "Send" so the first message the user will see will be this.
+
+Following, the user will see the "Amount". Besides the "label", the descriptor tells what "format" this is, in this case it says "the parameter `_value` is a `tokenAmount` and the token is `tokenPath` which is the tx destination `.to`".
+
+Finally, the "To" is an `addressName`, marked in the function param `_to`.
+
+In the end the formatter will do its magic and this will translate to:
+
+```
+Send
+  Amount 1 USDT
+  To vitalik.eth
+```
+
+This is of course a very basic example. You can find other examples in our playground https://clear-signing.sourcify.dev/.
+
+### The registry
+
+The ERC spec explains the individual descriptors and how to format but does not prescribe where to find the descriptors. 
+
+The registry initially was published under Ledger's Github. Recently it's been migrated under the `ethereum` organization as a neutral host. It's open and available at https://github.com/ethereum/clear-signing-erc7730-registry.
+
+### Attestations
+
+As a sibling to this spec, we define an attestation spec based on [Ethereum Attestation Service (EAS)](https://attest.org/) under [ERC-8176](https://eip.tools/eip/8176). 
+
+The idea is that the registry will become more permissive. Being included in the registry does not mean that a descriptor is "safe" or "approved". Instead auditors, wallets, and protocols can attest that a descriptor faithfully represents what the underlying contract does. 
+
+Under EAS, attestations are made with an Ethereum address. Your wallet or application can choose which attesters to trust. You can say that you trust Ledger and Cyfrin and only use the descriptors if there's an attestation by them. Your app should also check revocations, and revocations have to be done onchain. Attestations can be done onchain or offchain.
+
+Additionally, this gives provenance guarantees to the descriptors. Just embed some attester addresses you trust and implicitly you can be sure the descriptor the device received is not a tampered one. 
+
+In theory any attestation scheme is possible but we think EAS is a good starting point. It also does not matter where the attestations come from (e.g. offchain) since they are signed anyway. A first round of attestations are published by Cyfrin and can be seen [in Cyfrin's first attestations PR](https://github.com/ethereum/clear-signing-erc7730-registry/pull/2765).
+
+### Onchain registry
+
+Currently the registry is under Github for convenience and as a widespread tool. Our goal is to move to an onchain registry that's permissionless. 
+
+Design work is currently underway. The high level idea is that attesters push attestations to the onchain registry under their own address. Hence the namespaces are isolated and anyone can attest descriptors. The attesters will also declare where to find the attestation blobs and the descriptor blobs under Mirrors. This can be through `ipfs://` or `https://` links. Anyone can host mirrors, i.e. host attestation and descriptor blobs.
+
+A simple explainer for the registry is here: https://gist.github.com/kuzdogan/d07974040f505460e48c55e3badcece5
+
+The full spec is an ongoing ERC work: https://github.com/ethereum/ERCs/pull/1789. It is long; an LLM can help you read it. Feedback is more than welcome.
+
+## Next Steps and Feedback
+
+Our fear is if we are building this in isolation and it turns out what's needed and useful by the wallets is a completely different thing than what we've built. That's why we need to better understand your view and how this fits your needs.
+
+Some example questions to think about:
+- What is currently holding you back from implementing ERC-7730?
+  - You don't trust yet the implementations or the registry?
+  - Are you worried about the security implications?
+  - This is not a high enough priority for you and your users?
+- Is your wallet capable of doing clear signing locally? What are the limitations?
+  - Can you fit the full json and decode?
+  - Can you check attestations?
+  - What are the screen size and format limits?
+- Would you use the existing SDKs (below) or build your own?
+- How would your wallet's backend integrate ERC-7730 on a high level? How will you serve the descriptor files and attestations? 
+  - Do you use an in-house cache or DB? How do you update it?
+  - For example, the spec prescribes to attach descriptors to implementations and not proxies. Can you resolve proxies on your backend to serve clear signing for proxy contracts?
+
+Please reach out on X: [kuzdogan](https://twitter.com/kuzdogan), Telegram: [kuzdogan](https://t.me/kuzdogan), or Matrix: [kuzdogan:matrix.org](https://matrix.to/#/@kuzdogan:matrix.org).
+
+Check out the registry and submit your descriptors: https://github.com/ethereum/clear-signing-erc7730-registry
+
+## Reference
+
+### Spec
+
+The spec is available here: https://eip.tools/eip/7730
+
+### Registry
+
+The registry is available here: https://github.com/ethereum/clear-signing-erc7730-registry
+
+### Implementations
+
+Below are the live implementations:
+
+- Typescript SDK by Sourcify: https://github.com/sourcifyeth/clear-signing
+- Rust SDK by llbartekll: https://github.com/llbartekll/clear-signing
+- Trezor: https://github.com/trezor/trezor-firmware/tree/main/core/src/apps/ethereum
+- Ledger: https://developers.ledger.com/docs/clear-signing/reference/external-resources
+- Ambire: https://github.com/AmbireTech/ambire-common/tree/8a1f337863508dc32e815f00d4166757f5948b25/src/libs/humanizer/erc7730
