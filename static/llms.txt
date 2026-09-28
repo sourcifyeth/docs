@@ -2,6 +2,36 @@
 
 This file provides an overview of the Sourcify API documentation.
 
+## Bulk access and fair use (read this first)
+
+The Sourcify API serves single contracts. It is not for bulk downloads. Do not crawl it.
+
+### Pick the right source
+
+- Many contracts, or the full dataset: use the Parquet export. It is free and updated daily. Docs: https://docs.sourcify.dev/docs/repository/download-dataset/
+- SQL queries without a download: use the public BigQuery dataset. It is updated continuously. You need a Google account. Docs: https://docs.sourcify.dev/docs/bigquery/
+- Plain-language questions about the dataset: use the AI Dataset Playground. Docs: https://docs.sourcify.dev/docs/dataset-playground/
+- One contract, or a few contracts: use the API (see below).
+
+To download the full Parquet dataset and keep it in sync, run this command. On later runs, it downloads only new or changed files.
+
+```bash
+aws s3 sync s3://sourcify-production-parquet-export/v2/ ./sourcify-dataset --endpoint-url https://storage.googleapis.com --no-sign-request
+```
+
+For current file counts and sizes, see https://export.sourcify.dev/v2/stats.json.
+
+### Rules for API clients
+
+- Do not loop over `/v2/contract/{chainId}/{address}` to collect many contracts. Use the dataset.
+- Request only the fields that you need, for example `fields=abi` or `fields=sources`.
+- Do not use `fields=all` in loops. It returns every field, including all source files. It is the most expensive request.
+- Store responses. Do not fetch the same contract again.
+- Requests are rate limited per client. If you get a `429` or `5xx` response, stop and wait.
+- Retry with exponential backoff. If the response has a `Retry-After` header, wait at least that long.
+- Do not use `/v2/verify/etherscan` to import many contracts. Use it only for the contracts that you need.
+- If the dataset does not fit your use case, email hello@sourcify.dev.
+
 ## Sourcify API versions:
 
 - v1 (deprecated; don't use it)
