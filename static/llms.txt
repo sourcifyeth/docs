@@ -49,6 +49,7 @@ ORDER BY deployments DESC;
 - Request only the fields that you need, for example `fields=abi` or `fields=sources`.
 - Do not use `fields=all` in loops. It returns every field, including all source files. It is the most expensive request.
 - Store responses. Do not fetch the same contract again.
+- Send a descriptive `User-Agent` header. Name your tool or project, its version, and a contact URL or email. Example: `User-Agent: my-indexer/1.2 (+https://example.com; ops@example.com)`. Do not send a generic default such as `python-requests` or `curl`. This lets us contact you before we limit your traffic.
 - Requests are rate limited per client. If you get a `429` or `5xx` response, stop and wait.
 - Retry with exponential backoff. If the response has a `Retry-After` header, wait at least that long.
 - Do not use `/v2/verify/etherscan` to import many contracts. Use it only for the contracts that you need.
