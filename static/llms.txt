@@ -9,7 +9,8 @@ The Sourcify API serves single contracts. It is not for bulk downloads. Do not c
 ### Pick the right source
 
 - Many contracts, or the full dataset: use the Parquet export. It is free and updated daily. Docs: https://docs.sourcify.dev/docs/repository/download-dataset/
-- SQL queries without a download: use the public BigQuery dataset. It is updated continuously. You need a Google account. Docs: https://docs.sourcify.dev/docs/bigquery/
+- Analytics without a download: query the Parquet files remotely with DuckDB (see below).
+- SQL with many lookups by address, without a download: use the public BigQuery dataset. It is updated continuously. You need a Google account. Docs: https://docs.sourcify.dev/docs/bigquery/
 - Plain-language questions about the dataset: use the AI Dataset Playground. Docs: https://docs.sourcify.dev/docs/dataset-playground/
 - One contract, or a few contracts: use the API (see below).
 
@@ -20,6 +21,27 @@ aws s3 sync s3://sourcify-production-parquet-export/v2/ ./sourcify-dataset --end
 ```
 
 For current file counts and sizes, see https://export.sourcify.dev/v2/stats.json.
+
+### Query the Parquet files without downloading
+
+DuckDB can query the files in place. It reads only the parts that a query needs. No credentials are needed.
+
+```sql
+INSTALL httpfs;
+LOAD httpfs;
+CREATE SECRET sourcify_export (TYPE s3, PROVIDER config, KEY_ID '', SECRET '', ENDPOINT 'storage.googleapis.com', URL_STYLE 'path');
+
+SELECT chain_id, count(*) AS deployments
+FROM 's3://sourcify-production-parquet-export/v2/contract_deployments/*.parquet'
+GROUP BY chain_id
+ORDER BY deployments DESC;
+```
+
+- Use the `s3://` form for all files of a table. HTTPS URLs do not support wildcards.
+- Remote queries are fast for counts, aggregations, and filters on a few columns.
+- Remote lookups by address are slow. The files are ordered by `created_at`, so one lookup reads about 1 GB.
+- For many lookups by address, download the tables once, or use BigQuery.
+- For one contract, use the API.
 
 ### Rules for API clients
 
