@@ -1,5 +1,5 @@
 ---
-title: "Onay: A Second Factor for Signing"
+title: "Onay: 2FA for Signing"
 authors:
   - name: Kaan Uzdogan
     url: https://github.com/kuzdogan
@@ -14,7 +14,7 @@ import erc7730Img from "./erc7730.png"
 import calltreeImg from "./calltree.png"
 import digestImg from "./digest.png"
 
-# Onay: A Second Factor for Signing
+# Onay: 2FA for Signing
 
 If you've signed anything on Ethereum you know this feeling. The wallet pops up: an address, some hex, a function name... Where are these coming from? Am I even talking to the correct contract? What am I even signing? What is this action going to do?
 
@@ -24,21 +24,25 @@ You just press "Confirm" and hope for the best.
 
 And many lost their life savings because of this.
 
-In Ethereum we say "Don't trust, verify", but most of the time no one verifies. The users are not to blame. We have the means to verify things, but no one has time to check 100 different things every time they send a transaction. We just need to piece it together and make it easy for everyone to verify.
+In Ethereum we say "Don't trust, verify", but most of the time no one actually verifies. The users are not to blame. We have the means to verify things, but no one has time to check 100 different things every time they send a transaction. We just need to piece it together and make it easy for everyone to verify.
 
 And verifying is cheap, and quick. **A second look to what you are about to sign costs you a few seconds, but can save you from a big loss.** 
 
-We do second factor verification (2FA) in many places where stakes are high, yet in crypto we don't do it in when the stakes are our life savings. 
+We do second factor verification (2FA) in many places where stakes are high, yet in crypto we don't do it when the stakes are our life savings. 
 
 **Onay is a second factor for signing Ethereum transactions.**
 
-When you are about to sign a transaction onay receives the transaction as well. It retrieves all potentially useful information from various sources and displays them in an understandable way for you to double check. Onay does everything locally where it can: uses a local light client to verify chain state, reproduces the source-code verification locally etc. to minimize the trust required.
+At Sourcify we have been doing source code verification for years, and more recently clear signing with ERC-7730. Both are moving forward, but slowly. Yet the pieces to make signing safe are already there. Onay puts them together.
+
+You can help us build this. But first, let's understand what we are building.
+
+When you are about to sign a transaction Onay receives the transaction as well. It retrieves all potentially useful information from various sources and displays them in an understandable way for you to double check. Onay does everything locally where it can: uses a local light client to verify chain state, reproduces the source-code verification locally etc. to minimize the trust required.
 
 Importantly, **Onay is view only. It does not hold any keys or sign anything.** So it can safely leverage a multitude of services and display any information that will enrich the signing process, while keeping your signing device isolated and safe. 
 
 <p><small><em>The screenshots below come from an early mock with made-up data. They show the idea, not the final product. The design will change as we build.</em></small></p>
 
-## How does it Work
+## How does it work
 
 ### 1. Get the transaction
 
@@ -130,3 +134,5 @@ Onay is part of [theDAO's funding round](https://initiatives.thedao.fund/initiat
 Two thirds of the grant is tied to the adoption milestone. We only get paid in full if people actually use Onay.
 
 You can [donate directly](https://initiatives.thedao.fund/initiative/onay-local-signing-companion) or pledge as an organization. If the initiative does not reach its goal but passes $12,000, it qualifies for theDAO's voting round near the end of the year. There, the ETHSecurity Badge holders rank the initiatives, and TheDAO Security Fund completes the funding of the top-voted ones. So even smaller pledges help a lot.
+
+**[Help us ship 2FA for Ethereum.](https://initiatives.thedao.fund/initiative/onay-local-signing-companion)**
