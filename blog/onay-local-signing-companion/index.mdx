@@ -1,0 +1,138 @@
+---
+title: "Onay: 2FA for Signing"
+authors:
+  - name: Kaan Uzdogan
+    url: https://github.com/kuzdogan
+    image_url: https://github.com/kuzdogan.png
+tags: [Sourcify, Onay, Clear Signing, Security]
+date: 2026-10-13
+---
+
+import verifyImg from "./verify.png"
+import contextImg from "./context.png"
+import erc7730Img from "./erc7730.png"
+import calltreeImg from "./calltree.png"
+import digestImg from "./digest.png"
+
+# Onay: 2FA for Signing
+
+If you've signed anything on Ethereum you know this feeling. The wallet pops up: an address, some hex, a function name... Where are these coming from? Am I even talking to the correct contract? What am I even signing? What is this action going to do?
+
+You just press "Confirm" and hope for the best. 
+
+{/* truncate */}
+
+And many lost their life savings because of this.
+
+In Ethereum we say "Don't trust, verify", but most of the time no one actually verifies. The users are not to blame. We have the means to verify things, but no one has time to check 100 different things every time they send a transaction. We just need to piece it together and make it easy for everyone to verify.
+
+And verifying is cheap, and quick. **A second look to what you are about to sign costs you a few seconds, but can save you from a big loss.** 
+
+We do second factor verification (2FA) in many places where stakes are high, yet in crypto we don't do it when the stakes are our life savings. 
+
+**Onay is a second factor for signing Ethereum transactions.**
+
+At Sourcify we have been doing source code verification for years, and more recently clear signing with ERC-7730. Both are moving forward, but slowly. Yet the pieces to make signing safe are already there. Onay puts them together.
+
+You can help us build this. But first, let's understand what we are building.
+
+When you are about to sign a transaction Onay receives the transaction as well. It retrieves all potentially useful information from various sources and displays them in an understandable way for you to double check. Onay does everything locally where it can: uses a local light client to verify chain state, reproduces the source-code verification locally etc. to minimize the trust required.
+
+Importantly, **Onay is view only. It does not hold any keys or sign anything.** So it can safely leverage a multitude of services and display any information that will enrich the signing process, while keeping your signing device isolated and safe. 
+
+<p><small><em>The screenshots below come from an early mock with made-up data. They show the idea, not the final product. The design will change as we build.</em></small></p>
+
+## How does it work
+
+### 1. Get the transaction
+
+When you are about to sign a transaction Onay can recive it in several ways:
+
+- On the browser: the extension will wrap the EIP-1193 provider and send the transaction both to Onay and the user wallet. You will be able to compare both screens before you sign.
+- Other ways: You can input transactions by copy pasting the payload or reading ERC-4527 animated QR codes from air-gapped wallets
+
+### 2. Locally verify the chain state and source code
+
+Onay runs a local light client. Any information about the chain state will be verified locally. 
+
+Additionally, Onay does not blindly trust the source code and ABI. It receives the source code from Sourcify, compiles the contract, fetches bytecodes, and reproduces the verification locally.
+
+<figure style={{margin: "0 auto", width: "75%", paddingBottom: "3rem"}}>
+  <img src={verifyImg} alt="Chain data verified by the local Helios light client, and the contract's source code reproduced locally with an exact match" style={{width: "100%"}} />
+  <figcaption style={{textAlign: "center", fontSize: "0.85em", color: "var(--ifm-color-emphasis-600)", marginTop: "0.5em"}}>Example: chain state checked by the local light client, and the source code verification reproduced locally.</figcaption>
+</figure>
+
+### 3. Fetch and display context
+
+It is important to know which contract you are talking to. Any information that will help you know if this contract is legit or a scam will be displayed. 
+
+- Deployer, deployment time
+- Number of txs on this contract, first transaction date
+- Assets and TVL on the contract
+- Whitelist and blacklist check: Onay will check this contract multiple trusted lists and over multiple tx security providers.
+
+<figure style={{margin: "0 auto", width: "75%", paddingBottom: "3rem"}}>
+  <img src={contextImg} alt="Contract context: deployment date, deployer, transaction count, holdings, and the trusted lists the contract appears on" style={{width: "100%"}} />
+  <figcaption style={{textAlign: "center", fontSize: "0.85em", color: "var(--ifm-color-emphasis-600)", marginTop: "0.5em"}}>Example: who deployed the contract, how long it has been in use, what it holds, and which trusted lists include it.</figcaption>
+</figure>
+
+### 4. Clear Signing (ERC-7730) and decoding
+
+If this contract has a descriptor in the [ERC7730 registry](https://github.com/ethereum/clear-signing-erc7730-registry), the user sees a human readable description of the transaction. 
+
+A detailed ABI decoding with NatSpec is always done and shown as well.
+
+<figure style={{margin: "0 auto", width: "75%", paddingBottom: "3rem"}}>
+  <img src={erc7730Img} alt="Clear signing view of a swap: amount to send, minimum to receive, beneficiary and deadline, rendered from an ERC-7730 descriptor" style={{width: "100%"}} />
+  <figcaption style={{textAlign: "center", fontSize: "0.85em", color: "var(--ifm-color-emphasis-600)", marginTop: "0.5em"}}>Example: a swap rendered in plain words from its ERC-7730 descriptor.</figcaption>
+</figure>
+
+### 5. Call Tree and Simulation
+
+Onay will simulate the transaction locally and also over different simulation services to display the expected outcome to the user. 
+
+It will also show a detailed call tree of the transaction: which contracts will this tx touch, and their relevant source codes.
+
+<figure style={{margin: "0 auto", width: "75%", paddingBottom: "3rem"}}>
+  <img src={calltreeImg} alt="Call tree of the transaction: the router, WETH and the pair contract, each with its verification status" style={{width: "100%"}} />
+  <figcaption style={{textAlign: "center", fontSize: "0.85em", color: "var(--ifm-color-emphasis-600)", marginTop: "0.5em"}}>Example: the call tree of a swap, with each contract it touches and its verification status.</figcaption>
+</figure>
+
+### 6. The last check: the digest
+
+Before you go to your signer wallet, a hex digest (ERC-8213) will be shown to the user. The user must check the digest both on Onay and on their signer. If the digests match, it means both sides received the same payload and you can be sure what you are about to sign on your wallet is the same as what you see on Onay.
+
+<figure style={{margin: "0 auto", width: "75%", paddingBottom: "3rem"}}>
+  <img src={digestImg} alt="The ERC-8213 calldata digest shown by Onay, to compare with the digest on the wallet" style={{width: "100%"}} />
+  <figcaption style={{textAlign: "center", fontSize: "0.85em", color: "var(--ifm-color-emphasis-600)", marginTop: "0.5em"}}>Example: the calldata digest to compare with the one on your wallet.</figcaption>
+</figure>
+
+## Who is this for
+
+Anyone who signs on Ethereum, but some people carry more risk than others:
+
+- **Multisig signers and treasury operators.** The stakes are highest here. One signature can move millions, and there is no undo. Onay gives every signer an independent view to compare against before they sign.
+- **Hardware wallet users.** Your keys are safe in the device, but the device is very restricted: a tiny screen, little memory, and no network. Onay does the checks the device cannot, and the digest check confirms the device received the same bytes.
+- **Everyone else.** A few seconds of double checking on a swap or an approval is cheap insurance.
+
+## Where we are
+
+A working prototype exists at [project-onay](https://github.com/sourcifyeth/project-onay). It was written quickly to prove the idea end to end. We are now building the production version from the ground up in a public repository: [sourcifyeth/onay](https://github.com/sourcifyeth/onay). Everything is published under GPL-3.0.
+
+## Why Sourcify
+
+We run the verification service that Onay recompiles against, and we maintain the libraries it uses to verify contracts and to render transactions in plain words. We are a founding member of the [Clear Signing Working Group](/blog/clear-signing-launch/) around ERC-7730, and we are the current maintainers of the [ERC-7730 registry](https://github.com/ethereum/clear-signing-erc7730-registry).
+
+## Help us ship it
+
+Onay is part of [theDAO's funding round](https://initiatives.thedao.fund/initiative/onay-local-signing-companion). We are asking for $45,000 over six months, in three milestones:
+
+1. **Reviewed core:** the extension, the secure channel to the app, and the verification gate, intercepting and verifying a real transaction before signing.
+2. **Release 1:** call-tree simulation, pasted and QR-code inputs, signed desktop builds, and the extension on the Chrome Web Store.
+3. **Adoption:** at least 100 people who verify a real transaction with Onay, and at least 8 teams who use it in a real signing workflow, some of them on multisigs that govern more than $100M.
+
+Two thirds of the grant is tied to the adoption milestone. We only get paid in full if people actually use Onay.
+
+You can [donate directly](https://initiatives.thedao.fund/initiative/onay-local-signing-companion) or pledge as an organization. If the initiative does not reach its goal but passes $12,000, it qualifies for theDAO's voting round near the end of the year. There, the ETHSecurity Badge holders rank the initiatives, and TheDAO Security Fund completes the funding of the top-voted ones. So even smaller pledges help a lot.
+
+**[Help us ship 2FA for Ethereum.](https://initiatives.thedao.fund/initiative/onay-local-signing-companion)**
