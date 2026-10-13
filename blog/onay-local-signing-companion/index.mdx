@@ -32,10 +32,6 @@ We do second factor verification (2FA) in many places where stakes are high, yet
 
 **Onay is a second factor for signing Ethereum transactions.**
 
-At Sourcify we have been doing source code verification for years, and more recently clear signing with ERC-7730. Both are moving forward, but slowly. Yet the pieces to make signing safe are already there. Onay puts them together.
-
-You can help us build this. But first, let's understand what we are building.
-
 When you are about to sign a transaction Onay receives the transaction as well. It retrieves all potentially useful information from various sources and displays them in an understandable way for you to double check. Onay does everything locally where it can: uses a local light client to verify chain state, reproduces the source-code verification locally etc. to minimize the trust required.
 
 Importantly, **Onay is view only. It does not hold any keys or sign anything.** So it can safely leverage a multitude of services and display any information that will enrich the signing process, while keeping your signing device isolated and safe. 
