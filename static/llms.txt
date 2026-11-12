@@ -11,7 +11,6 @@ The Sourcify API serves single contracts. It is not for bulk downloads. Do not c
 - Many contracts, or the full dataset: use the Parquet export. It is free and updated daily. Docs: https://docs.sourcify.dev/docs/repository/download-dataset/
 - Analytics without a download: query the Parquet files remotely with DuckDB (see below).
 - SQL with many lookups by address, without a download: use the public BigQuery dataset. It is updated continuously. You need a Google account. Docs: https://docs.sourcify.dev/docs/bigquery/
-- Plain-language questions about the dataset: use the AI Dataset Playground. Docs: https://docs.sourcify.dev/docs/dataset-playground/
 - One contract, or a few contracts: use the API (see below).
 
 To download the full Parquet dataset and keep it in sync, run this command. On later runs, it downloads only new or changed files.
