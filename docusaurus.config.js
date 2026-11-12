@@ -91,6 +91,10 @@ const config = {
             to: "/docs/repository/signature-database",
             from: "/docs/signature-database",
           },
+          {
+            to: "/docs/bigquery",
+            from: "/docs/dataset-playground",
+          },
         ],
       },
     ],
