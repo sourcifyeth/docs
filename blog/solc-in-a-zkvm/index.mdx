@@ -14,9 +14,9 @@ Source code verification is a very simple process, if you have the contract's so
 
 Average users don't usually do this process though, mainly because the users' wallets and apps don't do it for them. They, instead, put their trust into verification services like Sourcify that can reply with a verification status in the matter of milliseconds.
 
-But what if Sourcify is hacked and malicious contracts appears as verified while they aren't? Speed and UX come to the big price of trust. If you are willing to pay trust with some seconds of your life, then we built a tool for you, called Onay. Onay recompiles the contracts directly on your machine and fetches their onchain bytecode from a light client running on your machine.
+But what if Sourcify is hacked and malicious contracts appears as verified while they aren't? Speed and UX come to the big price of trust. In theory the best way to verify would be to reproduce the verification locally, if you are willing to pay trust with some seconds of your life: your wallet recompiles the contracts directly on your machine and fetches their onchain bytecode from a light client, also running on your machine.
 
-Onay solves the trust problem on most devices (paying trust with time), with two exceptions:
+Verifying locally solves the trust problem on most devices (paying trust with time), with two exceptions:
 - **Hardware wallets** have a small process, too little memory to run a compiler or a light client.
 - **Smart contracts** can read the onchain hash, but they cannot execute solidity. So onchain source code verification is not possible.
 
@@ -120,7 +120,7 @@ Also keep in mind that this is an experiment. It works for one compiler version 
 
 ## The price problem
 
-Onay pays trust with time, a proof pays it with money. The `Counter` is the smallest contract you can think of, so we also ran bigger contracts in the zkVM without generating a proof (which is free) to estimate the price:
+Verifying locally you pay trust with time, with a proof you pay it with money. The `Counter` is the smallest contract you can think of, so we also ran bigger contracts in the zkVM without generating a proof (which is free) to estimate the price:
 
 | Contract | Estimated price on the prover network |
 | --- | --- |
