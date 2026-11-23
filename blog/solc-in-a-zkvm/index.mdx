@@ -72,7 +72,7 @@ There is also a nice side effect: the claim is about the bytecode and not about 
 
 ## What about hardware wallets and smart contracts?
 
-**Hardware wallets:** checking a proof needs no compiler and no source files, and the work is always the same no matter how big the contract is. This should be possible on a small device too, but we haven't tried it on a real one yet, so for now it is an open question.
+**Hardware wallets:** checking a proof needs no compiler and no source files, and the work is always the same no matter how big the contract is. This should be possible on a small device too, but we haven't tried it on an actual hardware wallet yet. For now, it is an open question.
 
 **Smart contracts:** this is the part that was simply impossible before. We wrote a contract called `ProvenanceRegistry` that anyone can call with a proof:
 
@@ -114,7 +114,7 @@ Not completely, but it moves to fewer places:
 - **The proof system:** SP1 and its verifier contract. If there is a bug there, everything built on top of it breaks.
 - **The program:** the proof is about a specific program, but who says that this program is really solc 0.8.38? Our build is reproducible, so anyone can build it again and compare the result. This has to be done once per compiler version instead of once per contract, but someone other than us has to do it and nobody has yet.
 - **The compiler and the source:** the proof says that solc produced this bytecode, not that solc is correct or that the source is safe. Verified does not mean safe, with or without a proof.
-- **The storage of the source:** the claim contains only the hash of the input, so you still need someone like Sourcify to store the sources and give them to you. But you can check what you receive, because the sources must hash to the input hash in the claim.
+- **The storage of the source:** the claim contains only the hash of the input, so you still need someone like Sourcify to store the sources and give them to you. However, you can check what you receive, as the sources must hash to the input hash in the claim.
 
 Also keep in mind that this is an experiment. It works for one compiler version (each solc version is a different zkVM program and we only built 0.8.38), and only for contracts whose onchain bytecode is equal to the compiler output byte for byte, i.e. an [exact match](/docs/exact-match-vs-match/). For the other contracts the zkVM program would also need to apply Sourcify's [transformations](/docs/transformations/), and we haven't built that.
 
@@ -133,6 +133,6 @@ With these prices we cannot generate a proof for every contract verified on Sour
 
 ## Would you use such a proof?
 
-This was a side experiment and it is not on our roadmap. Before building a service we want to know if someone actually needs it, so we have one question for you: would you use such a proof? In a wallet, in a governance process, in an audit report?
+This was a side experiment and it is not on our roadmap. Before building a service we want to know if someone actually needs it, so we have a question for you: would you use such a proof in a wallet, in a governance process or in an audit report, and would you be willing to pay for it?
 
 You can find the code at [sourcifyeth/solc-zk-proof](https://github.com/sourcifyeth/solc-zk-proof). Let us know what you think by opening an issue there, on [X](https://x.com/SourcifyEth), or in our [Matrix chat](https://matrix.to/#/#ethereum_source-verify:gitter.im).
