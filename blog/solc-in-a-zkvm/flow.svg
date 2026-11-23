@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 408" width="720" height="408" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5b6b8c"/>
+    </marker>
+  </defs>
+
+  <rect x="0.5" y="0.5" width="719" height="407" rx="12" fill="#ffffff" stroke="#d8deea"/>
+
+  <!-- Row 1: compile and prove once -->
+  <text x="20" y="34" font-size="13" font-weight="700" letter-spacing="1.2" fill="#2b50aa">COMPILE AND PROVE ONCE</text>
+  <line x1="20" y1="46" x2="700" y2="46" stroke="#2b50aa" stroke-width="2"/>
+
+  <rect x="20" y="68" width="200" height="120" rx="8" fill="#f4f6fb" stroke="#b8c3da"/>
+  <text x="120" y="112" text-anchor="middle" font-size="16" font-weight="700" fill="#1c2b4a">Standard JSON input</text>
+  <text x="120" y="138" text-anchor="middle" font-size="14" fill="#4a5875">all the sources</text>
+  <text x="120" y="158" text-anchor="middle" font-size="14" fill="#4a5875">the compiler settings</text>
+
+  <rect x="260" y="68" width="200" height="120" rx="8" fill="#e8efff" stroke="#2b50aa" stroke-width="1.5"/>
+  <text x="360" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#1c3e8e">SP1 zkVM</text>
+  <rect x="274" y="104" width="172" height="72" rx="6" fill="#ffffff" stroke="#7693da"/>
+  <text x="360" y="127" text-anchor="middle" font-size="15" font-weight="700" fill="#1c2b4a">solc 0.8.38</text>
+  <text x="360" y="147" text-anchor="middle" font-size="13.5" fill="#4a5875">official release source,</text>
+  <text x="360" y="165" text-anchor="middle" font-size="13.5" fill="#4a5875">no line changed</text>
+
+  <rect x="500" y="68" width="200" height="120" rx="8" fill="#f4f6fb" stroke="#b8c3da"/>
+  <text x="600" y="112" text-anchor="middle" font-size="16" font-weight="700" fill="#1c2b4a">Claim and proof</text>
+  <text x="600" y="138" text-anchor="middle" font-size="14" fill="#4a5875">claim: 448 bytes</text>
+  <text x="600" y="158" text-anchor="middle" font-size="14" fill="#4a5875">proof: 356 bytes</text>
+
+  <!-- Row 2: check anywhere -->
+  <rect x="130" y="266" width="220" height="84" rx="8" fill="#eaf7f0" stroke="#1e7a4c" stroke-width="1.5"/>
+  <text x="240" y="300" text-anchor="middle" font-size="16" font-weight="700" fill="#14532f">Wallet, explorer, tool</text>
+  <text x="240" y="326" text-anchor="middle" font-size="14" fill="#35604a">offchain, less than 0.5 s</text>
+
+  <rect x="370" y="266" width="220" height="84" rx="8" fill="#eaf7f0" stroke="#1e7a4c" stroke-width="1.5"/>
+  <text x="480" y="300" text-anchor="middle" font-size="16" font-weight="700" fill="#14532f">Smart contract</text>
+  <text x="480" y="326" text-anchor="middle" font-size="14" fill="#35604a">onchain</text>
+
+  <line x1="20" y1="372" x2="700" y2="372" stroke="#1e7a4c" stroke-width="2"/>
+  <text x="20" y="394" font-size="13" font-weight="700" letter-spacing="1.2" fill="#1e7a4c">CHECK ANYWHERE, ANY NUMBER OF TIMES</text>
+
+  <!-- Arrows -->
+  <g stroke="#5b6b8c" stroke-width="1.6" fill="none">
+    <line x1="220" y1="128" x2="256" y2="128" marker-end="url(#arrow)"/>
+    <line x1="460" y1="128" x2="496" y2="128" marker-end="url(#arrow)"/>
+    <path d="M 600 188 L 600 227 L 240 227 L 240 262" marker-end="url(#arrow)"/>
+    <line x1="480" y1="227" x2="480" y2="262" marker-end="url(#arrow)"/>
+  </g>
+</svg>
