@@ -97,6 +97,57 @@ The `swagger.json` file above is structured as follows:
 
 - paths["/v2/contract/{chainId}/{address}"].get
 
+## Contract deletion
+
+The deployer of a verified contract can ask Sourcify to delete the verification data of the contract, source code included. These two endpoints are not in the swagger file. A Sourcify maintainer approves or rejects each request, so a deletion is not immediate.
+
+- Only the deployer can ask. The deployer is `deployment.deployer` of `GET https://sourcify.dev/server/v2/contract/{chainId}/{address}?fields=deployment`: the sender of the transaction that created the contract, also if a factory created it.
+- Never ask a user for a private key. Give the user the message, and let the user sign it with a wallet (`personal_sign`, EIP-191).
+- If Sourcify has no deployer for the contract, or the user cannot sign with the deployer account, the user writes to hello@sourcify.dev.
+
+### Message to sign
+
+Lines end with one line feed. The last line has no line end.
+
+```
+Sourcify contract deletion request
+
+I am the deployer of the contracts below. I ask Sourcify to delete their verification data, source code included.
+
+Service: sourcify-contract-deletion
+Version: 3
+Issued at: {issuedAt}
+Contracts ({number of contracts}):
+{chainId}:{address}
+```
+
+- One line `{chainId}:{address}` for each contract, sorted by chain id (as a number), then by address. Addresses in lower case. No duplicates. At most 50 contracts.
+- `{issuedAt}` is the current UTC time in the form `2026-01-31T12:00:00Z` (no milliseconds). The request must arrive not later than 15 minutes after it.
+
+### Send the request
+
+`POST https://sourcify.dev/server/delete` with a JSON body. The contracts and the time must be the same as in the signed message:
+
+```json
+{
+  "contracts": [{ "chainId": 1, "address": "0xae519fc2ba8e6ffe6473195c092bf1bae986ff90" }],
+  "issuedAt": "2026-01-31T12:00:00Z",
+  "signature": "0x..."
+}
+```
+
+- `202`: `{"requestId": "<uuid>", "state": "pending"}`.
+- Errors have the form `{"error": "<code>", "message": "<text>"}`. Codes: `invalid_request`, `not_canonical`, `too_many_contracts`, `request_expired`, `issued_in_future`, `invalid_signature` (400); `not_deployer` (403); `request_pending` (409, the deployer has a request that is not finished); `not_verified`, `unsupported_chain` (422); `unavailable` (503).
+
+### Read the state
+
+`GET https://sourcify.dev/server/delete/{requestId}` gives `{"requestId": "<uuid>", "state": "<state>"}`. The state is `pending`, `done`, `rejected`, `expired`, or `failed`. Do not poll more often than once in a minute: a maintainer decides, and that can take days. A request without a decision expires after 14 days.
+
+### After a deletion
+
+- Source files that other verified contracts also use stay in Sourcify with those contracts.
+- The deletion does not stop a new verification of the same contract.
+
 ## Repository UI
 
 Contract's data can be viewed in the web application at https://repo.sourcify.dev/{chainId}/{address}.
