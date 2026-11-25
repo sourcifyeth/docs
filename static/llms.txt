@@ -107,7 +107,7 @@ Contract's data can be viewed in the web application at https://repo.sourcify.de
 
 ## Contract removal
 
-In case a contract was verified by accident, the deployer of the contract can ask Sourcify to delete its verification data. Requests are reviewed and approved by Sourcify maintainers. The endpoints are not in the swagger file.
+In case a contract was verified by accident, the deployer of the contract can ask Sourcify to delete its verification data. Requests are reviewed and approved by Sourcify maintainers. The endpoints are not in the swagger file. Docs: https://docs.sourcify.dev/docs/repository/contract-removal/
 
 - The deployer is `deployment.deployer` of `GET /v2/contract/{chainId}/{address}?fields=deployment`.
 - Never ask a user for a private key. The user signs the message below with a wallet (`personal_sign`).
