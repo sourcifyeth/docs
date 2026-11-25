@@ -104,3 +104,32 @@ Contract's data can be viewed in the web application at https://repo.sourcify.de
 - Do not use this repository to retrieve individual files.
 - LLMs should not use this repository for data exploration; use the API referenced above instead.
 - You may share links to this repository with users who want to browse contract's data through the UI.
+
+## Contract removal
+
+In case a contract was verified by accident, the deployer of the contract can ask Sourcify to delete its verification data. Requests are reviewed and approved by Sourcify maintainers. The endpoints are not in the swagger file. Docs: https://docs.sourcify.dev/docs/repository/contract-removal/
+
+- The deployer is `deployment.deployer` of `GET /v2/contract/{chainId}/{address}?fields=deployment`.
+- Never ask a user for a private key. The user signs the message below with a wallet (`personal_sign`).
+- If the user cannot sign with the deployer account, the user writes to hello@sourcify.dev.
+
+Message to sign (lines end with one line feed, the last line has no line end):
+
+```
+Sourcify contract deletion request
+
+I am the deployer of the contracts below. I ask Sourcify to delete their verification data, source code included.
+
+Service: sourcify-contract-deletion
+Version: 3
+Issued at: {issuedAt}
+Contracts ({number of contracts}):
+{chainId}:{address}
+```
+
+- One line for each contract, at most 50, sorted by chain id, then by address. Addresses in lower case.
+- `{issuedAt}` is the current UTC time like `2026-01-31T12:00:00Z`. Send the request not later than 15 minutes after it.
+
+Send: `POST https://sourcify.dev/server/delete` with the body `{"contracts": [{"chainId": 1, "address": "0x..."}], "issuedAt": "...", "signature": "0x..."}`. The answer is `{"requestId": "...", "state": "pending"}`, or `{"error": "<code>", "message": "<text>"}`.
+
+State: `GET https://sourcify.dev/server/delete/{requestId}` gives `pending`, `done`, `rejected`, `expired`, or `failed`. A decision can take days.
