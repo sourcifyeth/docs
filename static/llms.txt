@@ -105,7 +105,7 @@ Contract's data can be viewed in the web application at https://repo.sourcify.de
 - LLMs should not use this repository for data exploration; use the API referenced above instead.
 - You may share links to this repository with users who want to browse contract's data through the UI.
 
-## Contract deletion
+## Contract removal
 
 The deployer of a verified contract can ask Sourcify to delete its verification data. A Sourcify maintainer approves each request. The endpoints are not in the swagger file.
 
